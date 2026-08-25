@@ -10,7 +10,7 @@ book:
   repo-url: https://github.com/apmsbirdlife/apms-manual
   repo-actions: [issue]
   search: true
-  # chapters:
+  chapters:
     - index.qmd
     - part: "Overview"
       chapters:
