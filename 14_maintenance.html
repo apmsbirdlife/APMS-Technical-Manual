@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>15&nbsp; Maintenance – Automated Penguin Monitoring System (APMS)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./15_accuracy.html" rel="next">
+<link href="./13_data_processing.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-fd3b02168e988177e8c40aa51adbf8e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_commissioning.html">Deployment &amp; Operation</a></li><li class="breadcrumb-item"><a href="./14_maintenance.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automated Penguin Monitoring System (APMS)</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/apmsbirdlife/apms-manual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hardware</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_solar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Solar Power Supply</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_internet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Internet and WiFi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_scales_platform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scales Platform</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_apms_monitor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_apms_main_unit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">APMS Main Unit</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Software &amp; Configuration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_aws_s3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AWS S3 Cloud Storage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_raspberry_pi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raspberry Pi Operating System</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_arduino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming the Arduino Monitor via the Pi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_biomark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_crontab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Configure the Crontab</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deployment &amp; Operation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_commissioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Commissioning a New System in the Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_data_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">APMS Data Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_maintenance.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Checking the System for Accuracy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#cleaning-and-checking-the-scales" id="toc-cleaning-and-checking-the-scales" class="nav-link active" data-scroll-target="#cleaning-and-checking-the-scales"><span class="header-section-number">15.1</span> Cleaning and Checking the scales</a></li>
+  <li><a href="#routine-calibration-of-scales" id="toc-routine-calibration-of-scales" class="nav-link" data-scroll-target="#routine-calibration-of-scales"><span class="header-section-number">15.2</span> Routine Calibration of Scales</a>
+  <ul class="collapse">
+  <li><a href="#calibration-data-sheet" id="toc-calibration-data-sheet" class="nav-link" data-scroll-target="#calibration-data-sheet"><span class="header-section-number">15.2.1</span> Calibration Data Sheet</a></li>
+  <li><a href="#general-measure-gmt-x1-indicators" id="toc-general-measure-gmt-x1-indicators" class="nav-link" data-scroll-target="#general-measure-gmt-x1-indicators"><span class="header-section-number">15.2.2</span> General Measure GMT-X1 Indicators</a></li>
+  <li><a href="#laumas-tlb485-indicators" id="toc-laumas-tlb485-indicators" class="nav-link" data-scroll-target="#laumas-tlb485-indicators"><span class="header-section-number">15.2.3</span> Laumas TLB485 Indicators</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">15.3</span> Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#monitor-commands" id="toc-monitor-commands" class="nav-link" data-scroll-target="#monitor-commands"><span class="header-section-number">15.3.1</span> Monitor Commands</a></li>
+  <li><a href="#status-report-cmds" id="toc-status-report-cmds" class="nav-link" data-scroll-target="#status-report-cmds"><span class="header-section-number">15.3.2</span> Status Report (CMD:S)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_commissioning.html">Deployment &amp; Operation</a></li><li class="breadcrumb-item"><a href="./14_maintenance.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>When visiting a site always remember to log everything you do, even though it might seem insignificant.</p>
+<p>Check the following an:</p>
+<ul>
+<li><p>Tighten stay ropes (where applicable)</p></li>
+<li><p>Check outdoor router antennas and masts are secure (where applicable)</p></li>
+<li><p>Check for water ingress into the Skitch Box</p></li>
+<li><p>Check RFID antenna is still in good condition</p></li>
+<li><p>Check the height at which an RFID test tag is picked up.</p></li>
+</ul>
+<section id="cleaning-and-checking-the-scales" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="cleaning-and-checking-the-scales"><span class="header-section-number">15.1</span> Cleaning and Checking the scales</h2>
+<ul>
+<li><p>Clean the scales whenever visiting the site. As long as very little pressure is applied to the scales themselves, the system does not need to be turned off and no penguins will be registered</p></li>
+<li><p>Check around the scales and ensure no branches or debris are touching the scale pans. Anything touching the pans on the sides will alter the weight reading. Sand on top of the scales (if not too excessive) is not a problem.</p></li>
+<li><p>Check that the canvas is still in good condition and not torn/peeling off. Replace as necessary.</p></li>
+</ul>
+</section>
+<section id="routine-calibration-of-scales" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="routine-calibration-of-scales"><span class="header-section-number">15.2</span> Routine Calibration of Scales</h2>
+<p>R&amp;D Weighing recommends the scales be calibrated every 3 to 4 months to ensure accuracy. However, some sites may require you to calibrate it more often, and when the equipment starts getting older it’s recommended to calibrate more frequently. Version 1 of the APMS used the Laumas TLB485 scale indicators whereas as of 2026 BirdLife has moved on to using the General Measure GMT-X1 indicators which has more functionalities. Below are the calibration instructions for both of these. Always stop the <code>scales.py</code> script before starting with calibrations.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop scales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="calibration-data-sheet" class="level3" data-number="15.2.1">
+<h3 data-number="15.2.1" class="anchored" data-anchor-id="calibration-data-sheet"><span class="header-section-number">15.2.1</span> Calibration Data Sheet</h3>
+<p>A data sheet for field use can be downloaded from here:</p>
+<ul>
+<li><p><a href="_book/files/APMS_Calibration_datasheet.pdf">APMS Calibration Datasheet (PDF)</a></p></li>
+<li><p><a href="_book/files/APMS_Calibration_datasheet.docx">APMS Calibration Datasheet (Word)</a></p></li>
+</ul>
+</section>
+<section id="general-measure-gmt-x1-indicators" class="level3" data-number="15.2.2">
+<h3 data-number="15.2.2" class="anchored" data-anchor-id="general-measure-gmt-x1-indicators"><span class="header-section-number">15.2.2</span> General Measure GMT-X1 Indicators</h3>
+<p>To check if the system needs to be calibrated, place a 1kg and 5kg (6kg combined) weight on each scale and observe the readings on the scale indicators. If the reading is out by more than 5g, recalibrate. The wind can have a huge influence on the scales and thus <u>only calibrate on good weather days</u>.</p>
+<p>There are two scales at every site: Scale 1 (colony side) and Scale 2 (ocean side). Both are zeroed (tared) and calibrated in exactly the same way, one after the other. Follow the steps below in order and record every reading on the data sheet as you go, do not rely on memory.</p>
+<section id="record-before-readings-no-calibration-yet" class="level4" data-number="15.2.2.1">
+<h4 data-number="15.2.2.1" class="anchored" data-anchor-id="record-before-readings-no-calibration-yet"><span class="header-section-number">15.2.2.1</span> Record BEFORE readings (no calibration yet)</h4>
+<p>First ensure the <code>scales.py</code> script has been stopped before recording weight readings. With the scale in its current, uncalibrated state, record the reading shown for each of the following, in this order:</p>
+<ul>
+<li><p>No weight on scale 1 — record the reading.</p></li>
+<li><p>No weight on scale 2 — record the reading.</p></li>
+<li><p>Place the 1 kg weight on scale 1 — record the reading.</p></li>
+<li><p>Place the 1 kg weight on scale 2 — record the reading.</p></li>
+<li><p>Remove the 1 kg weight. Place the 5 kg weight on scale 1 — record the reading.</p></li>
+<li><p>Place the 5 kg weight on scale 2 — record the reading.</p></li>
+<li><p>Place the 1 kg and 5 kg weights together on scale 1 (i.e., 6 kg) — record the reading.</p></li>
+<li><p>Place the 1 kg and 5 kg weights together on scale 2 (i.e., 6 kg) — record the reading.</p></li>
+<li><p>Remove all weights from the scale.</p></li>
+</ul>
+</section>
+<section id="clean-the-scales" class="level4" data-number="15.2.2.2">
+<h4 data-number="15.2.2.2" class="anchored" data-anchor-id="clean-the-scales"><span class="header-section-number">15.2.2.2</span> Clean the scales</h4>
+<p>Remove any sand build up, sticks or debris that are on or around the scales. To do this, remove the scale pans and sweep out the sand that’s accumulated with your fingers or with a paint brush. Take care when you work around the cables as strong pressure on the cables can break or damage them and then the entire scale/loadcell would need to be replaced.</p>
+</section>
+<section id="zero-tare-the-scales" class="level4" data-number="15.2.2.3">
+<h4 data-number="15.2.2.3" class="anchored" data-anchor-id="zero-tare-the-scales"><span class="header-section-number">15.2.2.3</span> Zero (tare) the scales</h4>
+<p>We will first zero scale 1 (colony side) and then the exact same steps will be done for scale 2 (ocean side).</p>
+<ol type="1">
+<li><p>Press the Enter button (<strong>ENT</strong>) to open the menu.</p></li>
+<li><p>Press the right arrow to go to <strong>2xx Weight&amp;CAL</strong> and press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/89_weight_cal_menu.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 89.</strong> Selecting 2xx Weight&amp;CAL from the main menu.</figcaption>
+</figure>
+</div></li>
+<li><p>Press the down arrow to go to <strong>22x CAL Zero</strong> and press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/90_cal_zero_menu.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 90.</strong> Selecting 22x CAL Zero from the Weight&amp;CAL menu.</figcaption>
+</figure>
+</div></li>
+<li><p>It should now display <strong>221 Auto Capture</strong> — press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/91_auto_capture.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 91.</strong> Selecting 211 Auto Capture.</figcaption>
+</figure>
+</div></li>
+<li><p>It should now display the weight reading in millivolts. Wait for a drop in the wind, or for the green stable weight reading light (<strong>STAB</strong>) to come on, then press Enter (<strong>ENT</strong>) immediately to set the new zero point.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/92_zero_millivolts.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 92.</strong> Millivolt reading displayed while zeroing the scale.</figcaption>
+</figure>
+</div></li>
+<li><p>You should see <strong>Set Successfully</strong> displayed on the screen and it should then return to the <strong>22x CAL Zero</strong> menu. Press Escape (<strong>ESC</strong>) to go back to the previous menu (<strong>2xx Weight&amp;CAL</strong>) for calibration (Step 5 below).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/93_set_successfully.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 93.</strong> Set Successfully confirmation screen.</figcaption>
+</figure>
+</div></li>
+<li><p>Once you have zeroed (tared) scale 1, <strong>repeat the exact same steps for scale 2.</strong></p></li>
+</ol>
+</section>
+<section id="calibrate-the-scales" class="level4" data-number="15.2.2.4">
+<h4 data-number="15.2.2.4" class="anchored" data-anchor-id="calibrate-the-scales"><span class="header-section-number">15.2.2.4</span> Calibrate the scales</h4>
+<p>We will first calibrate scale 1 (colony side) and then the exact same steps will be done for scale 2 (ocean side).</p>
+<ol type="1">
+<li><p>In the <strong>2xx Weight&amp;CAL</strong> menu, go down to <strong>23x CAL Weight</strong> and press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/94_cal_weight_menu.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 94.</strong> Selecting 23x CAL Weight from the Weight&amp;CAL menu.</figcaption>
+</figure>
+</div></li>
+<li><p>You should now see <strong>231 Weight CP1</strong> displayed on the screen, press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/95_weight_cp1.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 95.</strong> Selecting 231 Weight CP1.</figcaption>
+</figure>
+</div></li>
+<li><p>You will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 1 kg weight on scale 1. You will note that the millivolts have increased. <u>Note the millivolts may be slightly different than the picture below.</u></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/96_1kg_millivolts.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 96.</strong> Millivolt reading increasing once the 1 kg weight is placed on the scale.</figcaption>
+</figure>
+</div></li>
+<li><p>Use the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 1 kg.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/97_1kg_adjust_cursor.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 97.</strong> Adjusting the displayed value to match the weight on the scale.</figcaption>
+</figure>
+</div></li>
+<li><p>As soon as you see the green stable weight (<strong>STAB</strong>) light come on, or note a break in the wind, press Enter (<strong>ENT</strong>). It should now read <strong>Set Successfully</strong> on the screen (see Figure 93).</p></li>
+<li><p>You have now successfully calibrated scale 1 with a 1 kg weight. Repeat the above steps with a 5 kg weight following the steps below.</p></li>
+<li><p>You should see <strong>231 Weight CP1</strong> displayed on the screen again after you successfully calibrated it in the previous step. Press the down arrow once to show <strong>232 Weight CP2</strong> and press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/98_weight_cp2.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 98.</strong> Selecting 232 Weight CP2.</figcaption>
+</figure>
+</div></li>
+<li><p>Again, you will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 5 kg weight on scale 1. Use the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 5 kg. <u>Note the millivolts may be slightly different than the picture below.</u></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/99_5kg_millivolts.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 99.</strong> Adjusting the displayed value to 5 kg using the arrow keys.</figcaption>
+</figure>
+</div></li>
+<li><p>As soon as you see the green stable weight (<strong>STAB</strong>) light come on, or note a break in the wind, press Enter (<strong>ENT</strong>). It should now read <strong>Set Successfully</strong> on the screen (see Figure 93).</p></li>
+<li><p>You have now successfully calibrated scale 1 with a 1 kg and 5 kg weight. Repeat the above steps with a 6 kg weight (1 kg + 5 kg together) following the steps below.</p></li>
+<li><p>You should see <strong>232 Weight CP2</strong> displayed on the screen again after you successfully calibrated it in the previous step. Press the down arrow once to show <strong>233 Weight CP3</strong> and press Enter (<strong>ENT</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/100_weight_cp3.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 100.</strong> Selecting 233 Weight CP3.</figcaption>
+</figure>
+</div></li>
+<li><p>Again, you will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 1 kg and 5 kg weights together on scale 1. Use the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 6 kg. <u>Note the millivolts may be slightly different than the picture below.</u></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/101_6kg_millivolts.jpeg" class="img-fluid figure-img" width="550"></p>
+<figcaption><strong>Figure 101.</strong> Adjusting the displayed value to 6 kg using the arrow keys.</figcaption>
+</figure>
+</div></li>
+<li><p>As soon as you see the green stable weight (<strong>STAB</strong>) light come on, or note a break in the wind, press Enter (<strong>ENT</strong>). It should now read <strong>Set Successfully</strong> on the screen (see Figure 93).</p></li>
+<li><p>You have now completed all steps for calibrating scale 1 with 1 kg, 5 kg, and 6 kg. Remove all the weights.</p></li>
+<li><p>Press the Escape button (<strong>ESC</strong>) twice until you get back to the main screen displaying just the weight reading. It should now read 0.000 kg, or be within 5 g of 0.000 kg.</p></li>
+<li><p>If scale 1 is within the 5 g threshold, <strong>repeat the exact same steps for scale 2.</strong> Otherwise, repeat the calibration steps again and check that the scale reads withing 5 g.</p></li>
+</ol>
+</section>
+<section id="record-the-weight-readings-after-calibration" class="level4" data-number="15.2.2.5">
+<h4 data-number="15.2.2.5" class="anchored" data-anchor-id="record-the-weight-readings-after-calibration"><span class="header-section-number">15.2.2.5</span> Record the weight readings after calibration</h4>
+<ul>
+<li><p>Make sure that there are no weights on the scales. Test the accuracy of the calibration with no weight, 1 kg, 5 kg, and 6 kg on the scales. The scales should be within 5 g of the true weight after calibration.</p></li>
+<li><p>Start with scale 1 (colony side). Record the weight reading when no weights are on scale 1.</p></li>
+<li><p>Place the 1 kg weight on scale 1 and record the reading.</p></li>
+<li><p>Place the 5 kg weight on scale 1 and record the reading.</p></li>
+<li><p>Place the 6 kg weight (1 kg + 5 kg weights together) on scale 1 and record the reading.</p></li>
+<li><p>If any of the above readings is out by more than 5 grams, repeat the calibration for that particular scale starting with 1 kg, then 5 kg, then 6 kg and check again.</p></li>
+<li><p>If scale 1 is within the 5 g threshold, <strong>repeat the exact same steps for scale 2.</strong> Otherwise, repeat the calibration steps again and check that the scale reads withing 5 g.</p></li>
+</ul>
+</section>
+<section id="turn-on-scales-scripts-and-log-weight-readings" class="level4" data-number="15.2.2.6">
+<h4 data-number="15.2.2.6" class="anchored" data-anchor-id="turn-on-scales-scripts-and-log-weight-readings"><span class="header-section-number">15.2.2.6</span> Turn on scales scripts and log weight readings</h4>
+<p>Once you have completed all the steps above to zero and calibrate the scales, remember to turn on the scales service again to start logging any penguins that cross the weighbridge, and if you haven’t done so before, log all the weight readings using the log.py script.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start scales</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status scales</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> apms/log.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Always follow the exact order: no weight → 1 kg → 5 kg → 6 kg, when taking weight readings before, during and after calibrations.</p></li>
+<li><p>Place weights gently in the centre of the scale platform and wait for the reading to settle before recording it.</p></li>
+<li><p>If you have already zeroed (tared) and calibrated the scales and the readings are more than 5 grams out, then zero the scales again and calibrate again until the reading is as close to accurate as possible. A maximum of 5 grams is okay.</p></li>
+<li><p>Keep test weights clean and dry — dirt or moisture can cause the weights to corrode and eventually change the physical weight.</p></li>
+<li><p>Take care not to drop the weights on the ground (or on the scales) as it can damage them and chip away little pieces which will over time cause it to be inaccurate.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The steps below are done once per scale unless noted otherwise:</p>
+<ul>
+<li><p>Ensure weight logging is switched off <code>sudo systemctl stop scales</code> before recording weight readings, taring scales, or calibrating scales..</p></li>
+<li><p>Record the BEFORE readings on both scales: no weight, 1 kg, 5 kg, then 6 kg (1 kg + 5 kg together).</p></li>
+<li><p>Clean each scale — remove sand, sticks, and debris from around and under the pan.</p></li>
+<li><p>Zero (tare) each scale: <strong>2xx Weight&amp;CAL</strong> → <strong>22x CAL Zero</strong> → <strong>211 Auto Capture</strong>.</p></li>
+<li><p>Calibrate each scale:</p>
+<ul>
+<li><p><strong>2xx Weight&amp;CAL</strong> → <strong>23x CAL Weight</strong> → <strong>231 Weight CP1</strong> with 1 kg.</p></li>
+<li><p><strong>2xx Weight&amp;CAL</strong> → <strong>23x CAL Weight</strong> → <strong>232 Weight CP2</strong> with 5 kg.</p></li>
+<li><p><strong>2xx Weight&amp;CAL</strong> → <strong>23x CAL Weight</strong> → <strong>233 Weight CP3</strong> with 6 kg.</p></li>
+</ul></li>
+<li><p>Record the AFTER readings on each scale (no weight, 1 kg, 5 kg, 6 kg). If any readings are out by more than 5 g, repeat the calibration for that scale and check again.</p></li>
+<li><p>Finish up: start the scales again <code>sudo systemctl start scales</code> and log all the weight readings <code>python3 apms/log.py</code>.</p></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="laumas-tlb485-indicators" class="level3" data-number="15.2.3">
+<h3 data-number="15.2.3" class="anchored" data-anchor-id="laumas-tlb485-indicators"><span class="header-section-number">15.2.3</span> Laumas TLB485 Indicators</h3>
+<p>To check if the system needs to be calibrated, place a 1kg, 5kg and 6kg (5+1) weight on each scale and observe the readings on the scale indicators. If the reading is out by more than 5g, recalibrate. The wind can have a huge influence on the scales and thus <u>only calibrate on good weather days</u>.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>There are 4 buttons on each indicator. They are:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>ENTER</strong></td>
+<td style="text-align: left;"><img src="images/media/image85.png" style="height:0.22in"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>LEFT</strong></td>
+<td style="text-align: left;"><img src="images/media/image86.png" style="height:0.22in"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>UP</strong></td>
+<td style="text-align: left;"><img src="images/media/image87.png" style="height:0.22in"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CANCEL/BACK</strong></td>
+<td style="text-align: left;"><img src="images/media/image84.png" style="height:0.22in"></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:45%;">
+<p><img src="images/media/image83.png" style="height:1.85in"></p>
+</div>
+</div>
+<ul>
+<li><p>SSH into the Pi</p></li>
+<li><p>Stop the scales process: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop scales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Log the start of the calibration event: &nbsp;&nbsp;&nbsp;&nbsp;</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/log.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Log the weight discrepancy for each scale using the 5kg weight.</li>
+<li>You can run the code below to check that the scripts have indeed stopped:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status scales</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Remove all weights from scales.</p></li>
+<li><p>Tare the scale:</p>
+<ul>
+<li>Hold in the CANCEL button until it displays: <img src="images/media/image158.png" style="height:0.22in"> Then press ENTER</li>
+<li>All the Lights should be flashing. Press ENTER again to zero the scale.</li>
+<li>The weight should read 0. Press CANCEL until you are back at the main weight display.</li>
+</ul></li>
+<li><p>Start with Scale 1 (colony side) and then do Scale 2 (ocean side). Start by placing the 5kg weight in the center of the scale. Then proceed to the indicator, and flip open the cover to reveal the buttons as described above (you might need a small flat screwdriver to lift the cover). It can be difficult to see the LED display without looking through the cover, so flip it down to confirm what is displayed if uncertain.</p></li>
+<li><p>While pressing and holding the ENTER button, also press the CANCEL button. This should display <img src="images/media/image159.png" style="height:0.22in"></p></li>
+<li><p>Press ENTER. Now use <img src="images/media/image162.png" style="height:0.22in"> to select <img src="images/media/image160.png" style="height:0.22in"> and press ENTER</p></li>
+<li><p>A flashing weight should be displayed. All the lights should be OFF</p></li>
+<li><p>Use <img src="images/media/image162.png" style="height:0.22in"> to adjust the weight until it reads exactly 5.000 kg</p>
+<p><img src="images/media/image86.png" style="height:0.22in"> to change value</p>
+<p><img src="images/media/image87.png" style="height:0.22in"> to change decimal place holder</p></li>
+<li><p>Press ENTER. The new weight should be displayed, and all the lights should be flashing.</p></li>
+<li><p>Press ENTER one more time. This should show again. Press CANCEL until you see the weight displayed.</p></li>
+<li><p>Check with 1kg, 5kg and 6kg weights again. It should be within 1g. If not, recalibrate.</p></li>
+<li><p>Start the APMS processes.</p></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start scales</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Log the end of the calibration event: &nbsp;&nbsp;&nbsp;&nbsp;</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/log.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="troubleshooting" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">15.3</span> Troubleshooting</h2>
+<p>There are too many permutations of how things can go wrong to cover it all in this manual. However, some common things to look out for, as well as how to go about getting more information, will be discussed below.</p>
+<p>Often, the dashboard will give an indication of something going wrong. A classic example of this would be seeing the solar supply voltage going down and the batteries not fully charging. This is often due to overgrowth and the dashboard should be checked the next day to see if it has improved. The dashboard could also show the system being healthy, but the algorithm shows something is wrong, such as the number of RFID tags dropping to zero for a few days. This could be due to the BioMark system failing, or the RFID antenna shifting out of position.</p>
+<p>For diagnosing problems, or just checking in on the system, the Monitor can be used.</p>
+<p>If the Monitor has power, it should operate and be able to give information about the system, even if the Main Unit is completely dead. Ensure the SIM card has airtime to be able to reply via SMS.</p>
+<ul>
+<li><p>The Monitor will send a SMS to the operator in the event of the following:</p>
+<ul>
+<li><p>If the 4V of the SIM800L is too low/high (only v1.1 of the APMS, v1.2 no longer uses the 4V SIM module)</p></li>
+<li><p>If the 5V of the Raspberry Pi is too low/high</p></li>
+<li><p>If the 12V of the scales/router is too low/high</p></li>
+<li><p>If the 24V solar supply is too low/high</p></li>
+<li><p>If the ambient temperature is too high. (Warning: 50°C - Danger at 60°C)</p></li>
+<li><p>If the Raspberry Pi or Monitor reboot</p></li>
+</ul></li>
+</ul>
+<p>If any of these messages are received, the operator should investigate.</p>
+<section id="monitor-commands" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="monitor-commands"><span class="header-section-number">15.3.1</span> Monitor Commands</h3>
+<p>A simple set of commands can be used by the administrator to diagnose system faults via SMS.</p>
+<p>To send a command to the Monitor, send a SMS starting with <strong>“CMD:”</strong></p>
+<p>For example, to request a status report, send:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">CMD:S</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The monitor should reply, via SMS, with a brief status report. The status report is discussed in ***</p>
+<p>Note the commands are not case sensitive.</p>
+<p>The table below shows a list of valid commands.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 22%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Command Name</strong></th>
+<th><strong>What to send</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Request Status Report</td>
+<td>CMD:S</td>
+<td>The Monitor should reply by sending a status report via SMS</td>
+</tr>
+<tr class="even">
+<td>Reboot</td>
+<td>CMD:R</td>
+<td>This power cycles the Raspberry Pi</td>
+</tr>
+<tr class="odd">
+<td>Power On/Off</td>
+<td>CMD:P</td>
+<td>This powers the Raspberry Pi on if it was off, and off if it was on</td>
+</tr>
+<tr class="even">
+<td>Update Time</td>
+<td>CMD:U</td>
+<td>This updates the Monitor system time.</td>
+</tr>
+<tr class="odd">
+<td>Change Phone Number of Operator</td>
+<td>CMD:M+27**<br>
+*******</td>
+<td>This changes the phone number of the operator, saved in the non-volatile memory of the Monitor.</td>
+</tr>
+<tr class="even">
+<td>Turn Off SMS Notifications</td>
+<td>CMD:X</td>
+<td>To turn off SMS notifications from the Monitor.</td>
+</tr>
+<tr class="odd">
+<td>Turn On SMS Notifications</td>
+<td>CMD:Y</td>
+<td>To turn on SMS notifications from the Monitor</td>
+</tr>
+<tr class="even">
+<td>Send BASH command</td>
+<td>CM D:C*****</td>
+<td><p>UNTESTED</p>
+<p>Send a BASH Command for the Pi to execute next time it checks in.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="status-report-cmds" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="status-report-cmds"><span class="header-section-number">15.3.2</span> Status Report (CMD:S)</h3>
+<p>An example of a status report as received from the Stony Point Monitor can be seen below. The example will be used to explain the different parameters.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/88_status.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 88.</strong> Status report sent via the APMS’s SIM module.</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./13_data_processing.html" class="pagination-link" aria-label="APMS Data Processing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">APMS Data Processing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./15_accuracy.html" class="pagination-link" aria-label="Checking the System for Accuracy">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Checking the System for Accuracy</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

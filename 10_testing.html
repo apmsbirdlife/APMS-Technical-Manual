@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Testing Each Script – Automated Penguin Monitoring System (APMS)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11_crontab.html" rel="next">
+<link href="./09_biomark.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-fd3b02168e988177e8c40aa51adbf8e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_aws_s3.html">Software &amp; Configuration</a></li><li class="breadcrumb-item"><a href="./10_testing.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automated Penguin Monitoring System (APMS)</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/apmsbirdlife/apms-manual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hardware</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_solar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Solar Power Supply</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_internet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Internet and WiFi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_scales_platform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scales Platform</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_apms_monitor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_apms_main_unit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">APMS Main Unit</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Software &amp; Configuration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_aws_s3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AWS S3 Cloud Storage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_raspberry_pi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raspberry Pi Operating System</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_arduino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming the Arduino Monitor via the Pi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_biomark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_testing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_crontab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Configure the Crontab</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deployment &amp; Operation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_commissioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Commissioning a New System in the Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_data_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">APMS Data Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_maintenance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Checking the System for Accuracy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#testing-the-scales.py-script" id="toc-testing-the-scales.py-script" class="nav-link active" data-scroll-target="#testing-the-scales.py-script"><span class="header-section-number">11.1</span> Testing the scales.py script</a></li>
+  <li><a href="#testing-the-rfid.py-script" id="toc-testing-the-rfid.py-script" class="nav-link" data-scroll-target="#testing-the-rfid.py-script"><span class="header-section-number">11.2</span> Testing the rfid.py script</a></li>
+  <li><a href="#testing-the-system_status_check.py-script" id="toc-testing-the-system_status_check.py-script" class="nav-link" data-scroll-target="#testing-the-system_status_check.py-script"><span class="header-section-number">11.3</span> Testing the system_status_check.py script</a></li>
+  <li><a href="#testing-the-transfer_data.py-script" id="toc-testing-the-transfer_data.py-script" class="nav-link" data-scroll-target="#testing-the-transfer_data.py-script"><span class="header-section-number">11.4</span> Testing the transfer_data.py script</a></li>
+  <li><a href="#testing-the-apms_email.py-script" id="toc-testing-the-apms_email.py-script" class="nav-link" data-scroll-target="#testing-the-apms_email.py-script"><span class="header-section-number">11.5</span> Testing the apms_email.py script</a></li>
+  <li><a href="#testing-the-log.py-script" id="toc-testing-the-log.py-script" class="nav-link" data-scroll-target="#testing-the-log.py-script"><span class="header-section-number">11.6</span> Testing the log.py script</a></li>
+  <li><a href="#assigning-an-rfid-tag-to-a-penguin" id="toc-assigning-an-rfid-tag-to-a-penguin" class="nav-link" data-scroll-target="#assigning-an-rfid-tag-to-a-penguin"><span class="header-section-number">11.7</span> Assigning an RFID Tag to a Penguin</a></li>
+  <li><a href="#error-handling" id="toc-error-handling" class="nav-link" data-scroll-target="#error-handling"><span class="header-section-number">11.8</span> Error Handling</a>
+  <ul class="collapse">
+  <li><a href="#error-directory-reference" id="toc-error-directory-reference" class="nav-link" data-scroll-target="#error-directory-reference"><span class="header-section-number">11.8.1</span> Error Directory Reference</a></li>
+  </ul></li>
+  <li><a href="#testing-the-onoff-button" id="toc-testing-the-onoff-button" class="nav-link" data-scroll-target="#testing-the-onoff-button"><span class="header-section-number">11.9</span> Testing the ON/OFF Button</a></li>
+  <li><a href="#testing-the-update_system_time.py-script" id="toc-testing-the-update_system_time.py-script" class="nav-link" data-scroll-target="#testing-the-update_system_time.py-script"><span class="header-section-number">11.10</span> Testing the update_system_time.py script</a></li>
+  <li><a href="#configure-scripts-as-services" id="toc-configure-scripts-as-services" class="nav-link" data-scroll-target="#configure-scripts-as-services"><span class="header-section-number">11.11</span> Configure Scripts as Services</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_aws_s3.html">Software &amp; Configuration</a></li><li class="breadcrumb-item"><a href="./10_testing.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Each part of the system can now be tested individually.</p>
+<ul>
+<li><p>The main scripts are:</p>
+<ul>
+<li><p>scale.py</p></li>
+<li><p>rfid.py</p></li>
+<li><p>system_status_check.py</p></li>
+<li><p>transfer_data.py</p></li>
+<li><p>apms_email.py</p></li>
+<li><p>log.py</p></li>
+</ul></li>
+</ul>
+<section id="testing-the-scales.py-script" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="testing-the-scales.py-script"><span class="header-section-number">11.1</span> Testing the scales.py script</h2>
+<p>Before testing, ensure the APMS is configured - See <a href="./07_raspberry_pi.html#Configuring the APMS">Configuring the APMS</a>.</p>
+<ul>
+<li><p>Plug both scales into their respective sockets.</p></li>
+<li><p>Power up the APMS Main Unit</p></li>
+<li><p>SSH into the Pi.</p></li>
+<li><p>Check if the scales service is running in the background and stop the service if it is:</p>
+<ul>
+<li>Check with:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status scales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>If active, stop the service:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop scales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Ensure the indicators show weight readings of close to 0.000 kg (It should be within 1g after calibration)</p></li>
+<li><p>Check the scale frequencies:</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/test_scale_frequency.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Currently the scales are set to 100 Hz.</p></li>
+<li><p>Check that the scale frequencies are within 1% (between 99 Hz and 101 Hz)</p></li>
+<li><p>Run the scales script:</p></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/scales.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>You should see the following on the screen:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/63_scsales_py.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 63.</strong> A screen shot of the scale.py script running.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Put a <u>1kg</u> weight on <u>scale 1</u>.</p></li>
+<li><p>As it is less than the weight of a penguin, and less than the weight specified in the config.json file, it should detect a high dead weight.</p></li>
+<li><p>Check that it is indeed <u>scale 1</u> showing the high dead weight (Fig. 64).</p></li>
+<li><p>Remove the <u>1kg</u> weight. A message should state the dead weight has reduced (Fig. 64).</p></li>
+<li><p>Repeat for scale 2</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/64_deadweight.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 64.</strong> Dead weight message printed in the terminal.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Place a <u>5kg</u> weight on <u>scale 1</u>.</p>
+<ul>
+<li><p>As this weight is greater than the minimum penguin weight, an event should be started. As scale 1 was triggered first, it should indicate a penguin heading out to the ocean.</p></li>
+<li><p>Wait a few seconds and remove the 5kg weight. After removing the weight, there will be a slight pause and then the event should finish, and the data stored to a file. This pause is the time period set in the config file for “SCALE_EMPTY_TIME”.</p></li>
+<li><p>A screenshot is shown below:</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/65_scale_event.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 65.</strong> Example of a scale file written to file.</figcaption>
+</figure>
+</div>
+<ul>
+<li>Repeat for <u>scale 2</u>. This time, the system should detect <u>scale 2</u> being triggered first, displaying a message that a penguin is coming back from the ocean. Remove the weight and wait for the event to finish.</li>
+</ul>
+<p>The testing of the scales is now complete. The files generated in the above tests can be checked for accuracy after uploading them to the cloud using the <code>transfer_data.py</code> script (see section below).</p>
+</section>
+<section id="testing-the-rfid.py-script" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="testing-the-rfid.py-script"><span class="header-section-number">11.2</span> Testing the rfid.py script</h2>
+<p>The APMS picks up RFID tags via an external RFID reader made by BioMark (Model IS1001).</p>
+<ul>
+<li><p>Before testing the rfid script, please ensure the BioMark Reader has been fully configured and the BioMark antenna installed. See <a href="./09_biomark.html#Configuring the BioMark Reader">Configuring the BioMark Reader</a>.</p></li>
+<li><p>Connect a cable between the mini-USB port on the BioMark Reader and the front USB port of the APMS main unit.</p>
+<ul>
+<li>If an APMS main unit is not being used, the Raspberry Pi will have to be powered by a 5V power supply and any USB port on the Pi can be used to connect to the BioMark Reader.</li>
+</ul></li>
+<li><p>Power up the BioMark Reader and APMS main unit.</p></li>
+<li><p>SSH into the Pi.</p></li>
+<li><p>Check that the rfid service is not running in the background and stop the service if it is. Check with:</p></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>If active, stop the service:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Run the rfid script:</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/rfid.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>You should see the following on the screen (Fig. 66). Note that the RFID reader could be assigned to “<em>ttyUSB0”</em>,”<em>ttyUSB1”</em> or “<em>ttyUSB2”</em>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/66_rfid_py.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 66.</strong> Running the rfid.py script.</figcaption>
+</figure>
+</div>
+<ul>
+<li>Take a test tag and move it close to the antenna. The tag should be registered and saved to a file. This file can also be checked after uploading to the cloud. The tag should be read and printed out (Fig. 67).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/67_rfid_py.png" class="img-fluid figure-img" width="700"></p>
+<figcaption><strong>Figure 67.</strong> RFID tag being read by the Biomark.</figcaption>
+</figure>
+</div>
+</section>
+<section id="testing-the-system_status_check.py-script" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="testing-the-system_status_check.py-script"><span class="header-section-number">11.3</span> Testing the system_status_check.py script</h2>
+<p>The <code>system_status_check.py</code> script automatically runs every hour, at 10 past the hour. The script is used to monitor the health of the entire APMS. See Fig. 68 for a screenshot after running the script manually. The main features of the script are:</p>
+<ul>
+<li><p>Send an SMS to the operator if the Raspberry Pi has rebooted.</p></li>
+<li><p>Check Last time data was uploaded and backfill data if needed.</p></li>
+<li><p>The script will check when last the data was uploaded to the cloud and if more than a day, the data transfer script will be executed to upload all outstanding data.</p></li>
+<li><p>Check CPU temperature</p></li>
+<li><p>If the CPU temperature exceeds the WARNING or DANGER thresholds, an email will be sent to the operator. Thresholds are set in the configuration file. See <a href="./07_raspberry_pi.html#Configuring the APMS">Configuring the APMS</a> and adjust <code>CPU_TEMP_WARNING</code> and <code>CPU_TEMP_DANGER</code> variables.</p></li>
+<li><p>Checks CPU load and memory usage</p></li>
+<li><p>Checks USB Flash drive is mounted and storage available</p></li>
+<li><p>Tests the internet connection</p></li>
+<li><p>Check if a BASH command has been received from Monitor and executes it (still in development)</p></li>
+<li><p>Receives status report from Arduino Monitor (Used for Dashboard)</p></li>
+<li><p>Sends a report to the Arduino Monitor</p>
+<ul>
+<li>Used when requesting a status report from the Monitor, via SMS.</li>
+</ul></li>
+</ul>
+<p>All the information is logged to a daily system status file. This file will normally have 24 entries, one for every hour. On occasion, the request for a status report from the Monitor might fail. The operator should receive an email alert. If this happens, wait one hour and check if the next status report is received (at 10 past the hour). If not investigate.</p>
+<p>The daily status file can be viewed with the <code>cat</code> function and files are located at:</p>
+<p>~/data/[YEAR]/[YYYYMMDD]/[YYYYMMDD]*_STATUS.txt</p>
+<p>For example: <code>cat ~/data/2023/20231230/20231230_STATUS.txt</code></p>
+<p>This file is uploaded to the cloud daily and most of the info on the Dashboard is obtained from this file.</p>
+<p>To test the system_status_check.py script, do the following:</p>
+<ul>
+<li>Run the script:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/system_status_check.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A typical output is shown in Fig. 68.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/68_system_status.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 68.</strong> Example of a system status report.</figcaption>
+</figure>
+</div>
+</section>
+<section id="testing-the-transfer_data.py-script" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="testing-the-transfer_data.py-script"><span class="header-section-number">11.4</span> Testing the transfer_data.py script</h2>
+<p>The APMS system stores data in three places. Initially, the raw files are saved to the internal micro-SD card of the Raspberry Pi. Every morning at 1AM the new data is transferred to the USB Flash drive and to the cloud. This upload time can be changed in the config file (<code>UPLOAD_HOUR</code>) If there is no internet connection or if the connection fails during data transfer, the <em>last_upload.txt</em> file will not be updated. The <em>last_upload.txt</em> file (located at <em>~/logs/last_upload.txt)</em> is checked by the <code>system_status_check.py</code> script that runs every hour.</p>
+<p>The APMS uses AWS S3 for cloud storage. It is the responsibility of the administrator to manage the storage space available on the USB Flash drive and the internal micro-SD card. Both these parameters can be viewed on the dashboard and an alert is set for when either one reaches 75% capacity.</p>
+<ul>
+<li><p>Ensure there are some data files to transfer and that the APMS has been configured. If you have already completed the testing of the <a href="./10_testing.html#Testing the scales.py script">scales</a> and <a href="./10_testing.html#Testing the rfid.py script">rfid</a> scripts, there should be some test files to transfer.</p></li>
+<li><p>Run the data transfer script:</p></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/transfer_data.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>You should see something similar to the screenshot in Fig. 69.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/69_transfer_data.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 69.</strong> Example of running the transfer_data.py script.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Every time data is successfully uploaded, the file <em>~/logs/last_upload.txt</em> is updated.</p></li>
+<li><p>To verify today’s date and time was added to the bottom of the file after the transfer, run:</p></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/logs/last_upload.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>To check if the data transferred to the USB Flash drive:</p>
+<ul>
+<li><p>Ensure it is mounted. See <a href="./07_raspberry_pi.html#Set up the USB Flash Drive">Set up the USB Flash Drive</a>.</p></li>
+<li><p>List the files in the scale and rfid data directory. For example, to list the files for today, the 15<sup>th</sup> of December 2023. Adapt the lines below for the day the test was conducted.</p></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/flash/2023/20231215/scale/</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/flash/2023/20231215/rfid/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>To check if the data transferred to the cloud:</p>
+<ul>
+<li><p>Open an S3 Client, such as S3 Browser.</p></li>
+<li><p>Check the scale and rfid data directory. For example, the scale and rfid directories for Stony Point, for the 15<sup>th</sup> of December 2023, can be found at:</p>
+<ul>
+<li><p><em>s3://apmsbirdlife/APMS/data/stony_point/2023/20231215/scale/</em></p></li>
+<li><p><em>s3://apmsbirdlife/APMS/data/stony_point/2023/20231215/rfid/</em></p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="testing-the-apms_email.py-script" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="testing-the-apms_email.py-script"><span class="header-section-number">11.5</span> Testing the apms_email.py script</h2>
+<p>The apms_email.py script is a useful script that can be run from the command line to send an email. The script is also capable of sending a file as an attachment. It is important to check this script is working, as it will be used to email the operator in case of a fault.</p>
+<p>The syntax is as follows: <code>python3 apms_email.py "body of email" \[path to attachment file\]</code></p>
+<p>example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/apms_email.py <span class="st">"this is the body of the email"</span> ~/attachment.zip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the script was not successful, examine the email information in the APMS configuration file. See <a href="./07_raspberry_pi.html#Configuring the APMS">Configuring the APMS</a></p>
+</section>
+<section id="testing-the-log.py-script" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="testing-the-log.py-script"><span class="header-section-number">11.6</span> Testing the log.py script</h2>
+<p>The <code>log.py</code> script is crucial and should be used whenever a calibration is done, something unusual is detected with the system, when any structural/firmware/hardware changes are made, or when any general work is carried out. The log script will make a backup of the existing log file whenever a log entry is added. The backed-up log files can be found at: <strong>~/logs/backup</strong></p>
+<p>To use the log script:</p>
+<ul>
+<li><p>SSH into the Pi.</p></li>
+<li><p>Run the log script:</p></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/log.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Follow the onscreen commands to log an entry</li>
+</ul>
+<p>If this is the first log entry, a new log file will be created (~/logs/log.txt)</p>
+<ul>
+<li>View the log file to check the entry was added</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/logs/log.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Edit the log file if a change needs to be made:</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano ~/logs/log.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The log entries are displayed on the Dashboard.</p>
+</section>
+<section id="assigning-an-rfid-tag-to-a-penguin" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="assigning-an-rfid-tag-to-a-penguin"><span class="header-section-number">11.7</span> Assigning an RFID Tag to a Penguin</h2>
+<p>After the scale file is analysed and a list of penguins is generated, RFID tags can be assigned. For each penguin, a “crossing time” is calculated. A penguin crossing is defined as the period between first stepping on the scales until stepping off the scales. A single “crossing time” is calculated as halfway through the penguin crossing.</p>
+<p>For each penguin, the crossing time is compared to the RFID timestamps to check if an RFID tag was picked up close to when the penguin crossed the scales (<code>RFID_TO_PENGUIN_INTERVAL</code> in the config file). By default, <code>RFID_TO_PENGUIN_INTERVAL</code> is set to 60 seconds.</p>
+<p>The location of the RFID antenna is set in the config file for each site. Look for <code>'RFID_LOCATION': 'MIDDLE_ONLY'</code> near the bottom of <code>config.py</code>. The default is <code>'MIDDLE_ONLY'</code>, as this is the configuration for all new sites. This is not the case for older sites (see later in this chapter).</p>
+<p>When <code>'MIDDLE_ONLY'</code> is given as the RFID antenna location, and no other RFID tags were recorded during the penguin’s crossing, the algorithm can assign an RFID tag number to the penguin based on the following two scenarios:</p>
+<ol type="1">
+<li><strong>The tag is picked up during the jump from one scale to the other:</strong> If a tag is picked up within the time period when the penguin is jumping from one scale to the other, the tag number is assigned to that penguin. This is also valid for a group of penguins, as we assume they move in single file over the scales. This is why it is important to ensure they move in single file when setting up the site: to avoid a penguin overtaking another and causing the event to be discarded or, worse, an incorrect RFID tag assigned to a penguin.</li>
+<li><strong>The tag was picked up somewhere during the penguin’s crossing (no other penguins crossing):</strong> Sometimes, due to various circumstances, the antenna will pick up the tag too early, or even after the jump. If, however, we know the antenna is placed in between the scales, and no other penguins were crossing at the same time, we assume the tag belongs to that penguin.</li>
+</ol>
+<p>Below is an example of two penguins heading out to the ocean. They each trigger the BioMark RFID reader as they jump from Scale 1 (colony side) to Scale 2 (ocean side), and thus both have RFID tag numbers assigned to them.</p>
+<p>As a final “basic check”, the algorithm checks for the following parameters set in the config file:</p>
+<ul>
+<li>The tag was picked up close to when a penguin was crossing (<code>RFID_TO_PENGUIN_INTERVAL</code>, default: 60 sec)<br>
+</li>
+<li><strong>AND</strong> the tag was the only one for a certain period of time (<code>RFID_ISOLATION_INTERVAL</code>, default: 5 minutes)<br>
+</li>
+<li><strong>AND</strong> it was the only scale file generated for a certain period of time (<code>SCALE_FILE_ISOLATION_INTERVAL</code>, default: 60 seconds)<br>
+</li>
+<li><strong>AND</strong> there was only one penguin in the above-mentioned scale file.</li>
+</ul>
+</section>
+<section id="error-handling" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="error-handling"><span class="header-section-number">11.8</span> Error Handling</h2>
+<p>Penguins are wild animals and do not always walk nicely over the scales. Numerous situations can give rise to a scale file not being processed. A fault with the scale could also lead to data files that cannot be processed by the algorithm.</p>
+<p>When the algorithm discards a file, it moves it to an “error” directory with the name of the error. These files can then be viewed separately to learn more. The error directories are located in the “processed” folder at:</p>
+<p><code>~\APMS_DATA_PROCESSING\DATA\PROCESSED\[SITE NAME]\[YEAR]\[YYYYMMDD]\[ERROR DIRECTORY]</code></p>
+<p>Note that even though these are called “error” directories, it does not mean there is a hardware fault. For instance, if another animal triggers the scale, the algorithm detects that and moves it to the <code>NO_PENGUINS</code> error directory. Many of these errors are triggered based on parameters set in the config file.</p>
+<p>When a site is not performing as expected, viewing these directories can often give clues as to what is wrong.</p>
+<p>This system can be expanded, with different error states added as required. (Adding a visualization of this to the APMS Dashboard is a recommended future addition.)</p>
+<section id="error-directory-reference" class="level3" data-number="11.8.1">
+<h3 data-number="11.8.1" class="anchored" data-anchor-id="error-directory-reference"><span class="header-section-number">11.8.1</span> Error Directory Reference</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Error Directory</th>
+<th style="text-align: left;">Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>TIMING_JUMP</code></td>
+<td style="text-align: left;">Large time difference between samples in scale file (&gt; 1 second).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>FREQUENCY_ERROR</code></td>
+<td style="text-align: left;">Scale sampling period is not correct. Configured via <code>MAX_AVG_SAMPLING_PERIOD</code> and <code>MIN_AVG_SAMPLING_PERIOD</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NO_SUB_EVENTS</code></td>
+<td style="text-align: left;">No sub-events found in scale file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>UNEQUAL_NUM_PENGUINS</code></td>
+<td style="text-align: left;">Number of penguins determined for Scale 1 differs from Scale 2.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NO_PENGUINS</code></td>
+<td style="text-align: left;">List of penguins for Scale 1 and Scale 2 are both empty.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DIRECTION_ERROR</code></td>
+<td style="text-align: left;">Different number of penguins going out to the ocean than coming back.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>PENGUIN_WEIGHT_ERROR</code></td>
+<td style="text-align: left;">Algorithm could not determine a weight from the provided data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>WEIGHT_TOO_HIGH</code></td>
+<td style="text-align: left;">Weight was recorded as &gt; 3x max penguin weight. Configured via <code>MAX_PENGUIN_WEIGHT</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>OVERLOAD</code></td>
+<td style="text-align: left;">Weight exceeded scale maximum. Configured via <code>SCALE_OVERLOAD</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DUPLICATE_TIMESTAMPS</code></td>
+<td style="text-align: left;">Weights with the exact same timestamp found in scale file.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>LARGE_PENGUIN_WEIGHT_DIFFERENCE</code></td>
+<td style="text-align: left;">Large difference in weight between Scale 1 and Scale 2. Configured via <code>MAX_SCALES_DIFFERENCE_ALLOWED</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>NO_DEAD_WEIGHT_EVENTS</code></td>
+<td style="text-align: left;">No periods found where the scale was reading a stationary dead weight.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>LARGE_DEAD_WEIGHT</code></td>
+<td style="text-align: left;">Weight on empty scale before/after event is higher than allowed. Configured via <code>MAX_DEAD_WEIGHT</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>LARGE_DEAD_WEIGHT_DIFFERENCE</code></td>
+<td style="text-align: left;">Difference between dead weight before hopping on vs.&nbsp;after hopping off is too large. Configured via <code>MAX_DEADWEIGHT_DIFF</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NEGATIVE_JUMP_TIME</code></td>
+<td style="text-align: left;">Calculation of time taken to jump between scales returned a negative result.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>NEGATIVE_TIME_ON_SCALE</code></td>
+<td style="text-align: left;">Calculated time of jumping onto scale occurs <em>after</em> jumping off scale.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="testing-the-onoff-button" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="testing-the-onoff-button"><span class="header-section-number">11.9</span> Testing the ON/OFF Button</h2>
+<p>Ensure the system is ready to be powered down before starting this test. Stop the rfid and scale services.</p>
+<p>To test the ON/OFF button, simply press it. The Raspberry Pi should start shutting down if it was on. The lights will flash and eventually a solid red light will be seen. If the Raspberry Pi was off, it should boot up.</p>
+<p>If it does not work, check the wiring of the button on the Monitor, as well as the configuration of GPIO on the Pi. See <a href="./07_raspberry_pi.html#Configure GPIO3 for Power ON\OFF">Configure GPIO3 for Power ON/OFF</a> for more info. Another way to isolate the fault is to power down the Pi via the Monitor command: <code>CMD:P</code>. If this works, the Pi has been configured properly and the problem lies elsewhere.</p>
+</section>
+<section id="testing-the-update_system_time.py-script" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="testing-the-update_system_time.py-script"><span class="header-section-number">11.10</span> Testing the update_system_time.py script</h2>
+<p>To prevent the system clock updating at random times, the updating of the system clock is handled by the update_system_time.py script. This is to prevent the clock updating while penguins are crossing. Causing timing errors. Files with timing errors will be rejected by the data processing algorithm, so to reduce the chance of this happening, a better time for updating the clock is chosen</p>
+<p>This script runs every Monday, at 12:00. This is set in the crontab (see: <a href="./11_crontab.html#Configure the Crontab">Configure the Crontab</a>). The script checks that no penguins cross the scales for 10 minutes and then updates the time. Even though this is not foolproof, it provides a safer moment in time to update the clock.</p>
+<p>To test, run the <code>update_system_time.py</code> script:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> python3 ~/apms/update_system_time.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The script will run, wait for 10 minutes, and update the system time.</p>
+<p>To view previous times when the clock was updated, view the log file at: <code>~/logs/update_time.log</code></p>
+</section>
+<section id="configure-scripts-as-services" class="level2" data-number="11.11">
+<h2 data-number="11.11" class="anchored" data-anchor-id="configure-scripts-as-services"><span class="header-section-number">11.11</span> Configure Scripts as Services</h2>
+<p>For a new system, the rfid and scales scripts need to be configured to run in the background, as processes.</p>
+<p>There are 2 main service files: scales.service and rfid.service. The service files are located at <code>~/apms/services/</code>. To perform these operations, ensure you SSH in locally, not via Tailscale.</p>
+<p>Copy the 2 service files to the appropriate directory:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp ~/apms/services/<span class="pp">*</span>.service /etc/systemd/system/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Start and enable each service:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> start scales</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable scales</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> start rfid</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check that the services are active by running:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status scales</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Reboot the Pi:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Wait a minute and try to SSH in remotely (via the internet). If this works, you have successfully configured tmate as a service. SSH into the Pi, either locally or via tmate and check that the scales and rfid services are running.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status scales</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09_biomark.html" class="pagination-link" aria-label="BioMark Reader">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11_crontab.html" class="pagination-link" aria-label="Configure the Crontab">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Configure the Crontab</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

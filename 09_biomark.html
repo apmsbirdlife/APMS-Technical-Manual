@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; BioMark Reader – Automated Penguin Monitoring System (APMS)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10_testing.html" rel="next">
+<link href="./08_arduino.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-fd3b02168e988177e8c40aa51adbf8e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_aws_s3.html">Software &amp; Configuration</a></li><li class="breadcrumb-item"><a href="./09_biomark.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automated Penguin Monitoring System (APMS)</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/apmsbirdlife/apms-manual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hardware</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_solar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Solar Power Supply</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_internet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Internet and WiFi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_scales_platform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scales Platform</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_apms_monitor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_apms_main_unit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">APMS Main Unit</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Software &amp; Configuration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_aws_s3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AWS S3 Cloud Storage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_raspberry_pi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raspberry Pi Operating System</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_arduino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming the Arduino Monitor via the Pi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_biomark.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_crontab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Configure the Crontab</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deployment &amp; Operation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_commissioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Commissioning a New System in the Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_data_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">APMS Data Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_maintenance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Checking the System for Accuracy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">10.1</span> Overview</a></li>
+  <li><a href="#connect-to-biomark-via-device-manager" id="toc-connect-to-biomark-via-device-manager" class="nav-link" data-scroll-target="#connect-to-biomark-via-device-manager"><span class="header-section-number">10.2</span> Connect to BioMark via Device Manager</a></li>
+  <li><a href="#connect-to-biomark-via-raspberry-pi-terminal" id="toc-connect-to-biomark-via-raspberry-pi-terminal" class="nav-link" data-scroll-target="#connect-to-biomark-via-raspberry-pi-terminal"><span class="header-section-number">10.3</span> Connect to BioMark via Raspberry Pi Terminal</a></li>
+  <li><a href="#configuring-the-biomark-reader" id="toc-configuring-the-biomark-reader" class="nav-link" data-scroll-target="#configuring-the-biomark-reader"><span class="header-section-number">10.4</span> Configuring the BioMark Reader</a></li>
+  <li><a href="#making-a-biomark-antenna" id="toc-making-a-biomark-antenna" class="nav-link" data-scroll-target="#making-a-biomark-antenna"><span class="header-section-number">10.5</span> Making a BioMark Antenna</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_aws_s3.html">Software &amp; Configuration</a></li><li class="breadcrumb-item"><a href="./09_biomark.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The BioMark RFID Reader is a device used to record penguins that have been PIT-tagged. The device outputs the tag number via a serial-to-USB converter, accessible via a mini-USB port on the device.</p>
+<p>The reader has many different configurations and the latest BioMark manual should always be followed.</p>
+<section id="overview" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">10.1</span> Overview</h2>
+<p>Below is some information of the currently used model, for reference. The Raspberry Pi reads the tags via a USB cable, plugged into the front of the APMS Main Unit.</p>
+<p>For the reader to operate, it needs 24V power and an RFID antenna connected. For the pinout, see Fig. 55.</p>
+<p>To make an antenna, see <a href="./09_biomark.html#Making a BioMark Antenna">Making a BioMark Antenna</a>. As of 2026, we have been using antenna’s custom made by BioMark to fit perfectly in between our scales.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/55_biomark.jpeg" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 55.</strong> BioMark pinout.</figcaption>
+</figure>
+</div>
+<p>The BioMark reader can be configured either via the BioMark Software (Device Manager) or via the Raspberry Pi terminal. Both methods described here use a USB-A to mini-USB cable to connect to the Reader.</p>
+<p>It is also possible to connect to reader via a RS232 or Bluetooth connection. Refer to the BioMark documentation for more information if this is required.</p>
+<p>Application Firmware Version v 1.7.1</p>
+</section>
+<section id="connect-to-biomark-via-device-manager" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="connect-to-biomark-via-device-manager"><span class="header-section-number">10.2</span> Connect to BioMark via Device Manager</h2>
+<ul>
+<li><p>BioMark Device Manager, can be installed on a Windows PC to configure the system. Currently version 1.2.15.1 is being used and can be found on the S3 account or downloaded here:</p>
+<ul>
+<li><a href="_book/files/DeviceManagerStandalone_1.2.15.1.zip">Download Device Manager 1.2.15.1.zip</a></li>
+</ul></li>
+<li><p>The Windows 10 and Windows 11 driver for the serial converter (<em>CP210x_Universal_Windows_Driver_11.3.0</em>), used by the BioMark Reader, can be found on the S3 account or downloaded here:</p>
+<ul>
+<li><a href="_book/files/CP210x_Universal_Windows_Driver_11.3.0.zip">Download Windows Driver</a></li>
+</ul></li>
+<li><p>Please refer to the IS1001 Reader User Manual and the Device Manager Software Manual for instructions on how to connect and configure the reader. Both can be found at:</p>
+<ul>
+<li><p><a href="_book/files/IS1001_Reader_User_Manual_Rev_11.pdf">Download IS1001 Reader User Manual</a></p></li>
+<li><p><a href="_book/files/Device-Manager-Software-Manual-v1.1.pdf">Download Device Software Manual</a></p></li>
+</ul></li>
+<li><p>Refer to the section <a href="./09_biomark.html#Configuring the BioMark Reader">Configuring the BioMark Reader</a> for the required settings.</p></li>
+</ul>
+</section>
+<section id="connect-to-biomark-via-raspberry-pi-terminal" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="connect-to-biomark-via-raspberry-pi-terminal"><span class="header-section-number">10.3</span> Connect to BioMark via Raspberry Pi Terminal</h2>
+<ul>
+<li><p>To connect to the BioMark Reader from the Raspberry Pi terminal, ensure that both the BioMark Reader and Raspberry Pi are powered up.</p></li>
+<li><p>SSH into the Pi</p></li>
+<li><p>Check that the RFID service is not running in the background and stop the service if it is:</p>
+<ul>
+<li>Check with:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>If active, stop the service:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop rfid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Connect the USB cable to the mini-USB port on the BioMark reader and to any of the USB ports of the Raspberry Pi. If an APMS Main Unit has been built, the front USB port can be used.</p></li>
+<li><p>After the USB cable is plugged into the Pi, the BioMark serial converter will be assigned to a device file. This will either be “ttyUSB0”, “ttyUSB1” or “ttyUSB2”, depending on what other USB devices are plugged in. To determine which device file to use, run the rfid script:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> ~/apms/rfid.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Find the device file name as indicated in Fig. 56 below.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/56_rfid_py.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 56.</strong> Finding the device name using the Python RFID script.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Close the script: Hold <strong>CTRL</strong> and press <strong>c</strong></p></li>
+<li><p>To connect to the BioMark reader from the Pi, a program called Minicom will be used. This was installed when the Raspberry Pi was set up. See <a href="./07_raspberry_pi.html#Install applications and libraries">Install applications and libraries</a>.</p>
+<ul>
+<li>Run:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">minicom</span> <span class="at">-D</span> /dev/[device file]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>-   Example: `minicom -D /dev/ttyUSB0`</code></pre>
+<ul>
+<li><p>Once inside minicom, disable “Hardware Flow Control”:</p></li>
+<li><p>Hold <strong>CTRL</strong> and press <strong>a</strong> - Then press <strong>o</strong> to bring up the options menu, go to “<strong>Serial port setup</strong>” and press Enter. See screenshot below</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/57_hardwareflowcontrol.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 57.</strong> Turning off ‘Hardware Flow Control’.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Ensure “Hardware Flow Control” is off (It must have “no” next to it) - see Fig. 58.</p>
+<ul>
+<li>If “Hardware Flow Control” is on, turn it off by pressing “<strong>f</strong>”.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/58_hardwareflowcontrol.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 58.</strong> Hardware Flow Control disabled.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Press <strong>Enter</strong> to save and return to the Options menu.</p></li>
+<li><p>Press <strong>Esc</strong> to exit the Options menu</p></li>
+<li><p>Type “<strong>rfs</strong>” and press <strong>Enter</strong>. The current configuration should be printed to the screen.</p></li>
+<li><p>You will not see the letters “<strong>rfs</strong>” until you press <strong>Enter</strong>.</p></li>
+<li><p>An Example for Robben Island can be seen in Fig. 59.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/59_rfs.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 59.</strong> RFS system configuration for Robben Island.</figcaption>
+</figure>
+</div>
+<ul>
+<li>If you see the configuration page as above, it means you have successfully connected to the BioMark Reader and can now send/receive commands in the console.</li>
+</ul>
+</section>
+<section id="configuring-the-biomark-reader" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="configuring-the-biomark-reader"><span class="header-section-number">10.4</span> Configuring the BioMark Reader</h2>
+<p>After successfully connecting to the BioMark Reader as discussed above, the system can be configured.</p>
+<ul>
+<li><p>If using the “Device Manager” software, please refer the BioMark documentation and use the settings provided below.</p></li>
+<li><p>If connecting via a Raspberry Pi terminal, use the commands below to set the BioMark parameters.</p></li>
+<li><p><strong>Before executing any commands, it is always a good idea to run “rfs” and check that a status report is received. This confirms the reader is working properly and clears the serial buffer of any garbage characters that may be present.</strong></p></li>
+</ul>
+<p>The settings given below are used for a BioMark Reader connected to an APMS.</p>
+<ul>
+<li>If connecting to the BioMark Reader via the Raspberry Pi terminal (minicom), the commands given in the table below can be used to configure the system. Keep the default for all other settings. Compare the values in the table with the values obtained from executing “rfs”, and change the settings as needed.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 33%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Setting</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Operation Mode</td>
+<td style="text-align: left;">“Scan”</td>
+<td style="text-align: left;"><strong>ROM1</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Network Mode</td>
+<td style="text-align: left;">IS1001 Standalone</td>
+<td style="text-align: left;"><strong>RNMS</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exciter Sync. Mode</td>
+<td style="text-align: left;">Standalone</td>
+<td style="text-align: left;"><strong>RSM0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beeper</td>
+<td style="text-align: left;">Disabled</td>
+<td style="text-align: left;"><strong>RBS0</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tag Display Format</td>
+<td style="text-align: left;">DEC</td>
+<td style="text-align: left;"><strong>RDFD</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exciter Voltage Level</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><strong>AVE3</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dynamic Tuning</td>
+<td style="text-align: left;">Enabled</td>
+<td style="text-align: left;"><strong>ADT1</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tags To Local Port</td>
+<td style="text-align: left;">Enabled</td>
+<td style="text-align: left;"><strong>CTL1</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Remote Port Protocol</td>
+<td style="text-align: left;">ASCII</td>
+<td style="text-align: left;"><strong>CPRA</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fastag Detection</td>
+<td style="text-align: left;">Enabled</td>
+<td style="text-align: left;"><strong>DFH1</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detection Counter Enabled</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><strong>DCS1</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unique Mode</td>
+<td style="text-align: left;">Delay</td>
+<td style="text-align: left;"><strong>DUMD</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unique Delay</td>
+<td style="text-align: left;">1200 sec</td>
+<td style="text-align: left;"><strong>DUD1200</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Auto VTT Delay</td>
+<td style="text-align: left;">360 min</td>
+<td style="text-align: left;"><strong>DTD360</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>After changing all the necessary parameters, run “rfs” again to confirm all the settings are correct.</p></li>
+<li><p>Take a test tag and move it close to the antenna. The tag should be picked up and displayed in minicom. If so, you have successfully configured the BioMark reader.</p></li>
+<li><p>Exit minicom</p>
+<ul>
+<li>Hold <strong>CTRL</strong> and press <strong>a</strong> - Then release keys - Then press ‘<strong>q</strong>’ and then <strong>Enter</strong> to exit.</li>
+</ul></li>
+</ul>
+</section>
+<section id="making-a-biomark-antenna" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="making-a-biomark-antenna"><span class="header-section-number">10.5</span> Making a BioMark Antenna</h2>
+<p>An experimental antenna has been made with some success. We no longer use these antennas and all systems have been upgraded with a tailormade antenna custom made for our system by BioMark. These custom made antennas have a better detection range, are easier to tune, and won’t lose resonance if the cables are moved. To test a new antenna, first ensure a connection to the BioMark Reader has been made, as discussed previously.</p>
+<p>As the wire being used might be slightly different, the basic method will be described below. The antennas at Dyer Island and Robben Island were made using the same 3-core wire as used to run power from the solar supply to the APMS. The main idea behind making an antenna is to make multiple loops and cutting it down to the correct length to achieve resonance.</p>
+<ul>
+<li>Start with a length of wire, L, strip both ends and connect the wires as shown in Fig. 60.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/60_antenna.png" class="img-fluid figure-img" width="700"></p>
+<figcaption><strong>Figure 60.</strong> Cable layout when making an antenna.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>The length to start at is a bit of a guess. The three core wire used for the latest antennas ended up being approximately 15-16 m. Thicker wires or more loops will result in a shorter length.</p></li>
+<li><p>Add a “fly-lead” of approximately 1m to join the antenna and the BioMark reader.</p></li>
+<li><p>During the test, lay the wires parallel, 40-60 cm apart, and connect the antenna to the BioMark reader. See Fig. 61 as an example.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/61_antenna.jpeg" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 61.</strong> Laying out the 3-core cable to build a RFID antenna.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Once the antenna is connected and you have logged into the BioMark via minicom (or the Device Manager software), the antenna can be tested. In the BioMark console, send the command “aft”. This is “Antenna Full Tune”. The reader will try to tune the antenna by adding capacitance and give a final “caps” value between 0 and 1023. As the antenna cable is too long at the start, the number should be low.</p></li>
+<li><p>Cut a piece of the cable off, connect in the same fashion and test again. The number might remain the same until the antenna starts getting close to resonance.</p></li>
+<li><p>Repeat this process until a caps value of approximately 512 is reached.</p></li>
+<li><p>Be careful not to cut too much off, as the number starts growing rapidly once it gets close to resonance.</p></li>
+<li><p>At this stage, the antenna current should also have increase. (above 3 A)</p></li>
+<li><p>Test the range of the new antenna with a test tag. Use the same test procedure when placing an antenna in the field.</p></li>
+<li><p>Solder the wires and insulate using heat shrink to prevent moisture from corroding the joints</p></li>
+</ul>
+<p>Note, when testing in the field, the caps number will vary wildly as the antenna shape is changed. The important thing is that the antenna tunes, and a tag is picked up from a decent distance. A screenshot of an antenna tested in the field (caps = 688) can be seen in Fig. 62.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/62_antenna.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 62.</strong> Antenna tuning example.</figcaption>
+</figure>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08_arduino.html" class="pagination-link" aria-label="Programming the Arduino Monitor via the Pi">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming the Arduino Monitor via the Pi</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10_testing.html" class="pagination-link" aria-label="Testing Each Script">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

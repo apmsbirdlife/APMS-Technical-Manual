@@ -1,0 +1,1043 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Automated Penguin Monitoring System (APMS)",
+    "section": "",
+    "text": "Introduction\nThis manual provides a comprehensive, step-by-step guide to the installation, configuration, and operation of the Automated Penguin Monitoring System (APMS). Developed by BirdLife South Africa, the APMS supports long-term monitoring of African penguin (Spheniscus demersus) colonies by tracking individual birds in the wild without the stress of physical handling.\nUtilizing integrated RFID detection and weighbridge technology, the system automatically records a penguin’s identity and body mass as it passes over the weighbridge This data is transmitted to cloud storage and processed to generate vital foraging trip metrics and body condition indices—critical data points that directly support ecosystem-based fisheries management.\nThe APMS comprises both hardware and software components. This document is structured to guide you through building a complete system from the ground up:",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-manual",
+    "href": "index.html#how-to-use-this-manual",
+    "title": "Automated Penguin Monitoring System (APMS)",
+    "section": "How to Use This Manual",
+    "text": "How to Use This Manual\nThis manual is organised into three parts:\n\nHardware — Construction and installation of all physical components\nSoftware & Configuration — Operating system setup, firmware, and scripts\nDeployment & Operation — Field commissioning, data processing, and maintenance\n\nUse the left sidebar to navigate between chapters. All chapters are searchable using the search bar at the top of the page.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#contributing",
+    "href": "index.html#contributing",
+    "title": "Automated Penguin Monitoring System (APMS)",
+    "section": "Contributing",
+    "text": "Contributing\nThis manual is maintained as an open-source document on GitHub. To suggest corrections or additions, use the Edit this page link at the top right of any page, or open an issue on the repository.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#authors-acknowledgements",
+    "href": "index.html#authors-acknowledgements",
+    "title": "Automated Penguin Monitoring System (APMS)",
+    "section": "Authors & Acknowledgements",
+    "text": "Authors & Acknowledgements\nManual written by Pierre Retief for BirdLife South Africa.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "001_overview.html",
+    "href": "001_overview.html",
+    "title": "1  Overview",
+    "section": "",
+    "text": "To build the APMS, some basic tools are required. A full list can be found at:\n               s3://apmsbirdlife /APMS /Documents/BirdLife_toolkit.xlsx\nSee the section AWS S3 CLOUD STORAGE for more information regarding accessing the cloud. Please add to the tool list as/when needed. In this manual, commands to be executed in the command line will either start with $ and be in bold and italics (for example: $ sudo apt update) or appear in a code block as below.\nsudo apt update\nThe APMS consists of the following key components:\n\n24V Solar Power Supply\n4G Router\nTwo scales, mounted on a platform.\nAPMS Main Unit\nBioMark RFID Reader\n\nThe 24V Solar Power Supply provides power for the APMS Main Unit, scales, 4G Router and BioMark RFID Reader. This is site dependent.\n\n\n\nFigure 1. Solar panel on Bird Island, Algoa Bay.\n\n\nThe primary internet connection is provided via a 4G router. Depending on the cellular signal strength at the site, either an indoor or outdoor router is deployed. We prefer utilizing Teltonika RUT906 or RUT956 routers for two main reasons:\n\nSignal Optimization: They support external antenna cables, allowing the antenna to be mounted higher for improved cellular reception.\nDirect Scale Integration: They feature an RS-485 port, enabling a direct connection to the scale indicators. This allows for remote control and maintenance, including remote taring and scale calibration.\n\n\n\n\n\n\n\nFigure 2.1. Teltonika RUT906\n\n\n\n\n\n\n\nFigure 2.2. Outdoor router\n\n\n\n\n\n\n\nFigure 2.3. Indoor router\n\n\n\n\n\nTwo scales are used to increase accuracy and to indicate whether a penguin is heading out to sea, or coming back from the ocean. These scales are mounted on a platform.\n\n\n\nFigure 3. Scale platform on Dyer Island.\n\n\nAll the electronics are housed inside an IP67 rated enclosure, referred to as the APMS Main Unit. The section “APMS Main Unit” describes how to build this box.\n\n\n\nFigure 4. APMS main unit.\n\n\nThe BioMark reader is an external device, used for picking up RFID pit tags. The APMS connects via a USB serial interface, internal to the reader. See the “BioMark” section for more information.\n\n\n\nFigure 5. BioMark reader.\n\n\nThe data is downloaded daily, processed, and displayed on a Grafana Dashboard. This is handled by the APMS Server off-site. See *** for more information regarding the Dashboard.\n\n\n\nFigure 6. APMS dashboard.",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview</span>"
+    ]
+  },
+  {
+    "objectID": "01_solar.html",
+    "href": "01_solar.html",
+    "title": "2  Solar Power Supply",
+    "section": "",
+    "text": "2.1 Basic System\nEach site is different and requires planning to ensure components are correctly sized. A basic system and the larger system at Bird Island are discussed below.\nA basic solar system is shown below and can be used for a site that is running 1 BioMark RFID reader, an APMS Main Unit and a 4G Router. This is the setup for Dassen Island, Robben Island, Stony Point and Dyer Island. Face the solar panels North and tilt at an angle of approximately 45 degrees. An up-to date parts list can be found at s3://apmsbirdlife /APMS/Documents/solar_parts_list.xlsx",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Solar Power Supply</span>"
+    ]
+  },
+  {
+    "objectID": "01_solar.html#basic-system",
+    "href": "01_solar.html#basic-system",
+    "title": "2  Solar Power Supply",
+    "section": "",
+    "text": "Figure 7. A diagram of a solar power system.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Solar Power Supply</span>"
+    ]
+  },
+  {
+    "objectID": "01_solar.html#bird-island-solar-system",
+    "href": "01_solar.html#bird-island-solar-system",
+    "title": "2  Solar Power Supply",
+    "section": "2.2 Bird Island Solar System",
+    "text": "2.2 Bird Island Solar System\nThe system on Bird Island is slightly larger as it is powering two BioMark readers and has provision for a future live feed camera. See Fig. 8 for a wiring diagram.\n\n\n\nFigure 8. A diagram of the solar power supply at Bird Island, Algoa Bay.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Solar Power Supply</span>"
+    ]
+  },
+  {
+    "objectID": "02_internet.html",
+    "href": "02_internet.html",
+    "title": "3  Internet and WiFi",
+    "section": "",
+    "text": "3.1 Outdoor Router\nTo monitor the site and upload data daily, a reliable internet connection is needed. This is accomplished by using a 4G Router. Wi-Fi has been used and has proven very reliable. If ever needed in future, a LAN cable can be used instead.\nCurrently, Vodacom seems to be the strongest and most stable provider at the different sites. The Vodacom app also makes it easy to load and keep track of data and SMS bundles. Remember to copy down the IMEI number from the SIM card before installing it into the router, as this number is needed for the app.\nWhen installing the APMS on site, take both a Vodacom and MTN SIM card, and check which one has a better signal. Be sure to test the SIM cards in a phone, and make sure they can access the internet. https://www.speedtest.net/ can be used to test internet connectivity.\nDepending on the site, an indoor router or outdoor router can be used, but we recommend using one of the Teltonika routers which has more features for maintenance and management and allows dual SIM cards.\nTo prepare either router for use with the APMS:\nFor more remote sites, with weaker cell reception, such as Bird and Robben Island, an outdoor router is used. The router is purchased from https://www.outdoorrouter.com/. Previously used model is: UK CAT6 Outdoor 4G Router (EZR33L-U4).\nWhen ordering, ask to have a 5m DC Cable included, as we do not use 48V POE. The cable comes with a DC connector that plugs into the circuit board. (It needs to be bent in a slightly awkward way to fit).\nThe router runs directly on the 24V Solar Power supply. A circuit breaker for the router should be installed and will also act as a power switch, as there is no easy way to power cycle the router.\nThe contact person is Tammy He (tammy@outdoorrouter.com)\nMount the router on a pole or to a wall, using the hardware supplied with the router.\nNote: Check the supplied hardware and ensure that the correct bracket is on hand before leaving for the site. Make sure to take extra nuts, bolts and screws and test fit them to the bracket. Use stainless steel for all fasteners. If drilling in to hard concrete, take an impact drill with, and have extra Fischer plugs on hand.\nAfter installation, ensure the unit is closed properly and all 4 antennas are screwed on tightly.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Internet and WiFi</span>"
+    ]
+  },
+  {
+    "objectID": "02_internet.html#outdoor-router",
+    "href": "02_internet.html#outdoor-router",
+    "title": "3  Internet and WiFi",
+    "section": "",
+    "text": "Figure 9. Outdoor router.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Internet and WiFi</span>"
+    ]
+  },
+  {
+    "objectID": "02_internet.html#indoor-router",
+    "href": "02_internet.html#indoor-router",
+    "title": "3  Internet and WiFi",
+    "section": "3.2 Indoor Router",
+    "text": "3.2 Indoor Router\nIf the cell signal is strong enough, a cheaper indoor router can be used. The router currently used is the DLINK DWR-M920, purchased from Takealot. It runs on 12V DC and has external antennas for the Wi-Fi, as well as for the cell signal. Cut off the 12V power supply and replace it with the 12V DC plug (RS: 138-9405). This connector will plug into the APMS Main Unit (12V DC IN) when the router is to be used.\n\n\n\nFigure 10. Indoor router.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Internet and WiFi</span>"
+    ]
+  },
+  {
+    "objectID": "02_internet.html#teltonika-router",
+    "href": "02_internet.html#teltonika-router",
+    "title": "3  Internet and WiFi",
+    "section": "3.3 Teltonika Router",
+    "text": "3.3 Teltonika Router\n\n3.3.1 Description\nThe Teltonika RUT906 and RUT956 are industrial-grade 4G LTE routers designed for robust connectivity in demanding remote environments. Unlike standard commercial routers, they feature external cellular antenna ports that allow users to connect a SMA cable, enabling a antenna to be mounted much higher on a mast or structure to maximize signal strength in poor coverage areas. These routers feature a built-in RS-485 serial interface. This allows for a direct data connection to digital scale indicators — such as the modern General Measure GMT-X1 weight transmitter — giving operators the ability to remotely calibrate, tare, and configure weighing systems from anywhere in the world without requiring a physical on-site visit.\nAdditional Advantages of the RUT906/RUT956:\n\nDual-SIM Failover: They support two SIM cards from different network providers, automatically switching carriers if the primary network drops to guarantee continuous cloud data transmission.\nRuggedized Design: Housed in a durable aluminum casing, they are built to withstand extreme temperatures, vibrations, and harsh environmental conditions typical of field deployments.\nRich I/O and Protocol Support: Beyond RS-485, they include digital/analog inputs and outputs and natively support industrial communication protocols like Modbus, MQTT, and NTRIP.\nLow Power Consumption: Optimized for efficiency, making them ideal for integration into off-grid, solar-powered battery enclosures.\nAdvanced Remote Management (RMS): Teltonika’s Remote Management System allows for secure VPN access, batch firmware updates, and real-time diagnostics of the router and attached devices completely over-the-air.\n\n\n\n\nFigure 11. Teltonika RUT906 router.\n\n\n\n\n3.3.2 Installation\nThese routers can take a range of power supplies, from 9 – 30 VDC, and have reverse polarity protection. Cut off the 12V power supply (plug) and replace it with the 12V DC plug (RS Components: 138-9405). This connector will plug into the APMS Main Unit (12V DC IN) when the router is to be used.\nThe manuals for these devices can be found here:\n\nRUT906 Manual\nRUT956 Manual\n\nNB. These routers are not weather protected and has to be kept inside the APMS box or some other weather-sealed enclosure.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Internet and WiFi</span>"
+    ]
+  },
+  {
+    "objectID": "03_scales_platform.html",
+    "href": "03_scales_platform.html",
+    "title": "4  Scales Platform",
+    "section": "",
+    "text": "4.1 Overview\nThe Scales Platform consists of two scales, mounted on a wooden base, with a RFID Antenna running through the middle. There are two “cable guides” to guide the scale cables and keep it in place.\nThe scales are manufactured by R&D WEIGHING (PTY) LTD (accounts@rdweighing.co.za).\nDepending on the distance between the scales and the Main Unit, extra scale cable might be needed and you will have to specify this in your order. The company can also solder the extended cable if needed. 5kg and 1kg calibrated weights are also purchased from R&D Weighing and are used for scale calibration. Please find a suitable enclosure for the weights and keep them indoors to prevent corrosion or damage. A parts list can be seen in TABLE 1 - SCALES PLATFORM PARTS LIST and the drawing can be seen in FIGURE 12 - DRAWING OF SCALES PLATFORM.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Scales Platform</span>"
+    ]
+  },
+  {
+    "objectID": "03_scales_platform.html#overview",
+    "href": "03_scales_platform.html#overview",
+    "title": "4  Scales Platform",
+    "section": "",
+    "text": "Table 4.1: Scales platform parts list\n\n\n\n\n\nName\nQuantity\nDescription\nWhere to buy / Part Number\n\n\n\n\nScale\n2\nStainless Steel scale with B6N load cell\nR&D Weighing\n\n\nIndicator\n2\n(General measure) GMT-X1 Or the Laumas TLB485\nR&D Weighing\n\n\n1 kg weight\n1\nUsed for calibration\nR&D Weighing\n\n\n5 kg weight\n1\nUsed for calibration\nR&D Weighing\n\n\nScale Cable\nas needed\nExtra scale cable (optional)\nR&D Weighing\n\n\nBase board\n1\nBase of platform. Marine Ply 1200x500x15mm\nTimBuild Woodstock\n\n\nCable guide\n2\nTo guide scale cable, wood\nHardware store – Builders Warehouse\n\n\nRFID block\n1\nRFID mounting block to hold antenna, wood\nHardware store – Builders Warehouse\n\n\n6 pin plug\n2\nPlug to connect scale to Main Unit\nRS: 111-5758\n\n\nCanvas\n±4m\nTo cover everything. Olive/Dark Green\nLudal Interior",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Scales Platform</span>"
+    ]
+  },
+  {
+    "objectID": "03_scales_platform.html#scales",
+    "href": "03_scales_platform.html#scales",
+    "title": "4  Scales Platform",
+    "section": "4.2 Scales",
+    "text": "4.2 Scales\nThe scales consist of a stainless-steel frame with a type B6N loadcell mounted underneath. A pan rests on top of the frame to provide a flat surface for the penguins to walk over. Note that the scales at Stony Point and Bird Island have older frames that are 90 degrees with respect to the new scales. If the scales need to be replaced in future, new holes can be drilled in the platform. Usually, however, only the load cell needs to be replaced and thus the existing frame can be re-used.\n\n\n\nFigure 13. Scale frames with monuted loadcell and scale pans.\n\n\nThe initial systems (Stony Point and Bird Island) used 50kg load cells. For the two newer systems (Dyer Island and Robben Island), a more sensitive 30kg load cell is used. However, it’s recommended to use a load cell with a higher load such as the 100kg load cell so that if a person accidentally steps on it in the field it won’t break (unless that person is 150% of the load cell’s weight rating, i.e., 150kg). The difference in sensitivity between 30, 50 and 100kg load cells are not significant.\n\n\n\nFigure 14. Drawing of scales platform.\n\n\n\n\n\nFigure 15. Load cell mounted on a scale paltform.\n\n\nNote: The maximum safe loading weight of the load cell is 150%. Thus, for a 50kg load cell, the max load is 75kg, for the 30kg load cell, the max load is 45kg, and for a 100kg load cell, the max load is 150kg.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Scales Platform</span>"
+    ]
+  },
+  {
+    "objectID": "03_scales_platform.html#building-the-platform",
+    "href": "03_scales_platform.html#building-the-platform",
+    "title": "4  Scales Platform",
+    "section": "4.3 Building the Platform",
+    "text": "4.3 Building the Platform\nStart by gathering all the required parts for the platform.\n\n\n\nFigure 16. Scale platform covered in canvas.\n\n\nTake note of the following while building the platform:\n\nLabel the scales and indicators immediately upon removing them from their packaging, as the scales and indicators are tied to each other.\nCover the wooden base and scales with canvas. The canvas can be glued to the wood and scales using Contact adhesive. Silicon has also been used. The cable guides and RFID block can be screwed down from underneath.\nThe scales are mounted using the threaded holes where the feet used to screw in.\nMount the scales to the base using 4 ***mm bolts per scale.\nScale 1 is positioned on the colony side, and Scale 2 is positioned on the ocean side. To remember this layout, consider a chick’s natural life cycle: a penguin is hatched on land (colony side) and will walk over Scale 1 first when heading out to sea for its very first foraging trip.\nThe distance between the pans of the scales is set to 26 cm.\nIt is important to ensure the frame of the scale is flush with the base.\nCover the cable guides with canvas and secure to the base. Feed the scale cables through the cable guide. See FIGURE 15 - SCALES PLATFORM WITHOUT RFID BLOCK\nCover the RFID Mounting Block with canvas and secure it between the scales. Drill holes to allow zip ties to be used to clamp the RFID antenna to the block.\nSolder a 6-pin socket (RS Components part number: 111-5764) to the end of each scale cable. This will plug into the 6-pin connector on the APMS Main Unit.\nAfter the Scale Indicators have been installed and configured, test and calibrate the platform on a solid, level floor. This will confirm the scales are 100% functional before taking it to the field. See INSTALLING THE SCALE INDICATORS and ROUTINE CALIBRATION OF SCALES for more information.\n\n\n\n\nFigure 17. A completed scales platform with an RFID antenna running through the middle of the two scales.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Scales Platform</span>"
+    ]
+  },
+  {
+    "objectID": "04_apms_monitor.html",
+    "href": "04_apms_monitor.html",
+    "title": "5  APMS Monitor",
+    "section": "",
+    "text": "A separate circuit, called the APMS Arduino Monitor, or just “Monitor” for short, is used to constantly check different system parameters, and gives the administrator the ability to diagnose system faults remotely.\nAll the components needed to build the Monitor are listed in Table 2 - APMS Monitor Parts List. A website or RS part number is given, accurate at time of writing this manual.\nThe circuit diagram can be seen in FIGURE 17 - APMS ARDUINO MONITOR CIRCUIT DIAGRAM\n\nTable 2 - APMS Monitor Parts List\n\n\n\n\n\n\n\n\n\nName\nDesignation\nQuantity per board\nRS Part Number\nNotes\n\n\n\n\nStrip board 100 x 160 mm\n\n1\n206-5879\nRS Components\n\n\nFuse holder\nFH1\n1\n765-2973\nMin Order Quantity: 5\n\n\n3A fuse\nF1\n1\n668-5963\nMin Order Quantity: 10\n\n\nMonitor Mounting Plate\n\n1\n\n3D Printed. Design files on AWS S3\n\n\nPCB Screw Terminal\nJ1, J2\n2\n193-0564\nMin Order Quantity: 5\n\n\nSIM800L-V2 5V\nU2\n1\n\nhttps://www.robotics.org.za/SIM800L-V2\n\n\n1uF Capacitor\nC1\n1\n538-1578\nMin Order Quantity: 5\n\n\n33pF Capacitor\nC2\n1\n194-0457\nMin Order Quantity: 10\n\n\n10pF Capacitor\nC3\n1\n194-0443\nMin Order Quantity: 10\n\n\n1000uF Capacitor\nC4\n1\n711-1150\nMin Order Quantity: 10\n\n\n5.1V Zener\nD1\n1\n544-3597\nMin Order Quantity: 20\n\n\n10uF 50V Capacitor\nC5\n1\n811-8373\nMin Order Quantity: 5\n\n\nK7805 Voltage Regulator 500mA\nU3\n1\n757-7239 144-6290\nRS Components\n\n\n22uF Capacitor\nC6\n1\n190-2953\nMin Order Quantity: 10\n\n\nArduino Nano Every\nU4\n1\n192-7586\nRS Components\n\n\nPush Button\nSW1\n1\n135-9445\nMin Order Quantity: 20\n\n\n10k Trimpot\nRV1\n1\n769-2202\nRS Components\n\n\nTemperature Sensor\nU5\n1\n811-5595\nMin Order Quantity: 10\n\n\nNPN Transistor KSP2222ABU\nQ1, Q2\n2\n739-0385\nMin Order Quantity: 10\n\n\nResistor 22k\nR9\n1\n135-954\nMin Order Quantity: 10\n\n\nResistor 10k\nR4, R10\n2\n\nhttps://www.prototypediy.co.za/\n\n\nResistor 4k7\nR8\n1\n\nhttps://www.prototypediy.co.za/\n\n\nResistor 27k\nR3, R6\n2\n\nhttps://www.prototypediy.co.za/\n\n\nResistor 5k6\nR5, R7\n2\n\nhttps://www.prototypediy.co.za/\n\n\nResistor 6k8\nR2\n1\n\nhttps://www.prototypediy.co.za/\n\n\nResistor 1k2\nR1, R11\n2\n\nhttps://www.prototypediy.co.za/\n\n\nLM2596 DC-DC Converter\nU1\n1\n\nwww.netram.co.za\n\n\nLogic Level Converter\nU6\n1\n\nhttps://www.netram.co.za\n\n\n40 Pin Header Socket for Pi\nJ3\n1\n674-1252\nRS Components\n\n\n36 Pin Male Headers\n\n5\n547-3166\nRS Components\n\n\n30 Pin Female Header\n\n2\n767-9842\nRS Components\n\n\nSchottky Diode\nD2\n1\n168-7175\ncomes in pack of 10\n\n\n40 Pin Ribbon Cable\n\n1\n\nwww.pishop.co.za\n\n\nBuzzer\nBZ1\n1\n771-6957\ncomes in pack of 5\n\n\nM2.5 x 8mm machine screws\n\n4\n914-1567\nRS Components\n\n\n\n\n\n\nFigure 18. Circuit diagram of the APMS Monitor (version 1). In version 2 the SIM800L is replaced by a SIM800L-V2 module which no longer needs the 4V conversion.\n\n\n\n5.0.1 Overview\nThe Monitor uses a separate SIM card and can thus be used to fault find the system even when the main internet is down. The Arduino can be programmed through the Raspberry Pi once configured. Currently, the main features are:\n\nMonitors the 4V internal power supply, used to power the SIM card module (only version 1 of the monitor board, version 2 uses a 5V SIM module and hence no longer needed to convert to and monitor 4V).\nMonitors the 5V power supply, used to power the Raspberry Pi.\nMonitors the 12V power supply, used for the scales and router (i.e., the indoor or teltonika router).\nMonitors the 24V solar power supply.\nMonitors the ambient temperature inside the APMS Main Unit.\nAlerts the administrator when the Monitor or Raspberry Pi boots up via SMS.\nShut down and power up the Raspberry Pi via SMS.\nSend an APMS status report on request via SMS.\nExchanges status reports with the Raspberry Pi every hour.\n\nAs the Monitor circuit is still a prototype, with relatively few components, the board is built on a piece of stripboard directly from the circuit diagram. Five boards have been built thus far, one for Stony Point, Bird Island, Dyer Island, Robben Island and Dassen Island. A PCB is being designed for future APMS installations.\nAs most components are quite standard, it should not be hard to source parts or find suitable replacements.\nThe circuit board is mounted on a custom designed, 3D printed Monitor Mounting Plate. The mount has been designed to fit the existing DIN rail, for easy insertion/extraction. The mounting plate is printed with ABS plastic to prevent warping in the summer heat. The design file for 3D printing can be downloaded here: Download\n\n\n5.0.2 Programming via the Arduino Software\nThe heart of the circuit is the Arduino Nano Every microcontroller. This is the successor to the popular Arduino Nano and provides slightly better capabilities for a lower price. The Arduino can be programmed in numerous ways. Two ways are discussed in this manual. The first will be using an unaltered Arduino and the standard Arduino Software, while the second method involves using the Raspberry Pi, together with some hardware modifications to the Arduino.\n\nBefore building the circuit, it is a good idea to test the Arduino. As the Arduino is straight out of the box, the standard Arduino software will be used for the initial setup.\n\nInstall the Arduino IDE Software (https://www.arduino.cc/en/software)\nInstall the Arduino megaAVR Core:\n\nFrom the Tools menu, select “Boards”\nSelect “Boards Manager”\nSearch for and install “megaAVR”\n\nDownload the test sketch from here: Download\nUse a Micro USB cable to connect to the Arduino and select the appropriate com port\nClick “Upload”\nIf the upload was successful, the LED will light up and the buzzer will sound when the button is pressed.\nIf the upload fails try a different com port, or charge the registers emulation:\n\nTools &gt; Register Emulation &gt; None (ATMEGA4809)\n\n\n\nNOTE: If the Arduino has already been modified for UPDI, programming via the USB port will not be possible. First remove the soldered link and disconnect the UPDI wire. See UPDI PROGRAMMING for more details\n\n\n5.0.3 Preparing the Stripboard\nThe 100x160 mm stripboard needs to be reduced to fit inside the Main Unit.\n\nMark the four corners for drilling with a permanent marker. The locations of the holes are important as they correspond to the holes in the mounting plate. See FIGURE 19 – PREPARING THE STRIPBOARD\nThe board does not have to be broken at the line, as seen in the picture, and a larger PCB can be obtained by breaking off a smaller piece. Just ensure the spacing between the holes are correct, as in the picture.\n\n\n\n\nFigure 19. Preparing the stripboard.\n\n\n\nUse the 3mm drill bit to drill the four corner holes in the circuit board.\n\nDo a test fit as shown in fig. 20. Use the four 2.5mm machine screws to secure the blank circuit board to the mounting plate. Note, do not exert too much force as the screws are going into plastic.\n\n\n\n\n\nFigure 20. Test fit the blank board on the mounting bracket.\n\n\n\nThe SIM800L antenna can be installed on the mounting bracket provided.\nIf the signal at the site is particularly weak, an antenna with higher gain can be used. For example:\n\nAn omnidirectional antenna (RS Part Number: 202-4179).\nA blade antenna with a SMA extension cable.\n\nRemove the blank circuit board from the mounting plate and start building the circuit according to the circuit diagram.\n\n\n\n5.0.4 4V and 5V Power Supplies\n\nStart with the main 24V DC connector and fuse holder.\nSkip this step if you are building version 2 of the monitor board. In version 2 of the APMS monitor, we no longer need the LM2596 converter as a different SIM module is used which runs on 5V. If you are building version 1 of the monitor board, then also add the LM2596 DC-DC converter and then insert a 3A fuse into the fuse holder. Next provide 24V to the main DC connector and adjust the output voltage of the LM2596 DC-DC converter to 4.0 V.\nInstall the K7805 voltage regulator, capacitors C5 and C6 and check for 5V on the output.\nBreak one of the 30 pin female header strips in half, to obtain two 15 pin strips. Use these two strips as a socket for the Arduino Nano (see fig. 21).\nTest for 5V between the GND and VCC pins on the Arduino header. Do not install the Arduino yet.\n\n\n\n\nFigure 21. A partially built monitor (version 1) for Stony Point.\n\n\n\n\n5.0.5 SIM800L Power Supply\n\nThe version 1 Monitor uses a SIM800L module (hereafter referred to SIM800L) and version 2 uses a SIM800L-V2 5V module (hereafter referred to as SIM800L-V2) to send/receive SMS messages.\nFour pins are used: VCC, GND, RXD and TXD. VCC requires a supply voltage of 3.4V – 4.4V for the SIM800L and 5V for SIM800L-V2. The version 1 monitor uses the LM2596 regulator to provide a stable 4.0V, whereas in version 2 of the monitor board the power is converted to 5V by the K7805 voltage regulator.\nThe first three monitors (Stony Point, Bird Island and Dyer Island) all use a smaller green PCB (SIM800L). As this module has been difficult to procure, a larger module with a red PCB was used at Robben Island (SIM800L). As we only use 4 pins, the extra features of the red board are not used. At Dassen Island we used the newer SIM800L-V2 module.\nUnfortunately, the modules are not directly interchangeable as the RX and TX pins are reversed (see pictures below).\n\n\n\n\n\n\n\nFigure 22.1. 4V SIM800L green PCB.\n\n\n\n\n\n\n\nFigure 22.2. 4V SIM800L red PCB.\n\n\n\n\n\n\n\nFigure 22.3. 5V SIM800L-v2.\n\n\n\n\n\nAn adapter board can be made, or the Monitor PCB modified, if a green module at the first three sites ever needs to be replaced with a red one.\nInstall the SIM800L Module header in the top left section of the board, as the module needs to be located close to the antenna slot on the mounting bracket (see fig. 23).\nUse female header pins to create a socket for the module. This enables the module to be easily removed for testing or to be replaced if faulty.\n\nInstall capacitors C1 – C4 and Zener diode D1.\nWith the SIM800L/SIM800L-v2 NOT inserted, confirm on the header that there is 4.0 V between VCC and GND, or 5.0 V if using the SIM800L-v2.\n\n\n\n\nFigure 23. Robben Island APMS monitor board.\n\n\n\n\n5.0.6 Communication Between SIM800L and Arduino\n\nSIM800L RX and Arduino TX\n\nSince the TX of the Arduino is between 0V and 5V, a simple voltage divider is used to step the voltage down to a level suitable for the SIM800L. Install Trimpot RV1 as per the schematic.\nWith the SIM800L module and Arduino not inserted, apply 5V to the voltage divider (pin D3 – See FIGURE 24 - ARDUINO NANO PINOUT). With 5V applied to D3, a voltage divider is created by trimpot RV1. Adjust the trimpot until the voltage on the centre pin, is 2.65 V. This pin will be connected to the receive line of the SIM800L.\n\nSIM800L TX and Arduino RX\n\nThe voltage level of the SIM800L needs to be stepped up for use with the Arduino. To achieve this, a circuit consisting of three resistors (R8, R9 and R10) and one NPN transistor (Q1) is used, as recommended by the SIM800L manual. Install the above-mentioned resistors and transistors and ensure the input of the circuit is connected to the transmit line of the SIM800L.\n\n\n5.0.7 Communication Between SIM800L-V2 and Arduino\n\nSIM800L-V2 RX and Arduino TX\n\nTo be completed.\n\nSIM800L-V2 TX and Arduino RX\n\nTo be completed.\n\n\n\nFigure 24. Arduino Nano pinout.\n\n\n\n\n5.0.8 Raspberry Pi Connection\nThe connector used to connect the Monitor to the Raspberry Pi can be seen in fig. 25. To use the connector with stripboard, the pins must either be bent outwards, or a “breakout” board made from a piece of scrap protoboard (fig. 26). Both methods have been used and are effective. A pre-made break-out board can be purchased if available. If a PCB is designed in future, it will be possible to solder the connector directly on the board.\n\n\n\n\n\n\nFigure 25. Raspberry Pi connector.\n\n\n\n\n\n\n\nFigure 26. Proto board.\n\n\n\n\n\nThe Raspberry Pi 40-pin Connector pinout can be seen in fig. 27.\nA simple voltage check of 3.3V on pin 1 and 5V pin 2 should confirm orientation if unsure.\nThe Raspberry Pi GPIO pins and their functions can be seen in TABLE 3 - RASPBERRY PI GPIO PINS AND FUNCTIONS\n\n\n\nFigure 27. Raspberry Pi GPIO pinout.\n\n\n\nTable 3 - Raspberry Pi GPIO pins and functions\n\n\n\n\n\n\nPin\nFunction\n\n\n\n\nGPIO3\nPower ON/OFF\n\n\nGPIO4\nRaspberry Pi UART3 TX\n\n\nGPIO5\nRaspberry Pi UART3 RX\n\n\nGPIO14\nRaspberry Pi TX\n\n\nGPIO15\nRaspberry Pi RX\n\n\n\n\n\n\nFigure 28. 40 pin ribbon cable.\n\n\nA 40-pin ribbon cable is used to connect the Monitor to the Raspberry Pi (fig. 28). After building the Monitor, check the voltages on the other end of the ribbon cable, to ensure it is not above 3.3V, before plugging it into the Pi.\n\n\n5.0.9 Logic Level Shifter\n\nSince the Pi uses 3.3 V for communication, and the Arduino 5 V, a logic level shifter is needed. These modules are available cheaply and two 6-pin female headers should be used as a socket for easy install/removal (fig. 29).\nThe level shifter uses the 3.3V on pin 1 of the Raspberry Pi connector for the LV connection and the 5V Arduino supply voltage for the HV connection.\n\n\n\n\nFigure 29. Dyer Island monitor board.\n\n\n\n\n5.0.10 UPDI Programming\nThe Arduino Nano Every uses UPDI (Unified Program and Debug Interface) for programming. This uses only 1 wire for programming, but a more complex communication protocol is needed. To use UPDI a wire needs to be soldered to a pad located on the underside of the Arduino. A link must also be soldered (Fig. 30).\nNOTE: After the link has been made, the board can no longer be programmed via the Arduino software and USB cable. It will be programmed via the Raspberry Pi using the UPDI wire. If the Arduino software needs to be used during fault finding, unsolder the link. The pads can break off with successive heating sessions, so be cautious.\n\n\n\nFigure 30. Wire and link soldered onto Arduino for UPDI programming.\n\n\n\nTo program the Arduino remotely via the Raspberry Pi, a utility called “pymcuprog” is used. This utility allows the Raspberry Pi to program the Arduino via a serial connection. This serial connection is established using UART3 (RX3 and TX3) on the Raspberry Pi as a serial port (see Table 3 for GPIO pinout).\nTo program the Arduino via a serial port, a hardware modification is required. The pymcuprog documentation (https://pypi.org/project/pymcuprog/) describes various combinations of diodes and resistors to achieve this, for various setups. After experimentation, using only a Schottky diode (D2) delivered the best results. Note the cathode of D2 is connected to TX3.\nThe UPDI wire is connected to HV1 on the level shifter (Fig. 18).\nA script has been written to compile and upload the firmware to the Arduino, from the Raspberry Pi, thus the user does not need to use pymcuprog directly. See the section: PROGRAMMING THE ARDUINO MONITOR VIA THE PI.\n\n\n\n5.0.11 Voltage Monitoring\nIf any of the main supply voltages are outside allowable limits, an SMS will be sent to the operator.\nCurrently, the following important voltages are monitored:\n\n4V: This is the SIM800L supply voltage. This voltage is generated by the LM2596 voltage regulator and is fed to analog input A6 of the Arduino, via resistor R1.\n\n\nNote: In version 2 of the monitor board a different SIM module is used which no longer needs a 4V supply voltage. As a result this is no longer monitored.\n\n\n5V: This is the 5V supply for the Raspberry Pi. The 5V is picked up from pin 2 or 4 on the Raspberry Pi connector (See Fig. 27 for the Raspberry Pi GPIO pinout).\n\n\nNote: As this voltage is close to, and might exceed, the Arduino maximum safe voltage, a voltage divider consisting of R2 and R3 is used to step the voltage down. The Arduino uses A3 to measure this voltage. Note that this 5V is separate and should be isolated from the Arduino 5V supply. This is in essence measuring the output of the 5V Meanwell Power Supply.\n\n\n12V: This is the 12V supply for the scales and the router (if an indoor router is used). This voltage is fed via a wire from the Meanwell 12V Power Supply to screw terminal J2. Install the screw terminal in the top right section of the board to allow for easy connecting when installing the board (Fig. 29). Resistor R4 and R5 is used to step the 12V before connecting it to A5 of the Arduino\n24V: This is the main solar supply voltage. This supplies power to the BioMark reader, the APMS Main Unit and the Outdoor Router (if one is installed). The voltage is measured at the input of the Monitor and is stepped down via resistor divider R6 and R7 before being connected to A7 of the Arduino.\n\n\n\n5.0.12 Temperature Monitoring\nThe ambient temperature inside the Main Unit is monitored using a LM35 temperature sensor (U5). The sensor operates on 5V and needs no other components to operate. The output of the sensor is read directly by analog pin A0 on the Arduino.\n\n\n5.0.13 Buzzer and Button\nA buzzer and button are included for debugging and future options. Currently the Monitor will beep once initialisation is complete, and the button will power the Raspberry Pi down/up.\n\nThe buzzer is switched via transistor Q2 with base current being limited by resistor R11.\nThe button is connected directly to pin D12 on the Arduino and makes use of the built-in pull-up resistor, thus requiring no other components. Place the button on the board in a location where it will be easy to press once the board is installed.\n\n\n\n5.0.14 Testing the Monitor Circuit Board\nBefore testing communication between the Raspberry Pi and the Arduino Monitor, some basic tests must be done to ensure no components will be damaged. A dual variable power supply will be needed to test the various voltages.\nEnsure the firmware was uploaded successfully as explained in the section PROGRAMMING VIA THE ARDUINO SOFTWARE\nPlug the SIM800L into its socket and connect the antenna.\n\nPlug the Arduino into its socket.\nPlug the Level Shifter into its socket.\nPlug the 40-pin ribbon cable into the socket on the Monitor but do not plug the other end into the Pi.\nPower the Monitor via the main 24V DC connector.\nObserve lights flashing on the SIM800L.\n\nThe green light on the SIM800L should flash rapidly at first, and after about 20 seconds, it should start flashing slowly. This indicates that the module was able to connect to the cell network successfully. Try different antennas and orientations for best results.\n\nCheck that there is 5.0V on the Arduino and Level Shifter supply pins.\nCheck that there is 4.0V on the SIM800L supply pin.\n\nCheck that the same 4.0V is measured on pin A6 of the Arduino.\n\nCheck that none of the pins on the Raspberry Pi connector has 5V on it.\n\nNote pin 2 and 4 will have 5V coming from the Pi when it is connected at a later stage.\n\nSupply 12V to connector J2 and ensure the voltage has dropped to below 5V on pin A5 of the Arduino.\nMeasure the stepped-down solar supply voltage on pin A7 of the Arduino. The 24V should have been stepped down to a value less than 5V.\nMeasure the output voltage of the temperature sensor on pin A0 of the Arduino. The sensor outputs 10mV per °C, so at 25°C, the voltage should be about 0.25V.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>APMS Monitor</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html",
+    "href": "05_apms_main_unit.html",
+    "title": "6  APMS Main Unit",
+    "section": "",
+    "text": "6.1 Preparing the USB Panel Mount Socket\nThe APMS Main Unit consists of all the electronics needed for the system.\nFor a complete parts list, see Table 4.\nFor a system diagram, see Fig. 31.\nThe USB Panel Mount Socket does not have adequate strain relief. Use Pratley Putty to reinforce the cables. Take note to avoid getting the putty on the threads (Fig. 32).",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#preparing-the-usb-panel-mount-socket",
+    "href": "05_apms_main_unit.html#preparing-the-usb-panel-mount-socket",
+    "title": "6  APMS Main Unit",
+    "section": "",
+    "text": "Figure 32.1. Pratley putty strain relief for USB socket.\n\n\n\n\n\nFigure 32.2. Pratley putty strain relief for USB socket.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#preparing-the-main-unit-enclosure",
+    "href": "05_apms_main_unit.html#preparing-the-main-unit-enclosure",
+    "title": "6  APMS Main Unit",
+    "section": "6.2 Preparing the Main Unit Enclosure",
+    "text": "6.2 Preparing the Main Unit Enclosure\nPrepare the enclosure before starting the build. RS Part numbers included in brackets.\n\nOpen the enclosure (508-2798) and screw down the DIN rail (188-2538) using the screws provided. Note, it takes a fair bit of force.\nDownload and print the template here: Download APMS template. Check the dimensions with a ruler after printing.\nGlue/stick the template on to the front of the enclosure and drill the holes as indicated on the template.\n\nThe 11mm and 21mm diameter holes are an odd size. Either go one size smaller and enlarge, or use one size larger, with it being a slightly loose fit.\n\nDo a test fit of all the sockets:\n\nMain DC socket (705-1525),\nUSB Panel Mount Socket (111-6761),\n12V DC socket (111-3725), and\ntwo scale sockets (111-5764)\n\nThe sockets can be removed to ease in the rest of the build.\nUse a label maker, or a permanent marker, and label each socket (Fig. 33).\n\n\n\n\nFigure 33. APMS Main Unit frontside.\n\n\n\n\n\n\n\n\nNote\n\n\n\nThere are now two versions of the APMS.\nIn version 1.1 the following improvements were made:\n\nMore robust fan with newly designed fan bracket\nUse of RS485 converters, instead of RS232\nScales are mounted on marine ply, instead of inside boxes\n\nIn version 1.2 the following improvements were made:\n\nNew APMS Main Unit enclosure that is easier to open\nNew SIM800L-V2 module that has an integrated power supply unit and doesn’t need the power to be converted to 4V anymore.\nNew Teltonika RUT906/RUT956 routers which allow remote calibration and taring of scales and extendable SMA cable ports for better cellphone reception.\nNew scale indicators (General Measure GMT-X1) which allow RS485 connection and management capabilities.\nTailor-made, custom BioMark RFID antennas to fit perfectly between the two scales. This design makes the antenna much easier to tune and protects the cable from being accidentally kicked out of place (which previously caused a loss of resonance). Additionally, these commercial antennas offer a significantly stronger detection range than the legacy homemade versions.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#mounting-the-raspberry-pi",
+    "href": "05_apms_main_unit.html#mounting-the-raspberry-pi",
+    "title": "6  APMS Main Unit",
+    "section": "6.3 Mounting The Raspberry Pi",
+    "text": "6.3 Mounting The Raspberry Pi\nUse four 2.5mm machine screws to mount the Raspberry Pi on the mounting plate (Figs. 34 and 35).\nAdd heatsinks (RS: 201-2169) (Fig. 35)\n\n\n\nFigure 34. Raspberry Pi 4 with mounting plate.\n\n\n\n\n\nFigure 35. Raspberry Pi mounted with heatsinks.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#preparing-the-fan",
+    "href": "05_apms_main_unit.html#preparing-the-fan",
+    "title": "6  APMS Main Unit",
+    "section": "6.4 Preparing the Fan",
+    "text": "6.4 Preparing the Fan\nSolder a 2-pin female header connector to the ends of fan cable. Use the four M3 screws and mount the fan to the fan bracket (Fig. 36).\n\n\n\nFigure 36 CPU fan mounted on bracket.\n\n\nThe fan and bracket fits into the slot provided on the Raspberry Pi mounting plate. The fan bracket slides in with a friction fit to allow easy installation/removal.\n\nNOTE: Even though 5V power is provided to the fan from the Monitor, the 5V is retrieved from the Raspberry Pi connector, and not from the 5V supply on the Monitor itself. This is done to prevent the fan stopping should the Monitor fail. The fan is connected to pin 4 and 6 on the Raspberry Pi.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#wiring-the-apms-main-unit",
+    "href": "05_apms_main_unit.html#wiring-the-apms-main-unit",
+    "title": "6  APMS Main Unit",
+    "section": "6.5 Wiring the APMS Main Unit",
+    "text": "6.5 Wiring the APMS Main Unit\n\nThe location of the DIN mounted components, as well as the power wires, can be seen in Fig. 38.\nThe main power wires consist of a ground wire, a 5V and a 12V wire.\nThe APMS uses a DIN mounted Fuse Holder (501-871) with a 3A Fuse (668-5963) to provide protection.\nTwo Meanwell Power Supplies are used to step the 24V DC down to the required voltages:\n\n5V 15W Power Supply (175-7775) for the Raspberry Pi\n12V 30W Power Supply (175-7778) for the scales (and indoor router if used).\n\n\n\nNOTE the polarity of the two Meanwell power supplies, as they are opposite to each other.\n\n\nInstall the 24V DC and 12V DC connectors.\nMount the Arduino Monitor, Raspberry Pi, Fuse Holder, 5V Power Supply, 12V Power Supply and the two Scale Indicators on the DIN Rail.\n\nIf the Arduino Monitor has not been built yet, use the 3D printed mounting plate is this step.\n\nRun a ground wire from the Main 24V DC Connector to the following components:\n\nArduino Monitor\nInput and Output of 5V Power Supply\nInput and Output of 12V Power Supply\nRaspberry Pi\nTwo Scale Indicators\n12V DC connector\n\n\n\n\n\nFigure 38. Location of DIN mounted components and power wires.\n\n\n\nWith the ground wire laid out, the locations of the different components are established. The Arduino Monitor, Raspberry Pi and the two Scale Indicators can now be removed to ease the rest of the wiring.\nRun two positive wires from the Main 24 DC Connector:\n\nOne through the fuse holder and to the input of the 5V and 12V Power Supplies,\nOne to the power connector on the Arduino Monitor.\n\nThe Arduino Monitor has its own 3A fuse. This allows the Monitor to continue operating even if a fault caused the main fuse to blow.\n\n\nOn the output of the 5V power supply, run a wire for the Raspberry Pi. This positive 5V wire, together with the ground wire created earlier, will be connected to a USB-C cable, to power the PI. Currently, the most cost-effective method to obtain a quality cable with a USB-C connector, is to use a USB-B to USB-C cable from RS Components (192-4730) and to cut off the USB-B connector. Please update this manual when a better alternative is sourced. Keep the cable running to the Pi short to avoid extra cabling in the Main Unit.\nRun a positive 12V wire from the output of the 12V Power supply to the following locations:\n\nArduino Monitor 12V monitoring screw terminal\nBoth Scale Indicators\n12V DC Socket\n\nCrimp ferrules to the ends of all the power wires.\n\n\n\n\nFigure 40. Power supplies and wiring.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#testing-the-power-supplies",
+    "href": "05_apms_main_unit.html#testing-the-power-supplies",
+    "title": "6  APMS Main Unit",
+    "section": "6.6 Testing the Power Supplies",
+    "text": "6.6 Testing the Power Supplies\nBefore connecting any of the components, it is important to check the output of the power supplies.\n\nInsert a 3A fuse into the fuse holder. The APMS Main Unit uses a 3A fuse (668-5963).\nConnect 24V DC to the main DC connector.\n\nTo do this, use the DC plug (RS: 705-1519) and make a temporary power cable for testing.\n\nThere should be a red light on the fuse holder and a blue light on each power supply.\nMeasure the output of the 5V power supply and set it to 5.1V. The supply can be adjusted by turning the “5V Adjust” potentiometer (see Fig. 40).\nMeasure the output of the 12V power supply and set it to 12.1V. The supply can be adjusted by turning the 12V Adjust potentiometer.\n\n\nPlease take note of the polarities, as the two Meanwell power supplies are not the same.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#installing-the-scale-indicators",
+    "href": "05_apms_main_unit.html#installing-the-scale-indicators",
+    "title": "6  APMS Main Unit",
+    "section": "6.7 Installing the Scale Indicators",
+    "text": "6.7 Installing the Scale Indicators\nInitially, the scale indicators used in the APMS are made by Laumas, model TLB485. However, we have since switched over to using indicators made by General Measure, model GMT-X1 indicators. The Laumas TLB485 indicators run on 12V, whereas the GMT-X1 indicators run on 24V. Both communicate with the Raspberry Pi via RS485. RS485 USB-to-Serial Converters are used. (RS: 687-7834).\nThe data is sent as\n\n6.7.1 Indicator Power and Data\n\nLaumas TLB485\n\nThe Laumas TLB485 scale indicator uses an 8-pin screw connector for power and serial communication. The connector, as well as the layout of the two RS485 Serial Converters can be seen in FIGURE 41 - SCALE INDICATOR CONNECTIONS\n\nGeneral Measure GMT-X1\n\nTO BE COMPLETED\n\nShorten the cables of the RS485 converters to fit the layout shown.\n\n\n\n\nFigure 41.1. Laumas TLB485 scale indicator connectors.\n\n\n\nOnly the orange and yellow wires of the RS485 converter is used. Strip and crimp ferrules on the end of the wires and connect as in Fig. 42.\nConnect the GROUND and +12V power wires.\n\n\n\n\nFigure 42.2. Laumas TLB485 USB to RS485 wiring.\n\n\n\n\n6.7.2 Indicator Scale Connection\n\nEach scale connects to the APMS Main Unit via a 6-pin socket (111-5764), mounted on the front of the enclosure.\nA short cable runs from the 6-pin socket to the x-pin connector for the GMT-X1 indicator, or if using a Laumas TLB485 the cable will run from the 6-pin socket connector to the 9-pin connector on the indicator (Fig. 43.2).\n\n\n\n\nFigure 43.2. Laumas TLB485 load cell wiring.\n\n\n\nEach pin on the socket (111-5764) is numbered. Match the numbering on the 9-pin connector with that of the socket (only 1 - 6 is used). See Figs. 43 & 44.\nSolder the wires to the sockets and add ferrules before inserting it into the scale connector screw terminals.\n\n\n\n\nFigure 44. Installing 6-pin scale connector.\n\n\n\n\n6.7.3 Jumper Install (Laumas TLB485 only)\nIf using the Laumas TLB485 indicators, a jumper needs to be installed if the baud-rate exceeds 9600. As we are communicating with the indicators at a speed greater than 9600 BAUD, two jumpers need to be installed. This is only applicable to TLB45 indicators and not the GMT-X1 indicators. Please see the excerpt from the manual below.\n\n\n\n\n\n\n\n6.7.4 Configuring The Scale Indicators\n\nBefore configuring the scale indicators, check that it has been wired correctly and working properly:\n\nPlug in both the 6- and 9-pin scale connectors.\nPlug the scales into their respective scale sockets\nApply power to the Main Unit – the indicators should light up and show a weight after start-up.\nApply light pressure on Scale 1 and Scale 2 and confirm the correct indicator changes its weight reading.\n\n\nTo configure the scale indicators, the front cover is flipped open and the buttons on the device are used. There are four buttons on each indicator as in Fig. 46.\n\n\n\nFigure 46.\n\n\n\n\n\n\n\n\n\nName\nValue\n\n\n\n\nMode\nContinuous\n\n\nBAUD rate\n115200\n\n\nHertz\n100\n\n\nParity\nNone\n\n\nStop Bit\n1\n\n\nMode\nnodt\n\n\n\nThe settings above will be checked when testing the scales script (See: Testing the scales.py Script)",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "05_apms_main_unit.html#installing-the-apms-monitor",
+    "href": "05_apms_main_unit.html#installing-the-apms-monitor",
+    "title": "6  APMS Main Unit",
+    "section": "6.8 Installing the APMS Monitor",
+    "text": "6.8 Installing the APMS Monitor\nIf the APMS Monitor has been tested as explained in Testing the Monitor Circuit Board, it can be installed in the APMS Main Unit. The Monitor is mounted on a 3D printed mounting plate, as discussed earlier.\n\nThe Monitor mounting plate clips on to the DIN rail, with the power connector facing the front of the Main Unit, and the 12V monitoring connector facing towards the back (Fig. 47).\nConnect the power and 12V monitoring wires.\nConnect the 40-pin Raspberry Pi ribbon cable.\n\n\n\n\nFigure 47. Monitor board mounted inside the APMS Main Unit.",
+    "crumbs": [
+      "Hardware",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>APMS Main Unit</span>"
+    ]
+  },
+  {
+    "objectID": "06_aws_s3.html",
+    "href": "06_aws_s3.html",
+    "title": "7  AWS S3 Cloud Storage",
+    "section": "",
+    "text": "7.1 Administrator Details\nThe software and data are stored on the AWS S3 Server.\nTo access the software, download a S3 Client, such as S3 Browser. (https://s3browser.com/).\nThe usernames, passwords and other confidential information is stored in a separate document.\nThere are currently five main objects:",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>AWS S3 Cloud Storage</span>"
+    ]
+  },
+  {
+    "objectID": "06_aws_s3.html#administrator-details",
+    "href": "06_aws_s3.html#administrator-details",
+    "title": "7  AWS S3 Cloud Storage",
+    "section": "",
+    "text": "Directory\nDescription of contents\n\n\n\n\n3://apmsbirdlife/APMS/data/\nThis holds all the scale, rfid and system status data.\n\n\n3://apmsbirdlife/APMS/software/\nThis holds all the necessary software to set up a new system.\n\n\n3://apmsbirdlife/APMS/documents/\nThis holds documentation such as the manual, parts lists etc.\n\n\n3://apmsbirdlife/APMS/3D_prints/\nThis holds the design files for the various 3D printed parts\n\n\n3://apmsbirdlife/APMS/website/\nThis holds the daily plots for the website run by Ninepoint\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe firmware running on the Raspberry Pi and the code for the Dashboard can all be found on the APMS BirdLife GithUB repository.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>AWS S3 Cloud Storage</span>"
+    ]
+  },
+  {
+    "objectID": "06_aws_s3.html#creating-a-user-on-aws-s3",
+    "href": "06_aws_s3.html#creating-a-user-on-aws-s3",
+    "title": "7  AWS S3 Cloud Storage",
+    "section": "7.2 Creating a User on AWS S3",
+    "text": "7.2 Creating a User on AWS S3\nEach Raspberry Pi has an AWS S3 Username, Access Key and Secret Access Key assigned to it. This enables the data and log files to be uploaded to the cloud every day. When installing an APMS at a new site, a new user for the site must be created. This manual is accurate as of writing in December 2023, but as websites and services change, slight variations might appear in future. Please update this manual when deemed necessary and update the revision number. Further improvement regarding security, such as using IAM Identity Center instead of IAM, using Multi Factor Authentication or using AWS CLI2, are left up to the discretion of the administrator\n\nGo to https://aws.amazon.com/s3/\nClick on “Sign in to console” in the top right.\n\n\n\n\n\n\n\nClick “Sign in using root user’s email”.\n\n\n\n\n\n\n\nLog using the relevant account details.\n\n\n\n\n\n\n\nClick on “IAM” (NOT “IAM Identity Center”).\n\n\n\n\n\n\n\nClick on “IAM Users” and then in the top right, “Create User”.\n\n\n\n\n\n\n\nUnder “User name”, enter the site name, all lower case letters. Example: “apms_boulders”. Keep all the defaults as is. Click Next to continue.\n\n\n\n\n\n\n\nOn the “Set permissions” page, select the S3_Full_Access option under user groups and click “Next”.\n\n\n\n\n\n\n\nOn the “Review and create” page, click on “Create user”.\nNow view the new user that you created and navigate to “Security credentials” and then scroll down to “Access keys”\n\n\n\n\n\n\n\nClick on “Create access key”\nClick on “Command Line Interface (CLI)”, click the “Confirmation” and click “Next”\n\n\n\n\n\n\n\nOn the “Set description tag” page, enter “APMS upload” and click on “Create access key”\n\n\n\n\n\n\n\nYou have now successfully created a user for the new site and created an access key. Copy down the Access key and Secret access key (Click “Show”). You can also download the .csv file containing this information. Please keep this information very secure as it has full read/write access to the cloud. Also, please note that you will not be able to view this information at a later stage, so make sure it is stored safely. If this information is lost, and is needed in future, create a new user as described in this section.\n\n\n\n\n\n\nThis access key and secret access key will be needed when the APMS is configured. See Configuring the APMS.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>AWS S3 Cloud Storage</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html",
+    "href": "07_raspberry_pi.html",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "",
+    "text": "8.1 Prepare the micro SD card\nThe Raspberry Pi operating system must be installed first, together with all required libraries and applications. A microSD card, SD card reader and a computer running Windows is needed for this step. If the operating system is being installed on a spare Raspberry Pi, a USB-C cable and 5V 3A power supply will be needed to power the device.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#prepare-the-micro-sd-card",
+    "href": "07_raspberry_pi.html#prepare-the-micro-sd-card",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "",
+    "text": "Get a new SD card (currently using a 64GB SanDisk) and insert it into the MicroSD card reader.\nDownload the Rpi Imager and Rpi OS from the cloud (APMS/software/RaspberryPi)\n\nThe Imager can also be downloaded online here: Download RPi Imager v1.7.4.\nOne way to do this is to download S3 Browser and navigate to the relevant software folder (https://s3browser.com/ )\nIf you don’t have access to the AWS S3 cloud, you can also download it from here: Download Pi OS bullseye. Make sure it’s the “2023-02-21-raspios-bullseye-arm64-lite.img” version.\n\nInstall and run Raspberry Pi Imager (Version 1.7.4 for Windows used for this manual)\n\nChoose OS\n\nSelect “Use custom”\nSelect the raspberry pi image you downloaded\nAll our APMSs are running on Raspi OS Bullseye 2023-02-21 “2023-02-21-raspios-bullseye-arm64-lite.img”\n\nCHOOSE STORAGE and select the SD card.\nClick on the settings cog.\n\nChoose a hostname. Example: “apms-dyer” or “apms-boulders”\nSelect “Enable SSH”\n\n“Use password authentication”\n\nSelect “Set username and password”\n\nusername: apms\npassword: &lt;ENTER YOUR PASSWORD&gt;\n\nSelect “Configure wireless LAN”\n\nSSID: apms\nPassword: &lt;ENTER YOUR PASSWORD&gt;\nWireless LAN country: ZA\n\nSelect “Set locale settings”\n\nTime zone: ZA\n\nLeave all other settings unchanged and click on SAVE\n\nClick on WRITE\nClick YES after confirming you selected the correct storage device\n\nWait for RaspiOS to finish installing and click CONTINUE after installation.\n\nEject the USB card and insert it into the Raspberry Pi. The MicroSD card slot is located on the underside of the Pi.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#ssh-into-the-pi-locally",
+    "href": "07_raspberry_pi.html#ssh-into-the-pi-locally",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.2 SSH into the pi (locally)",
+    "text": "8.2 SSH into the pi (locally)\n\nEnsure the WiFi router has been set up and has the correct SSID name for the Pi to connect to. See Internet and WiFi\nPower the Raspberry Pi via the USB-C connector. Use a suitable power supply that is capable of deliver 3A of current.\n\nThe Raspberry Pi will power up when the APMS main unit is powered.\nIf not using an APMS main unit, power the Pi with a 5V 3A power supply and USB-C cable. There will be a solid red light on the Pi when booting is complete.\n\nOn a PC, connect to the WiFi router. This can be done via WiFi or a LAN cable.\nConnect to the router’s admin page in a browser to find the IP of the new Raspberry pi.\n\nThe IP address of the router can usually be found on the back of the router or in the router’s manual.\nAlternatively, after connecting to the Wi-Fi, open Powershell and run:\n\nipconfig\n\nUnder “Wireless LAN Adapter Wifi”, find the IP address under “Default Gateway”.\nTo connect to the router, In an internet browser, type the IP address, found in the previous step, into the address bar.\nThe default username and password can usually be found on the back of the router or in the router’s manual. Commonly, the username is “admin” and the password is either “admin” or left blank.\nAfter connecting to the router’s admin page, look for the IP address of the Raspberry Pi. You would typically find this information in a section called “Connected Devices” or something similar. The Raspberry Pi should appear under the name “apms” or something like “apms-boulders”.\n\nAfter obtaining the IP of the Raspberry Pi, SSH into the pi:\n\nThe username will be “apms”\nThe password is the same password you set when you flashed the Raspberry Pi SD card with the Raspberry Pi Imager (see: Prepare the micro SD card).\n\n\n# ssh [username]@[IP address]\n# example:\nssh apms@192.168.0.111\n\nA message similar to the following might appear\n\nPS C:\\\\Users\\\\phil\\&gt; ssh &lt;apms@192.168.0.103&gt;\nThe authenticity of host \\'192.168.0.103 (192.168.0.103)\\' can\\'t be established.\nED25519 key fingerprint is SHA256:/kWcHC3/ADaEtjABjP8hUbrXdEmp09IIDBDLm6Pg8CY.\nThis key is not known by any other names\nAre you sure you want to continue connecting (yes/no/fingerprint)?\n\nType yes and if asked for a password, enter the password for the raspberry pi.\nWhile trying to SSH into the PI from another PC, especially after changes were made, you might encounter the following message:\n\n\n\nEdit the “known_hosts” file:\n\nsudo nano ~/.ssh/known_hosts\n\nRemove the line containing the IP of the Raspberry Pi:\nSave the file and exit. (Hold CTRL and press x. Type press y to save, then press Enter to exit)",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#update-the-raspberry-pi-operating-system",
+    "href": "07_raspberry_pi.html#update-the-raspberry-pi-operating-system",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.3 Update the Raspberry Pi Operating System",
+    "text": "8.3 Update the Raspberry Pi Operating System\n\nCheck the time is correct by running:\n\ndate\n\nIf incorrect, run:\n\nsudo raspi-config\n-   Select: Localisation options &gt; Timezone &gt; Africa &gt; Johannesburg\n-   Use the right arrow key to move to **FINISHED** and press **Enter**\n\nUpdate package list:\n\nsudo apt-get update\n-   Say \"yes\" to any messages that appear\n\nInstall latest packages:\n\nsudo apt-get upgrade\n-   Say \"yes\" to any messages that appear\n\n\n\n\n\n\nNote\n\n\n\nDownloading software via the 4G router could be costly and unnecessary if a local WiFi hotspot is available. To use local Wifi for initial setting up, the following changes to the above steps must be made:\n\nWhen setting up the Raspberry Pi in Rpi Imager, use the WiFi settings of the local WiFi network.\nTo find the IP address of the Raspberry Pi, the easiest option is to plug a monitor and keyboard into the Pi. Power up the Pi and log in using the username and password set up during the installation. In the terminal of the Pi, run:\n\nifconfig \n\nThe IP address can be found under “wlan0” -&gt; “inet”\nTo change the WiFi setting on the Raspberry Pi back to the 4G router run:\n\nsudo raspi-config\n\nThen select “System Options” -&gt; “Wireless LAN“",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#install-applications-and-libraries",
+    "href": "07_raspberry_pi.html#install-applications-and-libraries",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.4 Install applications and libraries",
+    "text": "8.4 Install applications and libraries\n\nThe following Linux applications are needed for the APMS. The currently used version is listed next to each application. If a future version becomes incompatible, try the listed version instead.\n\n\n\n\n\n\n\n\n\nLibrary\nVersion\nDescription\n\n\n\n\ngit\n2.34.1\nUsed to download and update the firmware\n\n\nntpdate\n4.2.8\nTo update the system time via NTP\n\n\ntmate\n2.4.0\nUsed to SSH into the Pi, via the internet\n\n\npython3\n3.9.2\nProgramming language used to run most of the firmware\n\n\nminicom\n2.8\nUseful program for monitoring the serial port\n\n\npip\n20.3.4\nProgram used to install python packages\n\n\nvnstat\n2.6\nProgram to monitor internet usage\n\n\n\n\nTo install the latest versions of all the applications above:\n\nUpdate the package list: $ sudo apt-get update\n\nsudo apt-get update\nInstall the packages:\n\nsudo apt-get install git ntpdate tmate python3 minicom pip vnstat\n\nAnswer Yes to any questions that may appear.\nIf installing an older version, add =[version] for example: $ sudo apt-get install ntpdate=4.2.8\nThe following python packages are also needed.\n\n\n\n\n\n\n\n\n\nLibrary\nVersion\nDescription\n\n\n\n\npyserial\n3.5\nUsed for serial communication\n\n\nvcgencmd\n0.1.1\nUsed to monitor CPU temperature\n\n\npsutil\n5.9.5\nUsed to monitor disk space and CPU usage\n\n\npmcuprog\n3.19.4.61\nMicrochip PIC microcontroller programmer utility\n\n\n\n\nTo install the python packages, use pip: $ pip install pyserial vcgencmd psutil pmcuprog and answer Yes to any questions that may appear:\n\npip install pyserial vcgencmd psutil pmcuprog\n\nIf installing an older version, add “=[version]” for example: $ pip install psutil=5.9.5",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#ssh-into-the-pi-via-tailscale",
+    "href": "07_raspberry_pi.html#ssh-into-the-pi-via-tailscale",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.5 SSH into the Pi (via Tailscale)",
+    "text": "8.5 SSH into the Pi (via Tailscale)\nTailscale is a tool that lets you securely connect computers, servers, and devices over the internet as if they were on the same local network, using a peer-to-peer encrypted VPN built on WireGuard.\nTo install Tailscale on your laptop or work computer, go to the Tailscale Download page, select your operating system, and follow the on-screen installation prompts. Once installed, log in with your identity provider (like Google, Microsoft, or GitHub) to connect your device to your private mesh network.\nNext, you will install it on the the Raspberry Pi.\n\nFirst ensure that you have enabled SSH on Raspberry Pi. To check, run:\n\nsudo raspi-config\n\nNavigate to Interface Options &gt; SSH and enable it.\nOn the Pi, run the following commands:\n\ncat /etc/resolv.conf\ncurl -fsSL https://tailscale.com/install.sh | sh\nsudo tailscale up\n\nYou should see a link in the terminal after running sudo tailscale up which will allow you to authenticate in your browser.\nIf you get the error message below after running sudo tailscale up, then sudo reboot and try the steps above again: failed to connect to local tailscaled (which appears to be running as tailscaled, pid 24600). Got error: 503 Service Unavailable: no backend\nInstall Tailscale on your laptop and log in with same account that you created or are using. For the weighbridge systems, we are using the apmsbirdlife@gmail.com account.\nIn order to remote into the pi, you need to have tailscale running (connected) on and signed in on the computer from which you want to connect to the raspberry pi. Once your device(s) is connected to your private tailscale network (called a tailnet), you should see it when you click on ‘Machines’ in the ‘Admin Console’ (see Fig. 49). You can view your machines/devices at any time on the Admin Console. You will also find the IP address for each device and some other information here.\n\n\n\n\nFigure 49. Tailscale Admin Console.\n\n\n\nSharing a device with co-workers can be done by hovering your mouse over the machine you wish to share and then clicking on ‘Share’ (Fig. 50). Type in the email address you want to share it with and then send. Your co-worker should have tailscale installed on their laptop and then once they’re ready, open the email that you sent to them and follow the instructions to add the device to their tailnet.\n\n\n\n\nFigure 50. Sharing access to a APMS with colleagues.\n\n\n\nIn the ‘Admin Console’ click on the device you added to your tailnet and then on the right, click ‘Machine Settings’ and navigate down to ‘Disable key expiry’ and select it. This will allow your key to remain active indefinitely (as opposed to expiring after 6 months).\nYou should now be ready to SSH into the raspberry pi from your laptop. Open the terminal and run: ssh apms@. For example: ssh apms@100.100.101.5",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#managing-background-services-with-tmux",
+    "href": "07_raspberry_pi.html#managing-background-services-with-tmux",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.6 Managing Background Services with tmux",
+    "text": "8.6 Managing Background Services with tmux\nWhen managing Raspberry Pi devices remotely, closing your terminal window will normally terminate any active commands. To keep your monitoring sessions open in the background, use tmux (Terminal Multiplexer). This is especially useful for tracking system logs without losing your place.\nFor instance, you can use journalctl to monitor your scales and RFID services simultaneously and continuously:\n# Monitor scales and RFID services in real-time\nsudo journalctl -u scales.service -u rfid.service -f\nIf you want to only view one of the services, e.g. just the scales script, run the following:\nsudo journalctl -fu scales\n\n\n8.6.1 Managing tmux Sessions\nUse the following commands to create, view, and manage your background sessions.\n\n8.6.1.1 Start a New Session\nTo start a new session, it is best to give it a descriptive name (e.g. stony-monitor):\ntmux new -s stony-monitor\n\n\n8.6.1.2 List Available Sessions\nTo see all tmux sessions currently running on the Raspberry Pi:\ntmux ls\n\n\n8.6.1.3 Attach to an Existing Session\nIf you get disconnected, reconnect to the Pi via SSH and resume your session:\ntmux a -t stony-monitor\n# OR\ntmux attach #if only one session is running\n\n\n8.6.1.4 Kill a Session\nWhen you are completely finished and want to close the session entirely:\ntmux kill-session -t stony-monitor\n\n\n\n\n\n\n\nEssential tmux Shortcuts\n\n\n\nAll tmux commands start with a prefix key combination: CTRL + b. Press and release the prefix keys first, then press the shortcut key.\n\nDetach from Session\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press d\nSplit Screen Vertically\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press %\nSplit Screen Horizontally\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press \"\nCreate New Window\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press c\nClose Window Pane\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press x\nSwitch to Next Window\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press n\nEnter “Scrolling” Mode\nHold CTRL and press b \\(\\rightarrow\\) Release keys \\(\\rightarrow\\) Press [\n(Press q to exit scrolling mode and return to the live prompt)",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#set-up-the-usb-flash-drive",
+    "href": "07_raspberry_pi.html#set-up-the-usb-flash-drive",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.7 Set up the USB Flash Drive",
+    "text": "8.7 Set up the USB Flash Drive\nA 64GB USB Flash drive is used as a backup for the APMS data. Every morning, the data gets backed up to the flash drive, before being transferred to the cloud. To configure Flash drive, a NTFS partition must be created.\n\nSSH into the Pi as described earlier in this manual.\nInsert the USB Flash drive into any of the available USB ports on the Pi.\nUnmount the flash drive (if mounted):\n\numount /dev/sda1\n\nRun fdisk on the drive:\n\nCreate a new empty DOS partition: press ‘o’ and enter\nCreate a new partition: press ‘n’ and enter – use all the default options\nChange partition type: press ‘t’ and enter – choose 7 - ‘HPFS/NTFS/exFAT’\nSave and exit: press ‘w’ and enter\n\nsudo fdisk /dev/sda\nFormat disk:\n\nsudo mkntfs -f -L \"apms_backup\" /dev/sda1\n\nCreate mounting point\n\nmkdir /home/apms/flash\n\nMount:\n\nsudo mount /dev/sda1 /home/apms/flash\n\nTo check the USB Flash drive has been properly mounted, run:\n\ndf -h\n\nPartition sda1 should be mounted at /home/apms/flash and should show the size of the drive (Fig. 51).\n\n\n\n\nFigure 51. Check if USB flash drive is mounted.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#turn-off-automatic-time-updating",
+    "href": "07_raspberry_pi.html#turn-off-automatic-time-updating",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.8 Turn off automatic time updating",
+    "text": "8.8 Turn off automatic time updating\nTo prevent the Raspberry Pi from updating its system clock at an inopportune time, automatic time updating must be disabled. A script called update_system_time.py will handle the updating of the system time. (See the section: Set up the Crontab for more details).\n\nSSH into the Pi as described earlier in this manual.\nTo stop time-sync process, run:\n\nsudo systemctl stop systemd-timesyncd\n\nTo prevent the process from starting at boot, run:\n\nsudo systemctl disable systemd-timesyncd\n\nTo check it is indeed off, run:\n\nsudo systemctl status systemd-timesyncd\n\nIt is important to ensure that “update_system_time.py” is set up to configure the time\n\n\n\n\nFigure 52. Confirm that the systemd-timesyncd is inactive.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#disable-serial-console",
+    "href": "07_raspberry_pi.html#disable-serial-console",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.9 Disable Serial Console",
+    "text": "8.9 Disable Serial Console\nThe Raspberry Pi communicates with the Monitor via serial, using GPIO14 and GPIO15. The Raspberry Pi Serial Console must be disabled to allow this serial port to be used:\n\nRun the following:\n\nsudo raspi-config\n\nSelect “Interfaces”\nSelect “Serial Port”\nSelect “NO” to login shell\nSelect “YES” to enable serial support\nSave and exit",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#configure-uart3",
+    "href": "07_raspberry_pi.html#configure-uart3",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.10 Configure UART3",
+    "text": "8.10 Configure UART3\nUART3 is used to program the Arduino Monitor.\nEnable serial port for programming by adding the following:\n\nEdit /boot/config.txt:\n\nsudo nano /boot/config.txt\n\nAdd “dtoverlay=uart3” after “enable_uart=1”\nSave the file and exit. (Hold CTRL and press x - Then press ‘y’ to save - then press Enter to exit)\nReboot:\n\nsudo reboot",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#configure-gpio3-for-power-onoff",
+    "href": "07_raspberry_pi.html#configure-gpio3-for-power-onoff",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.11 Configure GPIO3 for Power ON/OFF",
+    "text": "8.11 Configure GPIO3 for Power ON/OFF\nTo enable GPIO3 to be used to power the Raspberry Pi on/off, the config file must be edited:\n\nEdit the config file. Run:\n\nsudo nano /boot/config.txt\n\nAdd “dtoverlay=gpio-shutdown” to the bottom of the file.\nSave the file and exit. (Hold CTRL and press x - Then press ‘y’ to save - then press Enter to exit)\nReboot:\n\nsudo reboot",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#configure-git-and-download-firmware",
+    "href": "07_raspberry_pi.html#configure-git-and-download-firmware",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.12 Configure Git and Download Firmware",
+    "text": "8.12 Configure Git and Download Firmware\n\nSSH into the Pi as described earlier in this manual.\nInstall git (If you have not installed it already):\n\nsudo apt-get install git\n\nConfigure git:\n\ngit config --global user.name \"apms\"\ngit config --global user.email &lt;apmsbirdlife@gmail.com&gt;\n\n\n\n\n\n\nTip\n\n\n\nAll the firmware is stored on the APMS BirdLife Github page.\n\n\n\nGenerate an SSH key pair:\n\nssh-keygen -t rsa -b 4096 -C apmsbirdlife@gmail.com\n\nPress Enter for any questions that appear.\nStart SSH agent:\n\neval $(ssh-agent -s)\n\nAdd the private key to the agent to manage keys:\n\nssh-add ~/.ssh/id_rsa\n\nIf you are one of the admins for the APMS BirdLife GitHub page, then go to GitHub and log in using the details provided above.\n\nClick on the user image (top right of the page) and choose “Settings”.\n\n“Settings” → “SSH and GPG keys” → Click on “New SSH key”\nUnder “Title”, put “APMS [site_name]” Example: “APMS St Croix”. If replacing a pi, delete the previous one first.\n\n\nIn the “Key” field, copy the contents of the following file: ~/.ssh/id_rsa.pub. To do this, run the command:\n\ncat ~/.ssh/id_rsa.pub\n\nClick “Add SSH Key” .\nGo back to the Raspberry Pi terminal and authenticate:\n\nssh -T git@github.com\n- Type \"yes\" if asked to continue.\n\nGo to the home folder and clone the repository:\n\ncd ~\ngit clone git@github.com:apmsbirdlife/apms.git\n\n\n-   All the APMS firmware should now be downloaded to `~/apms/.` Go to the directory, then make sure you are on the correct branch: \n```bash\ncd ~/apms\ngit checkout main\n\nTo update to the latest firmware, go to ~/apms/ and run:\n\ngit pull",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#finding-the-rs485-serial-numbers",
+    "href": "07_raspberry_pi.html#finding-the-rs485-serial-numbers",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.13 Finding the RS485 Serial Numbers",
+    "text": "8.13 Finding the RS485 Serial Numbers\nEach scale is connected to the Raspberry Pi via a RS485 converter. Each converter has a unique serial number and that is how the Pi can determine which scale is which. This is why it is important to label the indicator, scale and RS485 converter as “scale 1” or “scale 2”. These should not be mixed and matched once the system has been set up.\n\nTo identify the serial number of each converter, a simple script was created. The script will be run twice, once for each converter. Run the script and follow the on-screen instructions:\n\npython3 ~/apms/tools/find_rs485_serial_number.py\n\nNote down the serial number for each converter as it will be used when configuring the APMS. See Configuring the APMS.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "07_raspberry_pi.html#configuring-the-apms",
+    "href": "07_raspberry_pi.html#configuring-the-apms",
+    "title": "8  Raspberry Pi Operating System",
+    "section": "8.14 Configuring the APMS",
+    "text": "8.14 Configuring the APMS\n\nAll the parameters that can and must be set for the system to work properly can be found in the config file: ~/apms/config.json\nA new system needs a config file to be created, an existing system will already have the file.\nTo check if the config file already exists, list the contents of the apms directory and see if the file is present:\n\nls ~/apms/\n\nIf a config file already exists, it can be edited with:\n\nsudo nano ~/apms/config.json\nSave the file and exit. (Hold CTRL and press x – Then press ‘y’ to save – then press Enter to exit)\n\nFor a new system, the file config_template.json can be used.\n\nMake a copy of the template:\n\ncp ~/apms/config_template.json ~/apms/config.json\n\nTo edit the config file, run:\n\nsudo nano ~/apms/config.json\n\nRefer to the table below when editing the config file. The values given in bold are defaults and do not need to be changed.\n\n\nThe table below shows the parameters and their descriptions.\n\n\n\nParameter\nDescription\n\n\n\n\nSITE_NAME\nUnique site name. All lowercase, no spaces. Example: \"stony_point\"\n\n\nSITE_CODE\nUnique 3-letter site code. All capital letters. Example: \"STO\" for Stony.\n\n\nSCALE_1_SERIAL_NUMBER\nUnique serial number for the first RS485 converter. See: Finding the RS485 Serial Numbers\n\n\nSCALE_2_SERIAL_NUMBER\nUnique serial number for the second RS485 converter. See: Finding the RS485 Serial Numbers\n\n\nAWS_S3_DATA_PATH\nThis should be \"s3://apmsbirdlife/APMS/data/[site name]/\". Example: *\"s3://apmsbirdlife/APMS/data/stony_point/\"*\n\n\nAWS_ACCESS_KEY\nThe access key you obtained when the user was created. See Creating a User on AWS S3\n\n\nAWS_SECRET_ACCESS_KEY\nThe secret access key you obtained when the user was created. See Creating a User on AWS S3\n\n\nAWS_BUCKET\nName of AWS S3 Bucket: “apmsbirdlife”\n\n\nAPMS_ABS_PATH\nAbsolute path where APMS is installed: “/home/apms/”\n\n\nDATA_PATH\nPath where raw data is stored: “/home/apms/data/”\n\n\nLOGS_PATH\nPath where log files are stored: “/home/apms/logs/”\n\n\nERROR_PATH\nPath where error files are stored: “/home/apms/error/”\n\n\nUSB_PATH\nPath when USB Flash drive is mounted: “/home/apms/flash/”\n\n\nUSB_PARTITION\nUSB Flash drive partition: “/dev/sda1”\n\n\nEMAIL_ADDRESS\nAPMS main email address: “apmsbirdlife@gmail.com”\n\n\nEMAIL_PASSWORD\nThis is the password to the main email address: “dayammxlcvvwmdza”\n\n\nEMAIL_ADDRESS_ADMIN\nEmail address of APMS administrator: “philip.faure@birdlife.org.za”\n\n\nSCALE_SAMPLING_FREQ\nSampling frequency of scales (samples per second): 100\n\n\nSCALE_BAUD_RATE\nRS485 Serial Converter BAUD rate: 115200\n\n\nMIN_PENGUIN_WEIGHT\nThis is the minimum penguin weight (in kg) expected to be encountered in the field: 1.9\n\n\nMAX_PENGUIN_WEIGHT\nThis is the maximum penguin weight (in kg) expected to be encountered in the field: 4.3\n\n\nMAX_DEAD_WEIGHT\nMaximum weight allowed (in kg) for sand/debris on the scales before warning: 0.5\n\n\nSCALE_EMPTY_TIME\nDuration (in seconds) the scales must be empty before the event stops: 3\n\n\nRFID_SERIAL_NUMBER\nThis is the serial number of the serial converter inside the BioMark RFID reader: “0001”\n\n\nRFID_BAUD_RATE\nThis is the BAUD rate of the BioMark serial converter: 115200\n\n\nSERIAL_PORT_INTERNAL\nThis is the name of the serial port used for communication with the Monitor: “/dev/ttyS0”\n\n\nINTERNAL_BAUD_RATE\nThis is the BAUD rate for communication between the Pi and the Monitor: 115200\n\n\nMAX_SCALE_ERROR_COUNT\nThis is the number of times a scale can fail before it gets disabled: 3\n\n\nCPU_TEMP_WARNING\nCPU temperature (in °C) at which to send out warning message: 60\n\n\nCPU_TEMP_DANGER\nCPU temperature (in °C) at which Raspberry Pi will start throttling the CPU: 70\n\n\nUPLOAD_HOUR\nHour of day to do the data transfer to the cloud. 1 = 1:00, 19 = 7pm etc: 1\n\n\nUPLOAD\nThis variable is set to 1 to allow daily data uploads to the cloud (0 to disable): 1\n\n\n\n\nAfter editing, Save the file and exit.\n\nHold CTRL and press x. Then press ‘y’ to save, then press Enter to exit\n\nThe configuration file has now been created.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Raspberry Pi Operating System</span>"
+    ]
+  },
+  {
+    "objectID": "08_arduino.html",
+    "href": "08_arduino.html",
+    "title": "9  Programming the Arduino Monitor via the Pi",
+    "section": "",
+    "text": "9.1 Initial Setup\nAs discussed in UPDI Programming, the Arduino is programmed via UPDI.\nAdd to path:\nTo install the AVR core, run:\nTo set up the config file, run:\nThe Software Serial port buffer must be increased:",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Programming the Arduino Monitor via the Pi</span>"
+    ]
+  },
+  {
+    "objectID": "08_arduino.html#initial-setup",
+    "href": "08_arduino.html#initial-setup",
+    "title": "9  Programming the Arduino Monitor via the Pi",
+    "section": "",
+    "text": "Before soldering the link and connecting the UPDI wire, compile and upload the test sketch as discussed in Programming via the Arduino Software.\nEnsure the Monitor Circuit Board has been fully tested before plugging it into the Pi. See Testing the Monitor Circuit Board.\nEnsure the Serial Console has been disabled as discussed in Disable Serial Console.\nEnsure UART3 has been configured as discussed in Configure UART3.\nEnsure GPIO3 has been configured to power the Raspberry Pi on/off as discussed in Configure GPIO3 for Power ON/OFF.\nProvide 24V DC to the Main Unit, providing power for the Raspberry Pi and Arduino to boot up.\nSSH into the Pi.\nEnsure the latest firmware has been downloaded:\n\ncd ~/apms\ngit clone\n\nTo compile the firmware, arduino-cli must be installed. Run:\n\ncd ~\ncurl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh\n\n\nEdit bashrc:\n\nnano ~/.bashrc\n\nAdd the following to the bottom: export PATH=\\$PATH:/home/apms/bin\nSave the file and exit. (Hold CTRL and press x – Then press ‘y’ to save – then press Enter to exit)\nType:\n\nsource ~/.bashrc\n\narduino-cli core install arduino:megaavr\n\narduino-cli config init\n\n\nDetermine the version number. Run:\n\nls ~/.arduino15/packages/arduino/hardware/megaavr/\n\nThe run the following:\n\nsudo nano ~/.arduino15/packages/arduino/hardware/megaavr/[VERSION NUMBER]/libraries/SoftwareSerial/src/SoftwareSerial.h\n\nLook for the line #define _SS_MAX_RX_BUFF 64 // RX buffer size and change 64 to 100\nSave the file and exit. (Hold CTRL and press x – Then press y to save – then press Enter to exit)",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Programming the Arduino Monitor via the Pi</span>"
+    ]
+  },
+  {
+    "objectID": "08_arduino.html#compiling-and-uploading",
+    "href": "08_arduino.html#compiling-and-uploading",
+    "title": "9  Programming the Arduino Monitor via the Pi",
+    "section": "9.2 Compiling and Uploading",
+    "text": "9.2 Compiling and Uploading\n\nSSH into the Pi\nGo to the Monitor firmware directory:\n\ncd ~/apms/system_monitor\n\nCompile the firmware:\n\nchmod +x .compile.sh\nchmod +x .upload.sh\n./compile.sh\n\n\n\nFigure 53. Compiling the firmware.\n\n\n\nUpload the firmware to the monitor:\n\n./upload.sh\n\nThe output can be seen in the below screenshot.\nIf the upload fails, check the UPDI wire and link, Schottky diode and the wiring of the level shifter.\nThe Monitor should reboot and send an SMS to the operator.\n\n\n\n\nFigure 54. Uploading the firmware.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Programming the Arduino Monitor via the Pi</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html",
+    "href": "09_biomark.html",
+    "title": "10  BioMark Reader",
+    "section": "",
+    "text": "10.1 Overview\nThe BioMark RFID Reader is a device used to record penguins that have been PIT-tagged. The device outputs the tag number via a serial-to-USB converter, accessible via a mini-USB port on the device.\nThe reader has many different configurations and the latest BioMark manual should always be followed.\nBelow is some information of the currently used model, for reference. The Raspberry Pi reads the tags via a USB cable, plugged into the front of the APMS Main Unit.\nFor the reader to operate, it needs 24V power and an RFID antenna connected. For the pinout, see Fig. 55.\nTo make an antenna, see Making a BioMark Antenna. As of 2026, we have been using antenna’s custom made by BioMark to fit perfectly in between our scales.\nThe BioMark reader can be configured either via the BioMark Software (Device Manager) or via the Raspberry Pi terminal. Both methods described here use a USB-A to mini-USB cable to connect to the Reader.\nIt is also possible to connect to reader via a RS232 or Bluetooth connection. Refer to the BioMark documentation for more information if this is required.\nApplication Firmware Version v 1.7.1",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html#overview",
+    "href": "09_biomark.html#overview",
+    "title": "10  BioMark Reader",
+    "section": "",
+    "text": "Figure 55. BioMark pinout.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html#connect-to-biomark-via-device-manager",
+    "href": "09_biomark.html#connect-to-biomark-via-device-manager",
+    "title": "10  BioMark Reader",
+    "section": "10.2 Connect to BioMark via Device Manager",
+    "text": "10.2 Connect to BioMark via Device Manager\n\nBioMark Device Manager, can be installed on a Windows PC to configure the system. Currently version 1.2.15.1 is being used and can be found on the S3 account or downloaded here:\n\nDownload Device Manager 1.2.15.1.zip\n\nThe Windows 10 and Windows 11 driver for the serial converter (CP210x_Universal_Windows_Driver_11.3.0), used by the BioMark Reader, can be found on the S3 account or downloaded here:\n\nDownload Windows Driver\n\nPlease refer to the IS1001 Reader User Manual and the Device Manager Software Manual for instructions on how to connect and configure the reader. Both can be found at:\n\nDownload IS1001 Reader User Manual\nDownload Device Software Manual\n\nRefer to the section Configuring the BioMark Reader for the required settings.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html#connect-to-biomark-via-raspberry-pi-terminal",
+    "href": "09_biomark.html#connect-to-biomark-via-raspberry-pi-terminal",
+    "title": "10  BioMark Reader",
+    "section": "10.3 Connect to BioMark via Raspberry Pi Terminal",
+    "text": "10.3 Connect to BioMark via Raspberry Pi Terminal\n\nTo connect to the BioMark Reader from the Raspberry Pi terminal, ensure that both the BioMark Reader and Raspberry Pi are powered up.\nSSH into the Pi\nCheck that the RFID service is not running in the background and stop the service if it is:\n\nCheck with:\n\nsystemctl status rfid\n\nIf active, stop the service:\n\nsudo systemctl stop rfid\nConnect the USB cable to the mini-USB port on the BioMark reader and to any of the USB ports of the Raspberry Pi. If an APMS Main Unit has been built, the front USB port can be used.\nAfter the USB cable is plugged into the Pi, the BioMark serial converter will be assigned to a device file. This will either be “ttyUSB0”, “ttyUSB1” or “ttyUSB2”, depending on what other USB devices are plugged in. To determine which device file to use, run the rfid script:\npython3 ~/apms/rfid.py\n\nFind the device file name as indicated in Fig. 56 below.\n\n\n\n\n\nFigure 56. Finding the device name using the Python RFID script.\n\n\n\nClose the script: Hold CTRL and press c\nTo connect to the BioMark reader from the Pi, a program called Minicom will be used. This was installed when the Raspberry Pi was set up. See Install applications and libraries.\n\nRun:\n\nminicom -D /dev/[device file]\n-   Example: `minicom -D /dev/ttyUSB0`\n\nOnce inside minicom, disable “Hardware Flow Control”:\nHold CTRL and press a - Then press o to bring up the options menu, go to “Serial port setup” and press Enter. See screenshot below\n\n\n\n\n\nFigure 57. Turning off ‘Hardware Flow Control’.\n\n\n\nEnsure “Hardware Flow Control” is off (It must have “no” next to it) - see Fig. 58.\n\nIf “Hardware Flow Control” is on, turn it off by pressing “f”.\n\n\n\n\n\nFigure 58. Hardware Flow Control disabled.\n\n\n\nPress Enter to save and return to the Options menu.\nPress Esc to exit the Options menu\nType “rfs” and press Enter. The current configuration should be printed to the screen.\nYou will not see the letters “rfs” until you press Enter.\nAn Example for Robben Island can be seen in Fig. 59.\n\n\n\n\nFigure 59. RFS system configuration for Robben Island.\n\n\n\nIf you see the configuration page as above, it means you have successfully connected to the BioMark Reader and can now send/receive commands in the console.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html#configuring-the-biomark-reader",
+    "href": "09_biomark.html#configuring-the-biomark-reader",
+    "title": "10  BioMark Reader",
+    "section": "10.4 Configuring the BioMark Reader",
+    "text": "10.4 Configuring the BioMark Reader\nAfter successfully connecting to the BioMark Reader as discussed above, the system can be configured.\n\nIf using the “Device Manager” software, please refer the BioMark documentation and use the settings provided below.\nIf connecting via a Raspberry Pi terminal, use the commands below to set the BioMark parameters.\nBefore executing any commands, it is always a good idea to run “rfs” and check that a status report is received. This confirms the reader is working properly and clears the serial buffer of any garbage characters that may be present.\n\nThe settings given below are used for a BioMark Reader connected to an APMS.\n\nIf connecting to the BioMark Reader via the Raspberry Pi terminal (minicom), the commands given in the table below can be used to configure the system. Keep the default for all other settings. Compare the values in the table with the values obtained from executing “rfs”, and change the settings as needed.\n\n\n\n\n\n\n\n\n\nSetting\nValue\nCommand\n\n\n\n\nOperation Mode\n“Scan”\nROM1\n\n\nNetwork Mode\nIS1001 Standalone\nRNMS\n\n\nExciter Sync. Mode\nStandalone\nRSM0\n\n\nBeeper\nDisabled\nRBS0\n\n\nTag Display Format\nDEC\nRDFD\n\n\nExciter Voltage Level\n3\nAVE3\n\n\nDynamic Tuning\nEnabled\nADT1\n\n\nTags To Local Port\nEnabled\nCTL1\n\n\nRemote Port Protocol\nASCII\nCPRA\n\n\nFastag Detection\nEnabled\nDFH1\n\n\nDetection Counter Enabled\nYes\nDCS1\n\n\nUnique Mode\nDelay\nDUMD\n\n\nUnique Delay\n1200 sec\nDUD1200\n\n\nAuto VTT Delay\n360 min\nDTD360\n\n\n\n\nAfter changing all the necessary parameters, run “rfs” again to confirm all the settings are correct.\nTake a test tag and move it close to the antenna. The tag should be picked up and displayed in minicom. If so, you have successfully configured the BioMark reader.\nExit minicom\n\nHold CTRL and press a - Then release keys - Then press ‘q’ and then Enter to exit.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "09_biomark.html#making-a-biomark-antenna",
+    "href": "09_biomark.html#making-a-biomark-antenna",
+    "title": "10  BioMark Reader",
+    "section": "10.5 Making a BioMark Antenna",
+    "text": "10.5 Making a BioMark Antenna\nAn experimental antenna has been made with some success. We no longer use these antennas and all systems have been upgraded with a tailormade antenna custom made for our system by BioMark. These custom made antennas have a better detection range, are easier to tune, and won’t lose resonance if the cables are moved. To test a new antenna, first ensure a connection to the BioMark Reader has been made, as discussed previously.\nAs the wire being used might be slightly different, the basic method will be described below. The antennas at Dyer Island and Robben Island were made using the same 3-core wire as used to run power from the solar supply to the APMS. The main idea behind making an antenna is to make multiple loops and cutting it down to the correct length to achieve resonance.\n\nStart with a length of wire, L, strip both ends and connect the wires as shown in Fig. 60.\n\n\n\n\nFigure 60. Cable layout when making an antenna.\n\n\n\nThe length to start at is a bit of a guess. The three core wire used for the latest antennas ended up being approximately 15-16 m. Thicker wires or more loops will result in a shorter length.\nAdd a “fly-lead” of approximately 1m to join the antenna and the BioMark reader.\nDuring the test, lay the wires parallel, 40-60 cm apart, and connect the antenna to the BioMark reader. See Fig. 61 as an example.\n\n\n\n\nFigure 61. Laying out the 3-core cable to build a RFID antenna.\n\n\n\nOnce the antenna is connected and you have logged into the BioMark via minicom (or the Device Manager software), the antenna can be tested. In the BioMark console, send the command “aft”. This is “Antenna Full Tune”. The reader will try to tune the antenna by adding capacitance and give a final “caps” value between 0 and 1023. As the antenna cable is too long at the start, the number should be low.\nCut a piece of the cable off, connect in the same fashion and test again. The number might remain the same until the antenna starts getting close to resonance.\nRepeat this process until a caps value of approximately 512 is reached.\nBe careful not to cut too much off, as the number starts growing rapidly once it gets close to resonance.\nAt this stage, the antenna current should also have increase. (above 3 A)\nTest the range of the new antenna with a test tag. Use the same test procedure when placing an antenna in the field.\nSolder the wires and insulate using heat shrink to prevent moisture from corroding the joints\n\nNote, when testing in the field, the caps number will vary wildly as the antenna shape is changed. The important thing is that the antenna tunes, and a tag is picked up from a decent distance. A screenshot of an antenna tested in the field (caps = 688) can be seen in Fig. 62.\n\n\n\nFigure 62. Antenna tuning example.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>BioMark Reader</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html",
+    "href": "10_testing.html",
+    "title": "11  Testing Each Script",
+    "section": "",
+    "text": "11.1 Testing the scales.py script\nEach part of the system can now be tested individually.\nBefore testing, ensure the APMS is configured - See Configuring the APMS.\nThe testing of the scales is now complete. The files generated in the above tests can be checked for accuracy after uploading them to the cloud using the transfer_data.py script (see section below).",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-scales.py-script",
+    "href": "10_testing.html#testing-the-scales.py-script",
+    "title": "11  Testing Each Script",
+    "section": "",
+    "text": "Plug both scales into their respective sockets.\nPower up the APMS Main Unit\nSSH into the Pi.\nCheck if the scales service is running in the background and stop the service if it is:\n\nCheck with:\n\nsystemctl status scales\n\nIf active, stop the service:\n\nsudo systemctl stop scales\nEnsure the indicators show weight readings of close to 0.000 kg (It should be within 1g after calibration)\nCheck the scale frequencies:\n\npython3 ~/apms/test_scale_frequency.py\n\nCurrently the scales are set to 100 Hz.\nCheck that the scale frequencies are within 1% (between 99 Hz and 101 Hz)\nRun the scales script:\n\npython3 ~/apms/scales.py\n\nYou should see the following on the screen:\n\n\n\n\nFigure 63. A screen shot of the scale.py script running.\n\n\n\nPut a 1kg weight on scale 1.\nAs it is less than the weight of a penguin, and less than the weight specified in the config.json file, it should detect a high dead weight.\nCheck that it is indeed scale 1 showing the high dead weight (Fig. 64).\nRemove the 1kg weight. A message should state the dead weight has reduced (Fig. 64).\nRepeat for scale 2\n\n\n\n\nFigure 64. Dead weight message printed in the terminal.\n\n\n\nPlace a 5kg weight on scale 1.\n\nAs this weight is greater than the minimum penguin weight, an event should be started. As scale 1 was triggered first, it should indicate a penguin heading out to the ocean.\nWait a few seconds and remove the 5kg weight. After removing the weight, there will be a slight pause and then the event should finish, and the data stored to a file. This pause is the time period set in the config file for “SCALE_EMPTY_TIME”.\nA screenshot is shown below:\n\n\n\n\n\nFigure 65. Example of a scale file written to file.\n\n\n\nRepeat for scale 2. This time, the system should detect scale 2 being triggered first, displaying a message that a penguin is coming back from the ocean. Remove the weight and wait for the event to finish.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-rfid.py-script",
+    "href": "10_testing.html#testing-the-rfid.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.2 Testing the rfid.py script",
+    "text": "11.2 Testing the rfid.py script\nThe APMS picks up RFID tags via an external RFID reader made by BioMark (Model IS1001).\n\nBefore testing the rfid script, please ensure the BioMark Reader has been fully configured and the BioMark antenna installed. See Configuring the BioMark Reader.\nConnect a cable between the mini-USB port on the BioMark Reader and the front USB port of the APMS main unit.\n\nIf an APMS main unit is not being used, the Raspberry Pi will have to be powered by a 5V power supply and any USB port on the Pi can be used to connect to the BioMark Reader.\n\nPower up the BioMark Reader and APMS main unit.\nSSH into the Pi.\nCheck that the rfid service is not running in the background and stop the service if it is. Check with:\n\nsystemctl status rfid\n\nIf active, stop the service:\n\nsudo systemctl stop rfid\n\nRun the rfid script:\n\npython3 ~/apms/rfid.py\n\nYou should see the following on the screen (Fig. 66). Note that the RFID reader could be assigned to “ttyUSB0”,”ttyUSB1” or “ttyUSB2”.\n\n\n\n\nFigure 66. Running the rfid.py script.\n\n\n\nTake a test tag and move it close to the antenna. The tag should be registered and saved to a file. This file can also be checked after uploading to the cloud. The tag should be read and printed out (Fig. 67).\n\n\n\n\nFigure 67. RFID tag being read by the Biomark.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-system_status_check.py-script",
+    "href": "10_testing.html#testing-the-system_status_check.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.3 Testing the system_status_check.py script",
+    "text": "11.3 Testing the system_status_check.py script\nThe system_status_check.py script automatically runs every hour, at 10 past the hour. The script is used to monitor the health of the entire APMS. See Fig. 68 for a screenshot after running the script manually. The main features of the script are:\n\nSend an SMS to the operator if the Raspberry Pi has rebooted.\nCheck Last time data was uploaded and backfill data if needed.\nThe script will check when last the data was uploaded to the cloud and if more than a day, the data transfer script will be executed to upload all outstanding data.\nCheck CPU temperature\nIf the CPU temperature exceeds the WARNING or DANGER thresholds, an email will be sent to the operator. Thresholds are set in the configuration file. See Configuring the APMS and adjust CPU_TEMP_WARNING and CPU_TEMP_DANGER variables.\nChecks CPU load and memory usage\nChecks USB Flash drive is mounted and storage available\nTests the internet connection\nCheck if a BASH command has been received from Monitor and executes it (still in development)\nReceives status report from Arduino Monitor (Used for Dashboard)\nSends a report to the Arduino Monitor\n\nUsed when requesting a status report from the Monitor, via SMS.\n\n\nAll the information is logged to a daily system status file. This file will normally have 24 entries, one for every hour. On occasion, the request for a status report from the Monitor might fail. The operator should receive an email alert. If this happens, wait one hour and check if the next status report is received (at 10 past the hour). If not investigate.\nThe daily status file can be viewed with the cat function and files are located at:\n~/data/[YEAR]/[YYYYMMDD]/[YYYYMMDD]*_STATUS.txt\nFor example: cat ~/data/2023/20231230/20231230_STATUS.txt\nThis file is uploaded to the cloud daily and most of the info on the Dashboard is obtained from this file.\nTo test the system_status_check.py script, do the following:\n\nRun the script:\n\npython3 ~/apms/system_status_check.py\nA typical output is shown in Fig. 68.\n\n\n\nFigure 68. Example of a system status report.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-transfer_data.py-script",
+    "href": "10_testing.html#testing-the-transfer_data.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.4 Testing the transfer_data.py script",
+    "text": "11.4 Testing the transfer_data.py script\nThe APMS system stores data in three places. Initially, the raw files are saved to the internal micro-SD card of the Raspberry Pi. Every morning at 1AM the new data is transferred to the USB Flash drive and to the cloud. This upload time can be changed in the config file (UPLOAD_HOUR) If there is no internet connection or if the connection fails during data transfer, the last_upload.txt file will not be updated. The last_upload.txt file (located at ~/logs/last_upload.txt) is checked by the system_status_check.py script that runs every hour.\nThe APMS uses AWS S3 for cloud storage. It is the responsibility of the administrator to manage the storage space available on the USB Flash drive and the internal micro-SD card. Both these parameters can be viewed on the dashboard and an alert is set for when either one reaches 75% capacity.\n\nEnsure there are some data files to transfer and that the APMS has been configured. If you have already completed the testing of the scales and rfid scripts, there should be some test files to transfer.\nRun the data transfer script:\n\npython3 ~/apms/transfer_data.py\n\nYou should see something similar to the screenshot in Fig. 69.\n\n\n\n\nFigure 69. Example of running the transfer_data.py script.\n\n\n\nEvery time data is successfully uploaded, the file ~/logs/last_upload.txt is updated.\nTo verify today’s date and time was added to the bottom of the file after the transfer, run:\n\ncat ~/logs/last_upload.txt\n\nTo check if the data transferred to the USB Flash drive:\n\nEnsure it is mounted. See Set up the USB Flash Drive.\nList the files in the scale and rfid data directory. For example, to list the files for today, the 15th of December 2023. Adapt the lines below for the day the test was conducted.\n\n\nls ~/flash/2023/20231215/scale/\nls ~/flash/2023/20231215/rfid/\n\nTo check if the data transferred to the cloud:\n\nOpen an S3 Client, such as S3 Browser.\nCheck the scale and rfid data directory. For example, the scale and rfid directories for Stony Point, for the 15th of December 2023, can be found at:\n\ns3://apmsbirdlife/APMS/data/stony_point/2023/20231215/scale/\ns3://apmsbirdlife/APMS/data/stony_point/2023/20231215/rfid/",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-apms_email.py-script",
+    "href": "10_testing.html#testing-the-apms_email.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.5 Testing the apms_email.py script",
+    "text": "11.5 Testing the apms_email.py script\nThe apms_email.py script is a useful script that can be run from the command line to send an email. The script is also capable of sending a file as an attachment. It is important to check this script is working, as it will be used to email the operator in case of a fault.\nThe syntax is as follows: python3 apms_email.py \"body of email\" \\[path to attachment file\\]\nexample:\npython3 ~/apms/apms_email.py \"this is the body of the email\" ~/attachment.zip\nIf the script was not successful, examine the email information in the APMS configuration file. See Configuring the APMS",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-log.py-script",
+    "href": "10_testing.html#testing-the-log.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.6 Testing the log.py script",
+    "text": "11.6 Testing the log.py script\nThe log.py script is crucial and should be used whenever a calibration is done, something unusual is detected with the system, when any structural/firmware/hardware changes are made, or when any general work is carried out. The log script will make a backup of the existing log file whenever a log entry is added. The backed-up log files can be found at: ~/logs/backup\nTo use the log script:\n\nSSH into the Pi.\nRun the log script:\n\npython3 ~/apms/log.py\n\nFollow the onscreen commands to log an entry\n\nIf this is the first log entry, a new log file will be created (~/logs/log.txt)\n\nView the log file to check the entry was added\n\ncat ~/logs/log.txt\n\nEdit the log file if a change needs to be made:\n\nsudo nano ~/logs/log.txt\nThe log entries are displayed on the Dashboard.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#assigning-an-rfid-tag-to-a-penguin",
+    "href": "10_testing.html#assigning-an-rfid-tag-to-a-penguin",
+    "title": "11  Testing Each Script",
+    "section": "11.7 Assigning an RFID Tag to a Penguin",
+    "text": "11.7 Assigning an RFID Tag to a Penguin\nAfter the scale file is analysed and a list of penguins is generated, RFID tags can be assigned. For each penguin, a “crossing time” is calculated. A penguin crossing is defined as the period between first stepping on the scales until stepping off the scales. A single “crossing time” is calculated as halfway through the penguin crossing.\nFor each penguin, the crossing time is compared to the RFID timestamps to check if an RFID tag was picked up close to when the penguin crossed the scales (RFID_TO_PENGUIN_INTERVAL in the config file). By default, RFID_TO_PENGUIN_INTERVAL is set to 60 seconds.\nThe location of the RFID antenna is set in the config file for each site. Look for 'RFID_LOCATION': 'MIDDLE_ONLY' near the bottom of config.py. The default is 'MIDDLE_ONLY', as this is the configuration for all new sites. This is not the case for older sites (see later in this chapter).\nWhen 'MIDDLE_ONLY' is given as the RFID antenna location, and no other RFID tags were recorded during the penguin’s crossing, the algorithm can assign an RFID tag number to the penguin based on the following two scenarios:\n\nThe tag is picked up during the jump from one scale to the other: If a tag is picked up within the time period when the penguin is jumping from one scale to the other, the tag number is assigned to that penguin. This is also valid for a group of penguins, as we assume they move in single file over the scales. This is why it is important to ensure they move in single file when setting up the site: to avoid a penguin overtaking another and causing the event to be discarded or, worse, an incorrect RFID tag assigned to a penguin.\nThe tag was picked up somewhere during the penguin’s crossing (no other penguins crossing): Sometimes, due to various circumstances, the antenna will pick up the tag too early, or even after the jump. If, however, we know the antenna is placed in between the scales, and no other penguins were crossing at the same time, we assume the tag belongs to that penguin.\n\nBelow is an example of two penguins heading out to the ocean. They each trigger the BioMark RFID reader as they jump from Scale 1 (colony side) to Scale 2 (ocean side), and thus both have RFID tag numbers assigned to them.\nAs a final “basic check”, the algorithm checks for the following parameters set in the config file:\n\nThe tag was picked up close to when a penguin was crossing (RFID_TO_PENGUIN_INTERVAL, default: 60 sec)\n\nAND the tag was the only one for a certain period of time (RFID_ISOLATION_INTERVAL, default: 5 minutes)\n\nAND it was the only scale file generated for a certain period of time (SCALE_FILE_ISOLATION_INTERVAL, default: 60 seconds)\n\nAND there was only one penguin in the above-mentioned scale file.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#error-handling",
+    "href": "10_testing.html#error-handling",
+    "title": "11  Testing Each Script",
+    "section": "11.8 Error Handling",
+    "text": "11.8 Error Handling\nPenguins are wild animals and do not always walk nicely over the scales. Numerous situations can give rise to a scale file not being processed. A fault with the scale could also lead to data files that cannot be processed by the algorithm.\nWhen the algorithm discards a file, it moves it to an “error” directory with the name of the error. These files can then be viewed separately to learn more. The error directories are located in the “processed” folder at:\n~\\APMS_DATA_PROCESSING\\DATA\\PROCESSED\\[SITE NAME]\\[YEAR]\\[YYYYMMDD]\\[ERROR DIRECTORY]\nNote that even though these are called “error” directories, it does not mean there is a hardware fault. For instance, if another animal triggers the scale, the algorithm detects that and moves it to the NO_PENGUINS error directory. Many of these errors are triggered based on parameters set in the config file.\nWhen a site is not performing as expected, viewing these directories can often give clues as to what is wrong.\nThis system can be expanded, with different error states added as required. (Adding a visualization of this to the APMS Dashboard is a recommended future addition.)\n\n11.8.1 Error Directory Reference\n\n\n\n\n\n\n\nError Directory\nReason\n\n\n\n\nTIMING_JUMP\nLarge time difference between samples in scale file (&gt; 1 second).\n\n\nFREQUENCY_ERROR\nScale sampling period is not correct. Configured via MAX_AVG_SAMPLING_PERIOD and MIN_AVG_SAMPLING_PERIOD.\n\n\nNO_SUB_EVENTS\nNo sub-events found in scale file.\n\n\nUNEQUAL_NUM_PENGUINS\nNumber of penguins determined for Scale 1 differs from Scale 2.\n\n\nNO_PENGUINS\nList of penguins for Scale 1 and Scale 2 are both empty.\n\n\nDIRECTION_ERROR\nDifferent number of penguins going out to the ocean than coming back.\n\n\nPENGUIN_WEIGHT_ERROR\nAlgorithm could not determine a weight from the provided data.\n\n\nWEIGHT_TOO_HIGH\nWeight was recorded as &gt; 3x max penguin weight. Configured via MAX_PENGUIN_WEIGHT.\n\n\nOVERLOAD\nWeight exceeded scale maximum. Configured via SCALE_OVERLOAD.\n\n\nDUPLICATE_TIMESTAMPS\nWeights with the exact same timestamp found in scale file.\n\n\nLARGE_PENGUIN_WEIGHT_DIFFERENCE\nLarge difference in weight between Scale 1 and Scale 2. Configured via MAX_SCALES_DIFFERENCE_ALLOWED.\n\n\nNO_DEAD_WEIGHT_EVENTS\nNo periods found where the scale was reading a stationary dead weight.\n\n\nLARGE_DEAD_WEIGHT\nWeight on empty scale before/after event is higher than allowed. Configured via MAX_DEAD_WEIGHT.\n\n\nLARGE_DEAD_WEIGHT_DIFFERENCE\nDifference between dead weight before hopping on vs. after hopping off is too large. Configured via MAX_DEADWEIGHT_DIFF.\n\n\nNEGATIVE_JUMP_TIME\nCalculation of time taken to jump between scales returned a negative result.\n\n\nNEGATIVE_TIME_ON_SCALE\nCalculated time of jumping onto scale occurs after jumping off scale.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-onoff-button",
+    "href": "10_testing.html#testing-the-onoff-button",
+    "title": "11  Testing Each Script",
+    "section": "11.9 Testing the ON/OFF Button",
+    "text": "11.9 Testing the ON/OFF Button\nEnsure the system is ready to be powered down before starting this test. Stop the rfid and scale services.\nTo test the ON/OFF button, simply press it. The Raspberry Pi should start shutting down if it was on. The lights will flash and eventually a solid red light will be seen. If the Raspberry Pi was off, it should boot up.\nIf it does not work, check the wiring of the button on the Monitor, as well as the configuration of GPIO on the Pi. See Configure GPIO3 for Power ON/OFF for more info. Another way to isolate the fault is to power down the Pi via the Monitor command: CMD:P. If this works, the Pi has been configured properly and the problem lies elsewhere.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#testing-the-update_system_time.py-script",
+    "href": "10_testing.html#testing-the-update_system_time.py-script",
+    "title": "11  Testing Each Script",
+    "section": "11.10 Testing the update_system_time.py script",
+    "text": "11.10 Testing the update_system_time.py script\nTo prevent the system clock updating at random times, the updating of the system clock is handled by the update_system_time.py script. This is to prevent the clock updating while penguins are crossing. Causing timing errors. Files with timing errors will be rejected by the data processing algorithm, so to reduce the chance of this happening, a better time for updating the clock is chosen\nThis script runs every Monday, at 12:00. This is set in the crontab (see: Configure the Crontab). The script checks that no penguins cross the scales for 10 minutes and then updates the time. Even though this is not foolproof, it provides a safer moment in time to update the clock.\nTo test, run the update_system_time.py script:\nsudo python3 ~/apms/update_system_time.py\nThe script will run, wait for 10 minutes, and update the system time.\nTo view previous times when the clock was updated, view the log file at: ~/logs/update_time.log",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "10_testing.html#configure-scripts-as-services",
+    "href": "10_testing.html#configure-scripts-as-services",
+    "title": "11  Testing Each Script",
+    "section": "11.11 Configure Scripts as Services",
+    "text": "11.11 Configure Scripts as Services\nFor a new system, the rfid and scales scripts need to be configured to run in the background, as processes.\nThere are 2 main service files: scales.service and rfid.service. The service files are located at ~/apms/services/. To perform these operations, ensure you SSH in locally, not via Tailscale.\nCopy the 2 service files to the appropriate directory:\nsudo cp ~/apms/services/*.service /etc/systemd/system/\nStart and enable each service:\nsystemctl start scales\nsystemctl enable scales\nsystemctl start rfid\nsystemctl enable rfid\nCheck that the services are active by running:\nsystemctl status scales\nsystemctl status rfid\nReboot the Pi:\nsudo reboot\nWait a minute and try to SSH in remotely (via the internet). If this works, you have successfully configured tmate as a service. SSH into the Pi, either locally or via tmate and check that the scales and rfid services are running.\nsystemctl status scales\nsystemctl status rfid",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Testing Each Script</span>"
+    ]
+  },
+  {
+    "objectID": "11_crontab.html",
+    "href": "11_crontab.html",
+    "title": "12  Configure the Crontab",
+    "section": "",
+    "text": "12.1 Setting up the Crontab\nThe crontab is a task scheduler and is responsible for the following:\nThe crontab sends the output of each script to a log file. See ~/logs/\nTo configure the crontab:",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Configure the Crontab</span>"
+    ]
+  },
+  {
+    "objectID": "11_crontab.html#setting-up-the-crontab",
+    "href": "11_crontab.html#setting-up-the-crontab",
+    "title": "12  Configure the Crontab",
+    "section": "",
+    "text": "Run:\n\ncrontab -e\n\nIf a message comes up asking to choose a text editor, choose nano.\nCopy and paste the following into the text editor, at the bottom of the file. See Fig. 70 as an example.\n\n10 * * * * /usr/bin/python3 /home/apms/apms/system_status_check.py &gt;&gt; /home/apms/logs/system_status_check.log 2&gt;&1\n0 1 * * * /usr/bin/python3 /home/apms/apms/transfer_data.py &gt;&gt; /home/apms/logs/transfer_data.log 2&gt;&1\n0 12 * * 1 /usr/bin/python3 /home/apms/apms/update_system_time.py &gt;&gt; /home/apms/logs/update_time.log 2&gt;&1\n@reboot /usr/bin/python3 /home/apms/apms/system_status_check.py boot &gt;&gt; /home/apms/logs/system_status_check.log 2&gt;&1\n\n\n\nFigure 70. Configuring the crontab.\n\n\n\nSave and exit. (Hold CTRL and press x - Then press y to save - then press Enter to exit)\nA message should state that the crontab has been successfully updated (Fig. 71).\n\n\n\n\nFigure 71 Successfully updating the crontab.",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Configure the Crontab</span>"
+    ]
+  },
+  {
+    "objectID": "11_crontab.html#testing-the-crontab",
+    "href": "11_crontab.html#testing-the-crontab",
+    "title": "12  Configure the Crontab",
+    "section": "12.2 Testing the Crontab",
+    "text": "12.2 Testing the Crontab\nTo test whether the crontab is working correctly, view the log files of the scripts:\ncat ~/logs/system_status_check.log\ncat ~/logs/transfer_data.log\ncat ~/logs/update_time.log",
+    "crumbs": [
+      "Software & Configuration",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Configure the Crontab</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html",
+    "href": "12_commissioning.html",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "",
+    "text": "13.1 APMS Location\nAt this stage, it is assumed that a 24V solar power supply is available and that the entire system (Main Unit, Monitor, Scales, and BioMark RFID reader) has been assembled and bench-tested. This section describes what to evaluate when choosing a new field site and how to house all the electronics.\nWhen selecting an installation site for the APMS, ensure the following:",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#apms-location",
+    "href": "12_commissioning.html#apms-location",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "",
+    "text": "High Traffic: Choose a path with a high rate of penguins crossing both to and from the ocean.\nCable Length (Scales to Main Unit): Keep distance manageable. A 10m extension cable has been field-tested and works reliably.\nPower Distance: Account for the cable run between the 24V solar power supply and the Main Unit.\nCellular Signal: Verify strong 4G/LTE coverage at the exact location where the 4G router and APMS Monitor will operate (test via Speedtest.net).\nCamouflage & Low Disturbance: Minimize disturbance to the surrounding area. Penguins are sensitive to environmental changes and may bypass the weighbridge if a path looks unfamiliar. Ensure every inch of the scales platform is covered in dark green canvas to blend into the habitat.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#apms-enclosure",
+    "href": "12_commissioning.html#apms-enclosure",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "13.2 APMS Enclosure",
+    "text": "13.2 APMS Enclosure\nDifferent site conditions require different housing strategies:\n\nStony Point: Housed in a large steel box alongside the BioMark RFID reader.\nDassen Island, Dyer Island & Robben Island: Uses a rugged 125L Skitch box. This provides enough interior volume for the APMS Main Unit, BioMark circuit board, and 4G indoor router.\n\nDrill entry holes for scale cables, the RFID antenna cable, and power lines.\nPass cables through grommets or feed irrigation piping directly into the box.\nSeal cable entry points with silicone to prevent water ingress.\nWhere possible, angle entry pipes slightly upward into the box so water cannot run down the exterior pipe into the enclosure.\n\nBird Island: Uses a smaller Skitch box with the BioMark reader housed in a separate enclosure.\n\n\n\n\n\n\n\nEnclosure Heat & Mounting\n\n\n\nPaint the exterior of plastic enclosures white to reflect solar radiation and lower internal temperatures. In high-wind locations (such as Bird Island), bolt the enclosure down securely to a solid base.\n\n\n\n\n\nFigure 72. Skitch Box Enclosure Setup\n\n\n\n\n\nFigure 73. Closed Skitch Box with Irrigation Pipe Entries",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#wiring-the-skitch-box",
+    "href": "12_commissioning.html#wiring-the-skitch-box",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "13.3 Wiring the Skitch Box",
+    "text": "13.3 Wiring the Skitch Box\nOnce the box is positioned and irrigation entry pipes/grommets are installed, begin internal wiring:\n\nPower Feed: Pass the 24V DC power wires from the solar supply through the irrigation pipe into the box. Split this feed to power both the APMS Main Unit and the BioMark Reader.\nMain Unit Power: Solder a DC plug (RS: 705-1519) onto the incoming 24V power line and plug it into the Main Unit.\nBioMark Power: Wire the BioMark reader through an inline circuit breaker, which also serves as a manual power switch.\nRouter Power: If using an indoor router, plug it into the 12V DC OUT socket. If using the Teltonika router, wire it to the 24V supply. Always check the power requirements of any device you install.\nRFID Antenna: Feed the BioMark antenna cable into the box and connect it to the terminal block on the BioMark board.\nData Link: Connect a mini-USB cable (RS: 822-3226) from the mini-USB port on the BioMark reader to a USB-A port on the front of the Main Unit.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#installing-the-scales-platform",
+    "href": "12_commissioning.html#installing-the-scales-platform",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "13.4 Installing the Scales Platform",
+    "text": "13.4 Installing the Scales Platform\n\nLeveling: The scales platform must be level. Use a spirit level across both dimensions of the frame. Use surrounding sand and rocks to create a flat, stable foundation.\nCable Protection: Run all scale cables inside irrigation piping back to the enclosure to protect them from weather and animal damage (especially where cable splices exist).\nFree Pan Movement: Ensure the canvas-covered scale pans rest cleanly on their load cells without touching surrounding rocks, twigs, or vegetation. Contact with external objects will distort weight measurements.\n\n\n\n\nFigure 74. Leveling the Scales Platform\n\n\n\nAntenna Placement & Tuning: Lay out the BioMark RFID antenna loop. Avoid running the antenna wire parallel to power cables, and never let the antenna wire overlap itself. Perform a full frequency tune on the BioMark reader and verify detection distance using a test PIT tag.\n\n\n\n\nFigure 75. RFID Antenna Layout and Tuning\n\n\n\nCalibration: Once the platform is level and the RFID antenna is verified, calibrate the scales following the instructions in the section: Routine Calibration of Scales.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#warning-sign-installation",
+    "href": "12_commissioning.html#warning-sign-installation",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "13.5 Warning Sign Installation",
+    "text": "13.5 Warning Sign Installation\nA warning sign alerts visitors and field staff to keep clear of the sensitive monitoring equipment.\n\n\n\n\n\n\nSecurity Consideration\n\n\n\nWhile a sign deters accidental disruption, it can also draw unwanted attention to equipment in publicly accessible areas. The decision to erect a sign depends on local site security.\n\n\n\nSign Graphics File Location: [TODO: Insert file path]\nSupplier Information: [TODO: Insert supplier info]\n\n\n\n\nFigure 76. Site Warning Sign Installation",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "12_commissioning.html#final-checks-and-system-startup",
+    "href": "12_commissioning.html#final-checks-and-system-startup",
+    "title": "13  Commissioning a New System in the Field",
+    "section": "13.6 Final Checks and System Startup",
+    "text": "13.6 Final Checks and System Startup\nBefore powering on, verify the following pre-flight checklist:\n\nSolar power supply outputting stable 24V DC.\nAll enclosures securely closed and latched (BioMark, APMS Main Unit, Router, Skitch Box).\nBioMark reader fully wired, configured, and seated in its final position.\nBioMark antenna zip-tied to mount, tuned, and field-tested with a PIT tag.\nArduino Monitor active and SIM800L antenna oriented in final position.\nRouter online with active cellular connection.\nField site cleared of all metal tools, loose wire, and debris.\nWarning sign secured (if applicable).\n\n\n13.6.1 System Startup Sequence\nTo start the system cleanly, perform a full reboot to ensure all background scripts launch via crontab and systemd:\n\nEstablish an SSH connection to the Main Unit (locally via LAN or remotely via Tailscale).\nIssue a system reboot:\n\nsudo reboot\n\nWait a few minutes and ssh into the system via Tailscale.\nUse the tmux commands to create windows to monitor the rfid and scales script\n\nExample:\n\nHold CTRL and press b - Then release keys - Then press % to split screen vertically\nHold CTRL and press b - Then release keys - Then press “ to split screen horizontally\nWrite the first entry into the log to state system is live:\n\npython3 ~/apms/log.py",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Commissioning a New System in the Field</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html",
+    "href": "13_data_processing.html",
+    "title": "14  APMS Data Processing",
+    "section": "",
+    "text": "14.1 Overview\nThe data processing section consists of the data processing script, the code necessary to display the data on the Dashboard and a script to generate graphs for a website. Instructions below are given for Linux, but the data_processing.py script can also be run on Windows.\nThe data processing script has the task of taking in raw scale and RFID data and producing a csv file containing a list of penguins. The script can be used to process multiple days over any given date range. For the example below, only one day’s data from one site is discussed. This process is repeated for all the days of all the sites requested.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#install-python-packages",
+    "href": "13_data_processing.html#install-python-packages",
+    "title": "14  APMS Data Processing",
+    "section": "14.2 Install Python Packages",
+    "text": "14.2 Install Python Packages\nInstall the latest version of Python if it is not installed already\npip install matplotlib\npip install pandas\npip install boto3\npip install scipy",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#download-the-software-from-github",
+    "href": "13_data_processing.html#download-the-software-from-github",
+    "title": "14  APMS Data Processing",
+    "section": "14.3 Download the Software from GitHub",
+    "text": "14.3 Download the Software from GitHub\nTo process and display the penguin data, download the code from GitHub.\n\nSee the section Configure Git and Download Firmware to authenticate. Clone the directory from GitHub into the home folder. This will automatically create a directory called apms_data_processing.\n\nRun the following code to clone and download the software:\ncd ~\ngit clone git@github.com:apmsbirdlife/apms_data_processing.git",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#editing-the-config-file",
+    "href": "13_data_processing.html#editing-the-config-file",
+    "title": "14  APMS Data Processing",
+    "section": "14.4 Editing the config file",
+    "text": "14.4 Editing the config file\nAll the main parameters for data processing and the Dashboard must be set in the config file. An example file is included, called “config_example.py”. Edit this file and change the parameters as required. Many of the settings can be left with their default values. Rename the newly edited “config_example.py” file to config.py when you are done. Ensure this file is stored in ~/apms_data_processing, together with all the rest of the code.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#data-processing-script-usage",
+    "href": "13_data_processing.html#data-processing-script-usage",
+    "title": "14  APMS Data Processing",
+    "section": "14.5 Data Processing Script Usage",
+    "text": "14.5 Data Processing Script Usage\nTo use the script, it is assumed that you have:\n\nSet up access to the cloud, as described in AWS S3 Cloud Storage\nConfigured the config.py file as described in Editing the config file\n\nTo process data using the script, use the following syntax:\npython3 process_data.py SITE DATE RANGE\nwhere:\n\n[SITE] can be left blank to process data for all sites, or a site name can be given.\n\nThe following site names can currently be used:\n\n“stony_point”\n“bird_island”\n“dyer_island”\n“robben_island”\n“dassen_island”\n\n\n[DATE RANGE] can either be left blank, or a date range such as “20230601-20231101” can be given, or the number of days back, e.g. “5”. If left blank, it will process only the previous day’s data.\n\nSome examples\nProcess the last 7 days’ worth of data for Stony Point:\npython3 process_data.py stony_point 7\nProcess yesterday’s data for Bird Island:\npython3 process_data.py bird_island\nProcess yesterday’s data for all the sites:\npython3 process_data.py\nProcess data from the first of September 2023 till the first of November 2023, for Dyer Island:\npython3 process_data.py dyer_island 20230901-20231101\nThis will create a CSV file for each day. The CSV file will be stored in the “processed” directory. An example of a CSV file and where it is stored, is shown below in the following directory path:\n~/apms_data_processing/data/processed/stony_point/2023/20231227/stony_point_20231227_processed_data.csv",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#how-the-script-works",
+    "href": "13_data_processing.html#how-the-script-works",
+    "title": "14  APMS Data Processing",
+    "section": "14.6 How the Script Works",
+    "text": "14.6 How the Script Works\nBelow are the basic steps for the script to process penguin data for the previous day.\n\nDownload the previous day’s scale and RFID data from the cloud (Amazon S3).\n\nThis gets stored in ~/apms_data_processing/data/downloaded_raw/.\n\nCopy the raw files to ~/apms_data_processing/data/processing/ directory for further processing.\nEach CSV scale file contains data for both scales and can be seen as one event.\nFor each scale, the event is broken up into sub events.\nThe penguins in each sub event are added to the list of penguins for that scale.\nThe lists from both scales are compared and the direction and weight of each penguin are determined.\nThe penguins for each event are added to the list of penguins for the day.\nThe list of penguins for the day is compared to a list of RFID tags for the day.\nPenguin weights are linked to RFID tags where appropriate.\nA CSV file is generated with a list of penguins and their weights. The list contains the following:\n\nTime of crossing\nRFID tag (if assigned)\nPenguin weight\nWeight difference between scale 1 and scale 2\nDirection (“out to ocean” or “back from ocean”)",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#downloading-the-raw-data",
+    "href": "13_data_processing.html#downloading-the-raw-data",
+    "title": "14  APMS Data Processing",
+    "section": "14.7 Downloading the Raw Data",
+    "text": "14.7 Downloading the Raw Data\nThe data of the requested days are automatically downloaded when executing the process_data.py script.\nWhile testing, if data has already been downloaded, set the DOWNLOAD_ALL variable to False in the config.py file. Both Scale and RFID data is downloaded.\nThe data is downloaded to: ~/apms_data_processing/data/download_raw/",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#scale-files",
+    "href": "13_data_processing.html#scale-files",
+    "title": "14  APMS Data Processing",
+    "section": "14.8 Scale Files",
+    "text": "14.8 Scale Files\nThe Scale Files are CSV files, containing the raw data sampled by the scales. The weights are sampled at 100 times per second. It consists of 3 columns, a timestamp and the weights of the two scales. The timestamp is in seconds (seconds since 1 Jan 1970). The weights are in kg, to the third decimal (1 gram accuracy). The weights are sampled at 100 Hz (the scales are capable of up to 300 Hz and this could be used if higher resolution is required). An example can be seen below. Note that when hovering around 0.000 kg, negative values are possible. Also note the timestamp between samples is not exactly 10 ms (100Hz). The samples are spaced out evenly by using the first and last time stamp, before processing starts. The frequency is checked and should be above 99% (ie 99Hz) to be processed.\n\n\n\n\n\nA Scale File is created when a weight, greater than the minimum penguin weight, is applied to one of the scales. This minimum weight (MIN_PENGUIN_WEIGHT) is set in the APMS config file. See: Configuring the APMS. The Scale File ends when the scale is empty for longer than a preset time (SCALE_EMPTY_TIME in the APMS config file). The same amount of time before the scale was triggered is also added to the end of the file.\nThe scale files are unique in that their filenames contain a wealth of information. A typical scale file filename looks like this:\nS20231206033841ROB.csv\n\nWhere:\n\nThe “S” signifies it’s a scale file (RIFD files start with “R”)\nThe date the follows in the format “YYYYMMDDHHMMSS”\nIn our example 03:38:41 on the 6th of December 2023\nFollowed by the site code.\n\nSTO = Stony Point\nBIR = Bird Island\nDYE = Dyer Island\nROB = Robben Island\nDAS = Dassen Island",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#determining-the-direction-of-a-penguin",
+    "href": "13_data_processing.html#determining-the-direction-of-a-penguin",
+    "title": "14  APMS Data Processing",
+    "section": "14.9 Determining the Direction of a penguin",
+    "text": "14.9 Determining the Direction of a penguin\nAn example of a Scale File is shown below. The top picture is Scale 1 (Colony Side) and the bottom picture is Scale 2 (Ocean Side). This shows two penguins, jumping on Scale 1 first, then Scale 2. They are thus heading out to the ocean. This is how the penguin direction is determined.\n\n\n\nFigure 77. Scale file plotted with weight on the Y-axis and time on the X-axis. The top graph is colony side, and bottom ocean side, indicating two penguins going out to sea.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#determining-the-weight-of-a-penguin",
+    "href": "13_data_processing.html#determining-the-weight-of-a-penguin",
+    "title": "14  APMS Data Processing",
+    "section": "14.10 Determining the Weight of a penguin",
+    "text": "14.10 Determining the Weight of a penguin\nEach Scale File consists of two events, one for each scale. The data is analysed and a separate penguin list is generated for each scale. The two lists are then compared and if certain checks are passed, they are combined to form a penguin list for the entire Scale File.\nThis hinges on the fact that we assume penguins will cross the scales in single file and not go past each other. This is why it is important to ensure the weighbridge and path is narrow enough to funnel them one by one.\nEach scale event is broken up into sub events which are then analysed. Below is a simple case with two sub events per scale. In this case, each sub event contains only one weight. Every sub event has deadweight before and after it. There will thus be one more deadweight than sub events, in the event.\nThe example above is shown again, indicating the different weights identified\n\n\n\nFigure 78. Scale file partitioned into sub events.\n\n\n\nThe weight inside each sub event is then identified and analysed.\n\nThe weight is categorised as one of the following:\n\nToo Short: Too little time spent on scale. This weight is not used.\nStatic Weight: Deadweight or animal stationary. Average taken.\nDynamic Weight: Not Static. Oscillatory. Explained below.\n\nThe first weight of the example above has been extracted from the sub event and can be seen below. It is a Dynamic Oscillatory weight and the peaks are identified and used to determine the weight.\n\n\n\nFigure 79. Example of a dynamic oscillatory weight reading.\n\n\nAs noted in [REFERENCE], as the penguin is walking, one can assume the penguin’s vertical velocity will be the same between two points one period apart. We will choose the peaks as they are easy to identify. The mass of the penguin during the event is constant and as the momentum is given by mass times velocity, and the velocity is the same at the peaks, we can say the momentum of the penguin in the vertical direction is the same at the peaks. There is thus no change in momentum between the peaks, i.e, the impulse is zero. The impulse is given as the integral of the force on the penguin, with respect to time.\n\\[J = \\ \\int_{}^{}{F_{net}(t)\\ dt}\\]\nThe net force on the penguin, at any point in time, is the force of the scale on the penguin, minus the force of gravity on the penguin. (As these are the only two forces acting on the penguin, ignoring air resistance).\nAlso, the force of gravity on the penguin does not change as\n\\[F_{g} = m_{penguin}*g\\]\nboth of which we assume are constant during the event.\nIf we take the impulse as zero between the peak at \\(t_{1}\\) and \\(t_{2}\\), as discussed above, we get:\n\\[0 = \\ \\int_{t1}^{t2}{{(F}_{scale}(t) - F_{g})}dt\\]\nWhere \\(F_{scale\\ }(t)\\ \\)is the force of the scale on the penguin.\nWe know the force of the penguin on the scale is opposite in sign but equal in magnitude to the force of the scale on the penguin.\n\\[{\\ \\ F}_{penguin - on - scale} = - {\\ \\ F}_{scale}\\]\nOur scales provide \\(m(t)\\), the mass on the scale, recorded every 10ms.\nWe know\n\\[F_{penguin - on - scale}(t) = m(t)*g\\]\nWe thus get:\n\\[{\\ \\ F}_{scale} = \\  - m(t)*g\\]\nSubstitution then gives \n\\[0 = \\ \\int_{t1}^{t2}{\\left( - m(t)*g - m_{penguin}*g \\right)dt}\\]\nSolving for the mass of the penguin, \\(m_{penguin}\\) , we get:\n\\[m_{penguin} = \\frac{\\int_{t1}^{t2}{m(t)\\ dt}}{t_{2} - t_{1}}\\]\nThis integral is computed numerically and this is how the mass of the penguin is determined using two peaks.\nThe penguin gives many steps and thus the mass is recalculated between the peaks and an average is taken. More sophisticated techniques can be used but this first approach gave adequate results (See: Weideman et al. in prep).\nAfter all the sub events have been analysed for Scale 1 a penguin list is created. The same process is then repeated for Scale 2. The two penguin lists are then compared. If they contain the same number penguins and if the difference in weight readings for the penguins are low enough (MAX_SCALES_DIFFERENCE_ALLOWED setting in the config file), they will be added to the total penguin list for the Scale File. The output of the algorithm for the two penguins above, can be seen below (Fig. 80).\nThe time given is when the penguin first steps on the scale (Scale 1 if going out to the ocean and Scale 2 if coming back from the ocean) As there were no RFID tags picked up, the penguin ID ’s are given as 0 and 1. This will be replaced by an RFID tag number if applicable. See Assigning an RFID Tag to a penguin.\nAnother example can be seen below, of three penguins walking over the scales. The top graph is Scale 1 (Colony Side) and the bottom graph is Scale 2 (Ocean Side). Note the peak on Scale 1 when both penguins were on the scale. On Scale 2, one can see that one penguin was busy jumping off as another was jumping on.\n\n\n\nFigure 80. Output of the weight algorithm for two penguins crossing the weighbridge and heading out to sea.\n\n\n\n\n\nFigure 81. Three penguins crossing the old weighbridge at Stony Point.\n\n\n\n\n\nTable 14.1: Automated weighbridge measurements for penguins featured in Fig. 81.\n\n\n\n\n\n\n\n\n\n\n\n\n\nPenguin ID\nWeight (kg)\nWeight Type\nDate Time (UTC+2)\nDirection\nScale Diff (kg)\n\n\n\n\n0\n2.322\navg_dynamic\n2023-12-05 09:10:12\nOut to ocean\n-0.0071\n\n\n1\n2.624\navg_dynamic\n2023-12-05 09:10:17\nOut to ocean\n-0.0373\n\n\n2\n2.053\navg_dynamic\n2023-12-05 09:10:18\nOut to ocean\n-0.0318",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#assigning-an-rfid-tag-to-a-penguin",
+    "href": "13_data_processing.html#assigning-an-rfid-tag-to-a-penguin",
+    "title": "14  APMS Data Processing",
+    "section": "14.11 Assigning an RFID Tag to a penguin",
+    "text": "14.11 Assigning an RFID Tag to a penguin\nAfter the scale file is analysed and a list of penguins is generated, RFID tags can be assigned. For each penguin a “crossing time” is calculated. A penguin crossing is defined as the period between first stepping on the scales until stepping off the scales. A single “crossing time” is calculated as halfway through the penguin crossing.\nFor each penguin, the crossing time is compared to the RFID timestamps to check if an RFID tag was picked up close to when the penguin crossed the scales. (RFID_TO_PENGUIN_INTERVAL in the config file). By default, RFID_TO_PENGUIN_INTERVAL is set to 60 seconds.\nThe location of the RFID antenna is set in the config file for each site. Look for rfid_location : middle_only near the bottom of config.py. The default is middle_only, as this is the configuration for all new sites. This is not the case for older sites, see later in this chapter.\nWhen middle_only is given as the RFID antenna location, and no other RFID tags were recorded during the penguin’s crossing, the algorithm can assign a RFID tag number to the penguin based on the following two scenarios\n\nThe tag is picked up during the jump from one scale to the other.\n\nIf a tag is picked up within the time period when the penguin is jumping from one scale to the other, the tag number is assigned to that penguin. This is also valid for a group of penguins, as we assume they move in single file over the scales. This is why it is important to ensure they move in single file when setting up the site, to avoid a penguin overtaking another and causing the event to be discarded or worse, an incorrect RFID tag assigned to a penguin. See example below (Fig. 82).\n\nThe tag was picked up somewhere during the penguin’s crossing. No other penguins crossing.\n\nSometimes, due to various circumstances, the antenna will pick up the tag too early, or even after the jump. If, however, we know the antenna is placed in between the scales, and no other penguins were crossing at the same time, we assume the tag belongs to that penguin.\nBelow is an example of two penguins heading out to the ocean. They each trigger the BioMark RFID reader (red line in Fig. 82) as they jump from Scale 1 (colony side) to Scale 2 (ocean side) and thus both have RFID tag numbers assigned to them.\n\n\n\nFigure 82. Another example of two penguins going out to see. Red line is when an RFID PIT-tag was recorded.\n\n\n\n\n\n\n\n\nBasic Validation Configuration Checks\n\n\n\nThe algorithm verifies all of the following conditions before accepting a reading. These parameters can all be configured in the config file:\n\nRFID_TO_PENGUIN_INTERVAL (Default: 60 sec)\nTag detected close to the penguin crossing time.\nRFID_ISOLATION_INTERVAL (Default: 5 minutes)\nTag was the only one detected within this window.\nSCALE_FILE_ISOLATION_INTERVAL (Default: 60 seconds)\nOnly one scale file generated within this window.\nSingle Penguin Rule (Enforced by algorithm)\nThere must be only one penguin recorded in the generated scale file.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#error-handling",
+    "href": "13_data_processing.html#error-handling",
+    "title": "14  APMS Data Processing",
+    "section": "14.12 Error Handling",
+    "text": "14.12 Error Handling\nPenguins are wild animals and they do not always walk nicely over the scales. Numerous situations can give rise to a scale file not being processed. A fault with the scale could also lead to data files that can not be processed by the algorithm. When the algorithm discards the file, it moves it to an “error” directory with the name of the error. These files can then be viewed separately to learn more. The error directories are in the “processed” folder. See below for the path.\n~\\apms_data_processing\\data\\processed\\ [site name] \\ [YEAR] \\ [YYYYMMDD] \\ [ERROR DIRECTORY]\nNote that even though these are called “error” directories, it does not mean there is a fault. For instance, if another animal triggers the scale, the algorithm should detect that and move it to the “no_penguins” error directory. Many of these errors are based on parameters in the config file. See Configuring the APMS.\nWhen a site is not performing as expected, viewing these directories can often give clues as to what is wrong.\nThis can be added to, with different error states added as required. The current error directories are as follows:\n\n\n\nTable 14.2: Summary of scale error directories and their definitions.\n\n\n\n\n\n\n\n\n\nError Directory\nReason\n\n\n\n\ntiming_jump\nLarge time difference between samples in scale file (greater than 1 second).\n\n\nfrequency_error\nScale sampling period is not correct. Set in config file: MAX_AVG_SAMPLING_PERIOD and MIN_AVG_SAMPLING_PERIOD.\n\n\nno_sub_events\nNo sub events found in scale file.\n\n\nunequal_num_penguins\nNumber of penguins determined for Scale 1 differs from the number determined for Scale 2.\n\n\nno_penguins\nList of penguins for scale 1 and scale 2 are both empty.\n\n\ndirection_error\nDifferent number of penguins going out to the ocean than coming back.\n\n\npenguin_weight_error\nAlgorithm could not determine a weight from the provided data.\n\n\nweight_too_high\nWeight was recorded as more than 3x max penguin weight. Set in config file: MAX_PENGUIN_WEIGHT.\n\n\noverload\nWeight exceeding scale maximum. Set in config file: SCALE_OVERLOAD.\n\n\nduplicate_timestamps\nWeights with the same timestamp found in scale file.\n\n\nlarge_penguin_weight_difference\nLarge difference in weight between scale 1 and scale 2. Set in config file: MAX_SCALES_DIFFERENCE_ALLOWED.\n\n\nno_dead_weight_events\nNo periods found where the scale was reading a stationary dead weight.\n\n\nlarge_dead_weight\nWeight on empty scale before or after event is higher than the allowed “dead weight”. Set in config file: MAX_DEAD_WEIGHT.\n\n\nlarge_dead_weight_difference\nDifference between the dead weight on the scale before the penguin jumps on and after it jumps off is too large. Set in config file: MAX_DEADWEIGHT_DIFF.\n\n\nnegative_jump_time\nTime calculation of time taken to jump from one scale to the other gave a negative result.\n\n\nnegative_time_on_scale\nTime of penguin jumping on to the scale is after time of penguin jumping off scale.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "13_data_processing.html#apms-dashboard",
+    "href": "13_data_processing.html#apms-dashboard",
+    "title": "14  APMS Data Processing",
+    "section": "14.13 APMS Dashboard",
+    "text": "14.13 APMS Dashboard\nThe APMS Dashboard allows the operator to view the health of the system at each site. The Dashboard uses the processed data files to display penguin data. The data processing script must thus be fully functioning before setting up the Dashboard. See Data Processing Script Usage. The instructions that follow explains how to install the dashboard on a machine running Ubuntu.\n\n\n\nFigure 83. Screenshot of the APMS Dashboard.\n\n\n\n14.13.1 Install Ubuntu\nTo install Ubuntu, use the Rufus application and write an Ubuntu image to it. The current versions are stored on the cloud, replace in future with newer versions if needed.\n\nRufus can be downloaded here: Rufus download\n\nThe software is also saved here on the server: s3://apmsbirdlife/APMS/software/Rufus_and_Ubuntu/rufus-4.1.exe\n\nUbuntu can be found at Download Ubuntu\nDownload both rufus and the Ubuntu image to a local directory on your machine.\nGet a Flash Drive. Note all data will be deleted on this Flash Drive.\nRun Rufus and select the Flash Drive under “device”.\nUnder “boot selection” click”SELECT” and select the Ubuntu image you downloaded.\nLeave all the other settings as they are and click “START”. This will create the Ubuntu Flash Drive.\n\nInsert the Flash Drive into the machine where Ubuntu will be installed, reboot and follow the onscreen instructions to install Ubuntu. After successfully installing Ubuntu, you will restart and go into the Desktop. For more information on installing Ubuntu, see this online tutorial.\n\n\n14.13.2 Install Influx DB\nInfluxDB is the database that will hold all the processed data, for displaying on the Dashboard.\nThe instructions below will be executed from a terminal.\n\nTo open a terminal from anywhere on Ubuntu, press CTRL + ALT + t\n\nRun the following commands to install and configure InfluxDB:\n# Update local package index\nsudo apt-get update\n\n# Install the InfluxDB database service\nsudo apt install -y influxdb\n\n# Start the InfluxDB service immediately\nsudo systemctl start influxdb\n\n# Enable InfluxDB to launch automatically on system boot\nsudo systemctl enable influxdb\n\n# Install the InfluxDB command-line client CLI tool\nsudo apt install -y influxdb-client\n\n\n14.13.3 Install Grafana Server\nGrafana is the graphical interface to display the data in the database, what the user see’s and interacts with. To run the Grafana Dashboard, a Grafana server should be installed and configured.\n# Update local package index\nsudo apt-get update\n\n# Install the Grafana server package\nsudo apt-get install -y grafana\n\n# Start the Grafana server service immediately\nsudo systemctl start grafana-server\n\n# Enable Grafana server to launch automatically on system boot\nsudo systemctl enable grafana-server.service\n\n\n14.13.4 Set up the Dashboard\nTo display anything on the Dashboard, the data must first be processed. This is explained in Data Processing Script Usage.\nThe script dashboard.py is then used to read the processed data into InfluxDB, with it eventually being displayed on Grafana. The IP address is needed to configure the Grafana dashboard. To find the IP address of the machine where Grafana is running, go into a terminal and type:\nifconfig\nBelow is an example showing the output of ifconfig and where to find the IP address.\n\n\n\nFigure 84. Finding the IP address when setting up a new APMS Dashboard.\n\n\nAdd this IP address to the HOST_IP parameter in the configuration file.\nThe usage of the dashboard script is the same as process_data.py. That is: python3 dashboard.py SITE DATE_RANGE. See* Data Processing Script Usage for examples.\nIn a browser of any computer on the network, including the one where Grafana has been installed type the IP address, followed by ‘:3000’. For example: http://192.168.1.32:3000.\nThis will open the Grafana page. If prompted for a password, enter “admin” for username and “admin” for password. This password can be changed if required.\nGrafana must now be configured to display data from InfluxDB. Click on settings, then “Add data sources”. Select InfluxDB and under “URL” enter the IP address of the server, or just http://localhost if it is the same machine as where InfluxDB is installed.\n\n\n\nFigure 85. Configuring InfluxDB on Grafana.\n\n\n\n\n\nFigure 86. Configuring InfluxDB on Grafana.\n\n\nThe final step is to load the APMS Dashboard. Click on the PLUS found in the top left area and click “Import”. In the text box provided, copy and paste the JSON code from the APMS_Dashboard.JSON file located at: ~/apms_data_processing/APMS_Dashboard.JSON.\n\n\n\nFigure 87. Configuring InfluxDB on Grafana.\n\n\nClick Load. If data has been loaded into the database as described earlier, using the dashboard.py script, it should be displayed on the Dashboard.\n\n\n14.13.5 Automatic Dashboard Update\nThe script process_and_display.sh can be added to the crontab to enable the system to process the data from all the sites and load it to influx. For more information regarding the crontab, see Configure the Crontab. Note that whenever new sites are added or removed that this file has to be edited to reflect those changes.\nEdit the Crontab:\ncrontab -e\nAdd this line to the bottom:\n0 6 * * * /usr/bin/bash ~/apms_data_processing/process_and_display.sh\nThis will run the script at 6 AM every morning and update the dash.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>APMS Data Processing</span>"
+    ]
+  },
+  {
+    "objectID": "14_maintenance.html",
+    "href": "14_maintenance.html",
+    "title": "15  Maintenance",
+    "section": "",
+    "text": "15.1 Cleaning and Checking the scales\nWhen visiting a site always remember to log everything you do, even though it might seem insignificant.\nCheck the following an:",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Maintenance</span>"
+    ]
+  },
+  {
+    "objectID": "14_maintenance.html#cleaning-and-checking-the-scales",
+    "href": "14_maintenance.html#cleaning-and-checking-the-scales",
+    "title": "15  Maintenance",
+    "section": "",
+    "text": "Clean the scales whenever visiting the site. As long as very little pressure is applied to the scales themselves, the system does not need to be turned off and no penguins will be registered\nCheck around the scales and ensure no branches or debris are touching the scale pans. Anything touching the pans on the sides will alter the weight reading. Sand on top of the scales (if not too excessive) is not a problem.\nCheck that the canvas is still in good condition and not torn/peeling off. Replace as necessary.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Maintenance</span>"
+    ]
+  },
+  {
+    "objectID": "14_maintenance.html#routine-calibration-of-scales",
+    "href": "14_maintenance.html#routine-calibration-of-scales",
+    "title": "15  Maintenance",
+    "section": "15.2 Routine Calibration of Scales",
+    "text": "15.2 Routine Calibration of Scales\nR&D Weighing recommends the scales be calibrated every 3 to 4 months to ensure accuracy. However, some sites may require you to calibrate it more often, and when the equipment starts getting older it’s recommended to calibrate more frequently. Version 1 of the APMS used the Laumas TLB485 scale indicators whereas as of 2026 BirdLife has moved on to using the General Measure GMT-X1 indicators which has more functionalities. Below are the calibration instructions for both of these. Always stop the scales.py script before starting with calibrations.\nsudo systemctl stop scales\n\n15.2.1 Calibration Data Sheet\nA data sheet for field use can be downloaded from here:\n\nAPMS Calibration Datasheet (PDF)\nAPMS Calibration Datasheet (Word)\n\n\n\n15.2.2 General Measure GMT-X1 Indicators\nTo check if the system needs to be calibrated, place a 1kg and 5kg (6kg combined) weight on each scale and observe the readings on the scale indicators. If the reading is out by more than 5g, recalibrate. The wind can have a huge influence on the scales and thus only calibrate on good weather days.\nThere are two scales at every site: Scale 1 (colony side) and Scale 2 (ocean side). Both are zeroed (tared) and calibrated in exactly the same way, one after the other. Follow the steps below in order and record every reading on the data sheet as you go, do not rely on memory.\n\n15.2.2.1 Record BEFORE readings (no calibration yet)\nFirst ensure the scales.py script has been stopped before recording weight readings. With the scale in its current, uncalibrated state, record the reading shown for each of the following, in this order:\n\nNo weight on scale 1 — record the reading.\nNo weight on scale 2 — record the reading.\nPlace the 1 kg weight on scale 1 — record the reading.\nPlace the 1 kg weight on scale 2 — record the reading.\nRemove the 1 kg weight. Place the 5 kg weight on scale 1 — record the reading.\nPlace the 5 kg weight on scale 2 — record the reading.\nPlace the 1 kg and 5 kg weights together on scale 1 (i.e., 6 kg) — record the reading.\nPlace the 1 kg and 5 kg weights together on scale 2 (i.e., 6 kg) — record the reading.\nRemove all weights from the scale.\n\n\n\n15.2.2.2 Clean the scales\nRemove any sand build up, sticks or debris that are on or around the scales. To do this, remove the scale pans and sweep out the sand that’s accumulated with your fingers or with a paint brush. Take care when you work around the cables as strong pressure on the cables can break or damage them and then the entire scale/loadcell would need to be replaced.\n\n\n15.2.2.3 Zero (tare) the scales\nWe will first zero scale 1 (colony side) and then the exact same steps will be done for scale 2 (ocean side).\n\nPress the Enter button (ENT) to open the menu.\nPress the right arrow to go to 2xx Weight&CAL and press Enter (ENT).\n\n\n\nFigure 89. Selecting 2xx Weight&CAL from the main menu.\n\n\nPress the down arrow to go to 22x CAL Zero and press Enter (ENT).\n\n\n\nFigure 90. Selecting 22x CAL Zero from the Weight&CAL menu.\n\n\nIt should now display 221 Auto Capture — press Enter (ENT).\n\n\n\nFigure 91. Selecting 211 Auto Capture.\n\n\nIt should now display the weight reading in millivolts. Wait for a drop in the wind, or for the green stable weight reading light (STAB) to come on, then press Enter (ENT) immediately to set the new zero point.\n\n\n\nFigure 92. Millivolt reading displayed while zeroing the scale.\n\n\nYou should see Set Successfully displayed on the screen and it should then return to the 22x CAL Zero menu. Press Escape (ESC) to go back to the previous menu (2xx Weight&CAL) for calibration (Step 5 below).\n\n\n\nFigure 93. Set Successfully confirmation screen.\n\n\nOnce you have zeroed (tared) scale 1, repeat the exact same steps for scale 2.\n\n\n\n15.2.2.4 Calibrate the scales\nWe will first calibrate scale 1 (colony side) and then the exact same steps will be done for scale 2 (ocean side).\n\nIn the 2xx Weight&CAL menu, go down to 23x CAL Weight and press Enter (ENT).\n\n\n\nFigure 94. Selecting 23x CAL Weight from the Weight&CAL menu.\n\n\nYou should now see 231 Weight CP1 displayed on the screen, press Enter (ENT).\n\n\n\nFigure 95. Selecting 231 Weight CP1.\n\n\nYou will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 1 kg weight on scale 1. You will note that the millivolts have increased. Note the millivolts may be slightly different than the picture below.\n\n\n\nFigure 96. Millivolt reading increasing once the 1 kg weight is placed on the scale.\n\n\nUse the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 1 kg.\n\n\n\nFigure 97. Adjusting the displayed value to match the weight on the scale.\n\n\nAs soon as you see the green stable weight (STAB) light come on, or note a break in the wind, press Enter (ENT). It should now read Set Successfully on the screen (see Figure 93).\nYou have now successfully calibrated scale 1 with a 1 kg weight. Repeat the above steps with a 5 kg weight following the steps below.\nYou should see 231 Weight CP1 displayed on the screen again after you successfully calibrated it in the previous step. Press the down arrow once to show 232 Weight CP2 and press Enter (ENT).\n\n\n\nFigure 98. Selecting 232 Weight CP2.\n\n\nAgain, you will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 5 kg weight on scale 1. Use the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 5 kg. Note the millivolts may be slightly different than the picture below.\n\n\n\nFigure 99. Adjusting the displayed value to 5 kg using the arrow keys.\n\n\nAs soon as you see the green stable weight (STAB) light come on, or note a break in the wind, press Enter (ENT). It should now read Set Successfully on the screen (see Figure 93).\nYou have now successfully calibrated scale 1 with a 1 kg and 5 kg weight. Repeat the above steps with a 6 kg weight (1 kg + 5 kg together) following the steps below.\nYou should see 232 Weight CP2 displayed on the screen again after you successfully calibrated it in the previous step. Press the down arrow once to show 233 Weight CP3 and press Enter (ENT).\n\n\n\nFigure 100. Selecting 233 Weight CP3.\n\n\nAgain, you will see the millivolts as read by the loadcell displayed at the top of the screen. At the bottom, it will first show 000.000. Put the 1 kg and 5 kg weights together on scale 1. Use the right arrow to move the cursor to the third 0 and then press the up arrow to adjust it to the weight that’s on the scale, i.e., 6 kg. Note the millivolts may be slightly different than the picture below.\n\n\n\nFigure 101. Adjusting the displayed value to 6 kg using the arrow keys.\n\n\nAs soon as you see the green stable weight (STAB) light come on, or note a break in the wind, press Enter (ENT). It should now read Set Successfully on the screen (see Figure 93).\nYou have now completed all steps for calibrating scale 1 with 1 kg, 5 kg, and 6 kg. Remove all the weights.\nPress the Escape button (ESC) twice until you get back to the main screen displaying just the weight reading. It should now read 0.000 kg, or be within 5 g of 0.000 kg.\nIf scale 1 is within the 5 g threshold, repeat the exact same steps for scale 2. Otherwise, repeat the calibration steps again and check that the scale reads withing 5 g.\n\n\n\n15.2.2.5 Record the weight readings after calibration\n\nMake sure that there are no weights on the scales. Test the accuracy of the calibration with no weight, 1 kg, 5 kg, and 6 kg on the scales. The scales should be within 5 g of the true weight after calibration.\nStart with scale 1 (colony side). Record the weight reading when no weights are on scale 1.\nPlace the 1 kg weight on scale 1 and record the reading.\nPlace the 5 kg weight on scale 1 and record the reading.\nPlace the 6 kg weight (1 kg + 5 kg weights together) on scale 1 and record the reading.\nIf any of the above readings is out by more than 5 grams, repeat the calibration for that particular scale starting with 1 kg, then 5 kg, then 6 kg and check again.\nIf scale 1 is within the 5 g threshold, repeat the exact same steps for scale 2. Otherwise, repeat the calibration steps again and check that the scale reads withing 5 g.\n\n\n\n15.2.2.6 Turn on scales scripts and log weight readings\nOnce you have completed all the steps above to zero and calibrate the scales, remember to turn on the scales service again to start logging any penguins that cross the weighbridge, and if you haven’t done so before, log all the weight readings using the log.py script.\nsudo systemctl start scales\nsudo systemctl status scales\n\npython3 apms/log.py\n\n\n\n\n\n\nNote\n\n\n\n\nAlways follow the exact order: no weight → 1 kg → 5 kg → 6 kg, when taking weight readings before, during and after calibrations.\nPlace weights gently in the centre of the scale platform and wait for the reading to settle before recording it.\nIf you have already zeroed (tared) and calibrated the scales and the readings are more than 5 grams out, then zero the scales again and calibrate again until the reading is as close to accurate as possible. A maximum of 5 grams is okay.\nKeep test weights clean and dry — dirt or moisture can cause the weights to corrode and eventually change the physical weight.\nTake care not to drop the weights on the ground (or on the scales) as it can damage them and chip away little pieces which will over time cause it to be inaccurate.\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nThe steps below are done once per scale unless noted otherwise:\n\nEnsure weight logging is switched off sudo systemctl stop scales before recording weight readings, taring scales, or calibrating scales..\nRecord the BEFORE readings on both scales: no weight, 1 kg, 5 kg, then 6 kg (1 kg + 5 kg together).\nClean each scale — remove sand, sticks, and debris from around and under the pan.\nZero (tare) each scale: 2xx Weight&CAL → 22x CAL Zero → 211 Auto Capture.\nCalibrate each scale:\n\n2xx Weight&CAL → 23x CAL Weight → 231 Weight CP1 with 1 kg.\n2xx Weight&CAL → 23x CAL Weight → 232 Weight CP2 with 5 kg.\n2xx Weight&CAL → 23x CAL Weight → 233 Weight CP3 with 6 kg.\n\nRecord the AFTER readings on each scale (no weight, 1 kg, 5 kg, 6 kg). If any readings are out by more than 5 g, repeat the calibration for that scale and check again.\nFinish up: start the scales again sudo systemctl start scales and log all the weight readings python3 apms/log.py.\n\n\n\n\n\n\n15.2.3 Laumas TLB485 Indicators\nTo check if the system needs to be calibrated, place a 1kg, 5kg and 6kg (5+1) weight on each scale and observe the readings on the scale indicators. If the reading is out by more than 5g, recalibrate. The wind can have a huge influence on the scales and thus only calibrate on good weather days.\n\n\nThere are 4 buttons on each indicator. They are:\n\n\n\nENTER\n\n\n\nLEFT\n\n\n\nUP\n\n\n\nCANCEL/BACK\n\n\n\n\n\n\n\n\n\nSSH into the Pi\nStop the scales process:         \n\nsudo systemctl stop scales\n\nLog the start of the calibration event:     \n\npython3 ~/apms/log.py\n\nLog the weight discrepancy for each scale using the 5kg weight.\nYou can run the code below to check that the scripts have indeed stopped:\n\nsystemctl status scales\nsystemctl status rfid\n\nRemove all weights from scales.\nTare the scale:\n\nHold in the CANCEL button until it displays:  Then press ENTER\nAll the Lights should be flashing. Press ENTER again to zero the scale.\nThe weight should read 0. Press CANCEL until you are back at the main weight display.\n\nStart with Scale 1 (colony side) and then do Scale 2 (ocean side). Start by placing the 5kg weight in the center of the scale. Then proceed to the indicator, and flip open the cover to reveal the buttons as described above (you might need a small flat screwdriver to lift the cover). It can be difficult to see the LED display without looking through the cover, so flip it down to confirm what is displayed if uncertain.\nWhile pressing and holding the ENTER button, also press the CANCEL button. This should display \nPress ENTER. Now use  to select  and press ENTER\nA flashing weight should be displayed. All the lights should be OFF\nUse  to adjust the weight until it reads exactly 5.000 kg\n to change value\n to change decimal place holder\nPress ENTER. The new weight should be displayed, and all the lights should be flashing.\nPress ENTER one more time. This should show again. Press CANCEL until you see the weight displayed.\nCheck with 1kg, 5kg and 6kg weights again. It should be within 1g. If not, recalibrate.\nStart the APMS processes.\n\nsudo systemctl start scales\nsudo systemctl start rfid\n\nLog the end of the calibration event:     \n\npython3 ~/apms/log.py",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Maintenance</span>"
+    ]
+  },
+  {
+    "objectID": "14_maintenance.html#troubleshooting",
+    "href": "14_maintenance.html#troubleshooting",
+    "title": "15  Maintenance",
+    "section": "15.3 Troubleshooting",
+    "text": "15.3 Troubleshooting\nThere are too many permutations of how things can go wrong to cover it all in this manual. However, some common things to look out for, as well as how to go about getting more information, will be discussed below.\nOften, the dashboard will give an indication of something going wrong. A classic example of this would be seeing the solar supply voltage going down and the batteries not fully charging. This is often due to overgrowth and the dashboard should be checked the next day to see if it has improved. The dashboard could also show the system being healthy, but the algorithm shows something is wrong, such as the number of RFID tags dropping to zero for a few days. This could be due to the BioMark system failing, or the RFID antenna shifting out of position.\nFor diagnosing problems, or just checking in on the system, the Monitor can be used.\nIf the Monitor has power, it should operate and be able to give information about the system, even if the Main Unit is completely dead. Ensure the SIM card has airtime to be able to reply via SMS.\n\nThe Monitor will send a SMS to the operator in the event of the following:\n\nIf the 4V of the SIM800L is too low/high (only v1.1 of the APMS, v1.2 no longer uses the 4V SIM module)\nIf the 5V of the Raspberry Pi is too low/high\nIf the 12V of the scales/router is too low/high\nIf the 24V solar supply is too low/high\nIf the ambient temperature is too high. (Warning: 50°C - Danger at 60°C)\nIf the Raspberry Pi or Monitor reboot\n\n\nIf any of these messages are received, the operator should investigate.\n\n15.3.1 Monitor Commands\nA simple set of commands can be used by the administrator to diagnose system faults via SMS.\nTo send a command to the Monitor, send a SMS starting with “CMD:”\nFor example, to request a status report, send:\nCMD:S\nThe monitor should reply, via SMS, with a brief status report. The status report is discussed in ***\nNote the commands are not case sensitive.\nThe table below shows a list of valid commands.\n\n\n\n\n\n\n\n\nCommand Name\nWhat to send\nDescription\n\n\n\n\nRequest Status Report\nCMD:S\nThe Monitor should reply by sending a status report via SMS\n\n\nReboot\nCMD:R\nThis power cycles the Raspberry Pi\n\n\nPower On/Off\nCMD:P\nThis powers the Raspberry Pi on if it was off, and off if it was on\n\n\nUpdate Time\nCMD:U\nThis updates the Monitor system time.\n\n\nChange Phone Number of Operator\nCMD:M+27**\n*******\nThis changes the phone number of the operator, saved in the non-volatile memory of the Monitor.\n\n\nTurn Off SMS Notifications\nCMD:X\nTo turn off SMS notifications from the Monitor.\n\n\nTurn On SMS Notifications\nCMD:Y\nTo turn on SMS notifications from the Monitor\n\n\nSend BASH command\nCM D:C*****\nUNTESTED\nSend a BASH Command for the Pi to execute next time it checks in.\n\n\n\n\n\n15.3.2 Status Report (CMD:S)\nAn example of a status report as received from the Stony Point Monitor can be seen below. The example will be used to explain the different parameters.\n\n\n\nFigure 88. Status report sent via the APMS’s SIM module.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Maintenance</span>"
+    ]
+  },
+  {
+    "objectID": "15_accuracy.html",
+    "href": "15_accuracy.html",
+    "title": "16  Checking the System for Accuracy",
+    "section": "",
+    "text": "16.1 Testing and Calibration of System\nTo know whether an APMS is functioning properly and providing accurate data, a cross check is performed. This is done by using a third, independent scale. The scale is powered from its own batteries and must be calibrated on site. This is explained in the manual that was supplied with the scale. A camera is placed to have a clear view of the weight readout on the LCD screen. The camera should also be positioned to have all three scales in view. The penguins do occasionally stand still on the independent scale. When this happens, the weight reading will not fluctuate a clear weight can be read and recorded. All the known weights should be identified and then compared with what the algorithm produced. The scale currently being used is accurate to the nearest 5g.\nTo test the accuracy of the APMS weighbridge, the weight estimates are compared to that obtained by an independent scale. Video footage is captured of the two main scales, as well as the independent scale. The independent scale has an LCD display, and this should be visible to the camera. It does have a night light and should thus be hidden as much as possible from view, as the penguins are very aware of changes to their surroundings and get easily frazzled. The video clips showing penguins stationary on the independent scale will be used to find the “true” weight, while the footage of the main two scales will be used to characterise the data. The penguin should be stationary on the independent scale, long enough to confidently read a stable reading from the LCD display.\nYou will need the following",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Checking the System for Accuracy</span>"
+    ]
+  },
+  {
+    "objectID": "15_accuracy.html#testing-and-calibration-of-system",
+    "href": "15_accuracy.html#testing-and-calibration-of-system",
+    "title": "16  Checking the System for Accuracy",
+    "section": "",
+    "text": "A laptop with WiFi. (Take a LAN cable with just in case)\nCertified 1kg and 5kg weights\nIndependent scale with fresh batteries and canvas cover.\nCamera to capture footage. Currently using the Reolink Go Ranger. Ensure it is charged and that you have the solar panel + zip ties\nIn addition to this, always take a basic tool kit and power supply with, as you never know what you might find at the site.\n\n\n16.1.1 To perform the testing/calibration\n\nChoose good weather and observe when the best time is to set up (usually mid day is good when less penguins cross the weighbridge).\nSSH into the system and log the start of the testing/calibration event in the log file:\n\npython3 apms/log.py\n\nThe independent scale must be set up as described in the section above.\nCalibrate the scales as described in the section Routine Calibration of Scales\nEnsure the camera has a clear view of the 2 main scales, the independent scale, and the LCD display\nAfter at least one day of capturing footage, SSH back into the system and log the end of the event in the log file.\nRemove the camera and independent scale, leaving the site as undisturbed as possible.\nThe data can then be manually processed or the user can wait for the daily file which is automatically generated by the algorithm at 2AM every morning.\nCompare the weights obtained from the footage with the weights generated by the algorithm\nIf the penguin weight is out by more than 50g, adjust the following parameters and run the algorithm manually to check again.\n\nMAX_PENGUIN_WEIGHT - The maximum weight of a penguin expected to walk over the scales.\nMIN_PENGUIN_WEIGHT - The minimum weight of a penguin expected to walk over the scales.\nMAX_SCALES_DIFFERENCE_ALLOWED - Difference allowed between weight measured on Scale 1 and Scale 2.\nCLIMB_ON_DURATION_MIN - Minimum amount of time it takes a penguin to climb on.\n\n\n\n\n16.1.2 Setup Procedure for Independent Scale\n\nEnsure scale has fresh batteries.\nEnsure the scale has the canvas cover on.\nPut the scale on a flat surface and ensure the scale is level.\nTest with 1kg, 5kg and 6kg weight. It should be spot on.\n\nCalibrate according to the user manual, if required\nPlease see the manual for the specific scale you are using. The independent scale we are currently using is the Adam CPW Plus-15 scale. Download the manual here.\n\nAt the site, also ensure the scale is level, and recheck with weights.\nPlace the display as far away and out of sight from the penguins as possible.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Checking the System for Accuracy</span>"
+    ]
+  },
+  {
+    "objectID": "16_conclusion.html",
+    "href": "16_conclusion.html",
+    "title": "17  Conclusion",
+    "section": "",
+    "text": "The system was built as a platform for future expansions and experiments. There are GPIO ports available on the Raspberry Pi, the CPU has the capacity to do more work and the Monitor can be programmed with more features. The data processing algorithm is also a first attempt and the raw data can be processed differently in future if desired.",
+    "crumbs": [
+      "Deployment & Operation",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  }
+]

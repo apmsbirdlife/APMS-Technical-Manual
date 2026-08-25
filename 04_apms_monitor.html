@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; APMS Monitor – Automated Penguin Monitoring System (APMS)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05_apms_main_unit.html" rel="next">
+<link href="./03_scales_platform.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-fd3b02168e988177e8c40aa51adbf8e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_solar.html">Hardware</a></li><li class="breadcrumb-item"><a href="./04_apms_monitor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automated Penguin Monitoring System (APMS)</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/apmsbirdlife/apms-manual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./001_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hardware</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_solar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Solar Power Supply</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_internet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Internet and WiFi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_scales_platform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scales Platform</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_apms_monitor.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_apms_main_unit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">APMS Main Unit</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Software &amp; Configuration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_aws_s3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AWS S3 Cloud Storage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_raspberry_pi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raspberry Pi Operating System</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_arduino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming the Arduino Monitor via the Pi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_biomark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BioMark Reader</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testing Each Script</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_crontab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Configure the Crontab</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deployment &amp; Operation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_commissioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Commissioning a New System in the Field</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_data_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">APMS Data Processing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_maintenance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Maintenance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Checking the System for Accuracy</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">5.0.1</span> Overview</a></li>
+  <li><a href="#programming-via-the-arduino-software" id="toc-programming-via-the-arduino-software" class="nav-link" data-scroll-target="#programming-via-the-arduino-software"><span class="header-section-number">5.0.2</span> Programming via the Arduino Software</a></li>
+  <li><a href="#preparing-the-stripboard" id="toc-preparing-the-stripboard" class="nav-link" data-scroll-target="#preparing-the-stripboard"><span class="header-section-number">5.0.3</span> Preparing the Stripboard</a></li>
+  <li><a href="#v-and-5v-power-supplies" id="toc-v-and-5v-power-supplies" class="nav-link" data-scroll-target="#v-and-5v-power-supplies"><span class="header-section-number">5.0.4</span> 4V and 5V Power Supplies</a></li>
+  <li><a href="#sim800l-power-supply" id="toc-sim800l-power-supply" class="nav-link" data-scroll-target="#sim800l-power-supply"><span class="header-section-number">5.0.5</span> SIM800L Power Supply</a></li>
+  <li><a href="#communication-between-sim800l-and-arduino" id="toc-communication-between-sim800l-and-arduino" class="nav-link" data-scroll-target="#communication-between-sim800l-and-arduino"><span class="header-section-number">5.0.6</span> Communication Between SIM800L and Arduino</a></li>
+  <li><a href="#communication-between-sim800l-v2-and-arduino" id="toc-communication-between-sim800l-v2-and-arduino" class="nav-link" data-scroll-target="#communication-between-sim800l-v2-and-arduino"><span class="header-section-number">5.0.7</span> Communication Between SIM800L-V2 and Arduino</a></li>
+  <li><a href="#raspberry-pi-connection" id="toc-raspberry-pi-connection" class="nav-link" data-scroll-target="#raspberry-pi-connection"><span class="header-section-number">5.0.8</span> Raspberry Pi Connection</a></li>
+  <li><a href="#logic-level-shifter" id="toc-logic-level-shifter" class="nav-link" data-scroll-target="#logic-level-shifter"><span class="header-section-number">5.0.9</span> Logic Level Shifter</a></li>
+  <li><a href="#updi-programming" id="toc-updi-programming" class="nav-link" data-scroll-target="#updi-programming"><span class="header-section-number">5.0.10</span> UPDI Programming</a></li>
+  <li><a href="#voltage-monitoring" id="toc-voltage-monitoring" class="nav-link" data-scroll-target="#voltage-monitoring"><span class="header-section-number">5.0.11</span> Voltage Monitoring</a></li>
+  <li><a href="#temperature-monitoring" id="toc-temperature-monitoring" class="nav-link" data-scroll-target="#temperature-monitoring"><span class="header-section-number">5.0.12</span> Temperature Monitoring</a></li>
+  <li><a href="#buzzer-and-button" id="toc-buzzer-and-button" class="nav-link" data-scroll-target="#buzzer-and-button"><span class="header-section-number">5.0.13</span> Buzzer and Button</a></li>
+  <li><a href="#testing-the-monitor-circuit-board" id="toc-testing-the-monitor-circuit-board" class="nav-link" data-scroll-target="#testing-the-monitor-circuit-board"><span class="header-section-number">5.0.14</span> Testing the Monitor Circuit Board</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_solar.html">Hardware</a></li><li class="breadcrumb-item"><a href="./04_apms_monitor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">APMS Monitor</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A separate circuit, called the APMS Arduino Monitor, or just “Monitor” for short, is used to constantly check different system parameters, and gives the administrator the ability to diagnose system faults remotely.</p>
+<p>All the components needed to build the Monitor are listed in Table 2 - APMS Monitor Parts List. A website or RS part number is given, accurate at time of writing this manual.</p>
+<p>The circuit diagram can be seen in FIGURE 17 - APMS ARDUINO MONITOR CIRCUIT DIAGRAM</p>
+<table class="caption-top table">
+<caption><strong>Table 2</strong> - APMS Monitor Parts List</caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Name</strong></th>
+<th style="text-align: left;"><strong>Designation</strong></th>
+<th style="text-align: left;"><strong>Quantity per board</strong></th>
+<th style="text-align: left;"><strong>RS Part Number</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Strip board 100 x 160 mm</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">206-5879</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fuse holder</td>
+<td style="text-align: left;">FH1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">765-2973</td>
+<td style="text-align: left;">Min Order Quantity: 5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3A fuse</td>
+<td style="text-align: left;">F1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">668-5963</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Monitor Mounting Plate</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">3D Printed. Design files on AWS S3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PCB Screw Terminal</td>
+<td style="text-align: left;">J1, J2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">193-0564</td>
+<td style="text-align: left;">Min Order Quantity: 5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIM800L-V2 5V</td>
+<td style="text-align: left;">U2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.robotics.org.za/SIM800L-V2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1uF Capacitor</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">538-1578</td>
+<td style="text-align: left;">Min Order Quantity: 5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">33pF Capacitor</td>
+<td style="text-align: left;">C2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">194-0457</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10pF Capacitor</td>
+<td style="text-align: left;">C3</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">194-0443</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1000uF Capacitor</td>
+<td style="text-align: left;">C4</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">711-1150</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5.1V Zener</td>
+<td style="text-align: left;">D1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">544-3597</td>
+<td style="text-align: left;">Min Order Quantity: 20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10uF 50V Capacitor</td>
+<td style="text-align: left;">C5</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">811-8373</td>
+<td style="text-align: left;">Min Order Quantity: 5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">K7805 Voltage Regulator 500mA</td>
+<td style="text-align: left;">U3</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">757-7239 144-6290</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">22uF Capacitor</td>
+<td style="text-align: left;">C6</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">190-2953</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arduino Nano Every</td>
+<td style="text-align: left;">U4</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">192-7586</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Push Button</td>
+<td style="text-align: left;">SW1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">135-9445</td>
+<td style="text-align: left;">Min Order Quantity: 20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10k Trimpot</td>
+<td style="text-align: left;">RV1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">769-2202</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Temperature Sensor</td>
+<td style="text-align: left;">U5</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">811-5595</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NPN Transistor KSP2222ABU</td>
+<td style="text-align: left;">Q1, Q2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">739-0385</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor 22k</td>
+<td style="text-align: left;">R9</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">135-954</td>
+<td style="text-align: left;">Min Order Quantity: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Resistor 10k</td>
+<td style="text-align: left;">R4, R10</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor 4k7</td>
+<td style="text-align: left;">R8</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Resistor 27k</td>
+<td style="text-align: left;">R3, R6</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor 5k6</td>
+<td style="text-align: left;">R5, R7</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Resistor 6k8</td>
+<td style="text-align: left;">R2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor 1k2</td>
+<td style="text-align: left;">R1, R11</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.prototypediy.co.za/</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LM2596 DC-DC Converter</td>
+<td style="text-align: left;">U1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">www.netram.co.za</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Logic Level Converter</td>
+<td style="text-align: left;">U6</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">https://www.netram.co.za</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">40 Pin Header Socket for Pi</td>
+<td style="text-align: left;">J3</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">674-1252</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">36 Pin Male Headers</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">547-3166</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30 Pin Female Header</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">767-9842</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Schottky Diode</td>
+<td style="text-align: left;">D2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">168-7175</td>
+<td style="text-align: left;">comes in pack of 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">40 Pin Ribbon Cable</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">www.pishop.co.za</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Buzzer</td>
+<td style="text-align: left;">BZ1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">771-6957</td>
+<td style="text-align: left;">comes in pack of 5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M2.5 x 8mm machine screws</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">914-1567</td>
+<td style="text-align: left;">RS Components</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/18_circuitdiagram_v1.png" class="img-fluid figure-img" width="700"></p>
+<figcaption><strong>Figure 18.</strong> Circuit diagram of the APMS Monitor (version 1). In version 2 the SIM800L is replaced by a SIM800L-V2 module which no longer needs the 4V conversion.</figcaption>
+</figure>
+</div>
+<section id="overview" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">5.0.1</span> Overview</h3>
+<p>The Monitor uses a separate SIM card and can thus be used to fault find the system even when the main internet is down. The Arduino can be programmed through the Raspberry Pi once configured. Currently, the main features are:</p>
+<ul>
+<li><p>Monitors the 4V internal power supply, used to power the SIM card module (only version 1 of the monitor board, version 2 uses a 5V SIM module and hence no longer needed to convert to and monitor 4V).</p></li>
+<li><p>Monitors the 5V power supply, used to power the Raspberry Pi.</p></li>
+<li><p>Monitors the 12V power supply, used for the scales and router (i.e., the indoor or teltonika router).</p></li>
+<li><p>Monitors the 24V solar power supply.</p></li>
+<li><p>Monitors the ambient temperature inside the APMS Main Unit.</p></li>
+<li><p>Alerts the administrator when the Monitor or Raspberry Pi boots up via SMS.</p></li>
+<li><p>Shut down and power up the Raspberry Pi via SMS.</p></li>
+<li><p>Send an APMS status report on request via SMS.</p></li>
+<li><p>Exchanges status reports with the Raspberry Pi every hour.</p></li>
+</ul>
+<p>As the Monitor circuit is still a prototype, with relatively few components, the board is built on a piece of stripboard directly from the circuit diagram. Five boards have been built thus far, one for Stony Point, Bird Island, Dyer Island, Robben Island and Dassen Island. A PCB is being designed for future APMS installations.</p>
+<p>As most components are quite standard, it should not be hard to source parts or find suitable replacements.</p>
+<p>The circuit board is mounted on a custom designed, 3D printed Monitor Mounting Plate. The mount has been designed to fit the existing DIN rail, for easy insertion/extraction. The mounting plate is printed with ABS plastic to prevent warping in the summer heat. The design file for 3D printing can be downloaded here: <a href="files/Monitor_V_0_5.3mf" download="Monitor_V_0_5.3mf">Download</a></p>
+</section>
+<section id="programming-via-the-arduino-software" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="programming-via-the-arduino-software"><span class="header-section-number">5.0.2</span> Programming via the Arduino Software</h3>
+<p>The heart of the circuit is the Arduino Nano Every microcontroller. This is the successor to the popular Arduino Nano and provides slightly better capabilities for a lower price. The Arduino can be programmed in numerous ways. Two ways are discussed in this manual. The first will be using an unaltered Arduino and the standard Arduino Software, while the second method involves using the Raspberry Pi, together with some hardware modifications to the Arduino.</p>
+<ul>
+<li><p>Before building the circuit, it is a good idea to test the Arduino. As the Arduino is straight out of the box, the standard Arduino software will be used for the initial setup.</p>
+<ul>
+<li><p>Install the Arduino IDE Software (https://www.arduino.cc/en/software)</p></li>
+<li><p>Install the Arduino megaAVR Core:</p>
+<ul>
+<li><p>From the Tools menu, select “Boards”</p></li>
+<li><p>Select “Boards Manager”</p></li>
+<li><p>Search for and install “megaAVR”</p></li>
+</ul></li>
+<li><p>Download the test sketch from here: <a href="files/monitor_test_sketch.ino" download="monitor_test_sketch.ino">Download</a></p></li>
+<li><p>Use a Micro USB cable to connect to the Arduino and select the appropriate com port</p></li>
+<li><p>Click “Upload”</p></li>
+<li><p>If the upload was successful, the LED will light up and the buzzer will sound when the button is pressed.</p></li>
+<li><p>If the upload fails try a different com port, or charge the registers emulation:</p>
+<ul>
+<li>Tools &gt; Register Emulation &gt; None (ATMEGA4809)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>NOTE: If the Arduino has already been modified for UPDI, programming via the USB port will not be possible. First remove the soldered link and disconnect the UPDI wire. See UPDI PROGRAMMING for more details</strong></p>
+</section>
+<section id="preparing-the-stripboard" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="preparing-the-stripboard"><span class="header-section-number">5.0.3</span> Preparing the Stripboard</h3>
+<p>The 100x160 mm stripboard needs to be reduced to fit inside the Main Unit.</p>
+<ul>
+<li><p>Mark the four corners for drilling with a permanent marker. The locations of the holes are important as they correspond to the holes in the mounting plate. See FIGURE 19 – PREPARING THE STRIPBOARD</p></li>
+<li><p>The board does not have to be broken at the line, as seen in the picture, and a larger PCB can be obtained by breaking off a smaller piece. Just ensure the spacing between the holes are correct, as in the picture.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/19_stripboard.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 19.</strong> Preparing the stripboard.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Use the 3mm drill bit to drill the four corner holes in the circuit board.</p>
+<ul>
+<li>Do a test fit as shown in fig.&nbsp;20. Use the four 2.5mm machine screws to secure the blank circuit board to the mounting plate. <strong>Note, do not exert too much force as the screws are going into plastic.</strong></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/20_test_stripboard.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 20.</strong> Test fit the blank board on the mounting bracket.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>The SIM800L antenna can be installed on the mounting bracket provided.</p></li>
+<li><p>If the signal at the site is particularly weak, an antenna with higher gain can be used. For example:</p>
+<ul>
+<li>An omnidirectional antenna (RS Part Number: 202-4179).</li>
+<li>A blade antenna with a SMA extension cable.</li>
+</ul></li>
+<li><p>Remove the blank circuit board from the mounting plate and start building the circuit according to the circuit diagram.</p></li>
+</ul>
+</section>
+<section id="v-and-5v-power-supplies" class="level3" data-number="5.0.4">
+<h3 data-number="5.0.4" class="anchored" data-anchor-id="v-and-5v-power-supplies"><span class="header-section-number">5.0.4</span> 4V and 5V Power Supplies</h3>
+<ul>
+<li><p>Start with the main 24V DC connector and fuse holder.</p></li>
+<li><p><strong>Skip this step if you are building version 2 of the monitor board. In version 2 of the APMS monitor, we no longer need the LM2596 converter as a different SIM module is used which runs on 5V.</strong> If you are building version 1 of the monitor board, then also add the LM2596 DC-DC converter and then insert a 3A fuse into the fuse holder. Next provide 24V to the main DC connector and adjust the output voltage of the LM2596 DC-DC converter to 4.0 V.</p></li>
+<li><p>Install the K7805 voltage regulator, capacitors C5 and C6 and check for 5V on the output.</p></li>
+<li><p>Break one of the 30 pin female header strips in half, to obtain two 15 pin strips. Use these two strips as a socket for the Arduino Nano (see fig.&nbsp;21).</p></li>
+<li><p>Test for 5V between the GND and VCC pins on the Arduino header. Do not install the Arduino yet.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/21_partial_monitor.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 21.</strong> A partially built monitor (version 1) for Stony Point.</figcaption>
+</figure>
+</div>
+</section>
+<section id="sim800l-power-supply" class="level3" data-number="5.0.5">
+<h3 data-number="5.0.5" class="anchored" data-anchor-id="sim800l-power-supply"><span class="header-section-number">5.0.5</span> SIM800L Power Supply</h3>
+<ul>
+<li><p>The version 1 Monitor uses a SIM800L module (hereafter referred to SIM800L) and version 2 uses a SIM800L-V2 5V module (hereafter referred to as SIM800L-V2) to send/receive SMS messages.</p></li>
+<li><p>Four pins are used: VCC, GND, RXD and TXD. VCC requires a supply voltage of 3.4V – 4.4V for the SIM800L and 5V for SIM800L-V2. The version 1 monitor uses the LM2596 regulator to provide a stable 4.0V, whereas in version 2 of the monitor board the power is converted to 5V by the K7805 voltage regulator.</p></li>
+<li><p>The first three monitors (Stony Point, Bird Island and Dyer Island) all use a smaller green PCB (SIM800L). As this module has been difficult to procure, a larger module with a red PCB was used at Robben Island (SIM800L). As we only use 4 pins, the extra features of the red board are not used. At Dassen Island we used the newer SIM800L-V2 module.</p></li>
+<li><p>Unfortunately, the modules are not directly interchangeable as the RX and TX pins are reversed (see pictures below).</p></li>
+</ul>
+<div class="quarto-layout-panel" data-fig-align="center" data-layout-ncol="3">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/22_1_sim800L.png" height="200" class="figure-img"></p>
+<figcaption><strong>Figure 22.1. </strong>4V SIM800L green PCB.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/22_2_sim800L.jpeg" width="480" height="200" class="figure-img"></p>
+<figcaption><strong>Figure 22.2. </strong>4V SIM800L red PCB.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/22_3_sim800L-v2.png" height="200" class="figure-img"></p>
+<figcaption><strong>Figure 22.3. </strong>5V SIM800L-v2.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>An adapter board can be made, or the Monitor PCB modified, if a green module at the first three sites ever needs to be replaced with a red one.</p>
+<p>Install the SIM800L Module header in the top left section of the board, as the module needs to be located close to the antenna slot on the mounting bracket (see fig.&nbsp;23).</p>
+<p>Use female header pins to create a socket for the module. This enables the module to be easily removed for testing or to be replaced if faulty.</p>
+<ul>
+<li><p>Install capacitors C1 – C4 and Zener diode D1.</p></li>
+<li><p>With the SIM800L/SIM800L-v2 <strong>NOT</strong> inserted, confirm on the header that there is 4.0 V between VCC and GND, or 5.0 V if using the SIM800L-v2.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/23_monitor.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 23.</strong> Robben Island APMS monitor board.</figcaption>
+</figure>
+</div>
+</section>
+<section id="communication-between-sim800l-and-arduino" class="level3" data-number="5.0.6">
+<h3 data-number="5.0.6" class="anchored" data-anchor-id="communication-between-sim800l-and-arduino"><span class="header-section-number">5.0.6</span> Communication Between SIM800L and Arduino</h3>
+<ul>
+<li><u>SIM800L RX and Arduino TX</u></li>
+</ul>
+<p>Since the TX of the Arduino is between 0V and 5V, a simple voltage divider is used to step the voltage down to a level suitable for the SIM800L. Install Trimpot RV1 as per the schematic.</p>
+<p>With the SIM800L module and Arduino <u>not</u> inserted, apply 5V to the voltage divider (pin D3 – See FIGURE 24 - ARDUINO NANO PINOUT). With 5V applied to D3, a voltage divider is created by trimpot RV1. Adjust the trimpot until the voltage on the centre pin, is 2.65 V. This pin will be connected to the receive line of the SIM800L.</p>
+<ul>
+<li><u>SIM800L TX and Arduino RX</u></li>
+</ul>
+<p>The voltage level of the SIM800L needs to be stepped up for use with the Arduino. To achieve this, a circuit consisting of three resistors (R8, R9 and R10) and one NPN transistor (Q1) is used, as recommended by the SIM800L manual. Install the above-mentioned resistors and transistors and ensure the input of the circuit is connected to the transmit line of the SIM800L.</p>
+</section>
+<section id="communication-between-sim800l-v2-and-arduino" class="level3" data-number="5.0.7">
+<h3 data-number="5.0.7" class="anchored" data-anchor-id="communication-between-sim800l-v2-and-arduino"><span class="header-section-number">5.0.7</span> Communication Between SIM800L-V2 and Arduino</h3>
+<ul>
+<li><u>SIM800L-V2 RX and Arduino TX</u></li>
+</ul>
+<p>To be completed.</p>
+<ul>
+<li><u>SIM800L-V2 TX and Arduino RX</u></li>
+</ul>
+<p>To be completed.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/24_arduino_pinout.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 24.</strong> Arduino Nano pinout.</figcaption>
+</figure>
+</div>
+</section>
+<section id="raspberry-pi-connection" class="level3" data-number="5.0.8">
+<h3 data-number="5.0.8" class="anchored" data-anchor-id="raspberry-pi-connection"><span class="header-section-number">5.0.8</span> Raspberry Pi Connection</h3>
+<p>The connector used to connect the Monitor to the Raspberry Pi can be seen in fig.&nbsp;25. To use the connector with stripboard, the pins must either be bent outwards, or a “breakout” board made from a piece of scrap protoboard (fig.&nbsp;26). Both methods have been used and are effective. A pre-made break-out board can be purchased if available. If a PCB is designed in future, it will be possible to solder the connector directly on the board.</p>
+<div class="quarto-layout-panel" data-fig-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/25_connector.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 25.</strong> Raspberry Pi connector.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/26_protoboard.jpeg" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 26.</strong> Proto board.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The Raspberry Pi 40-pin Connector pinout can be seen in fig.&nbsp;27.</p>
+<p>A simple voltage check of 3.3V on pin 1 and 5V pin 2 should confirm orientation if unsure.</p>
+<p>The Raspberry Pi GPIO pins and their functions can be seen in TABLE 3 - RASPBERRY PI GPIO PINS AND FUNCTIONS</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/27_pi_pinout.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 27.</strong> Raspberry Pi GPIO pinout.</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<caption><strong>Table 3</strong> - Raspberry Pi GPIO pins and functions</caption>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 66%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pin</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GPIO3</td>
+<td style="text-align: left;">Power ON/OFF</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GPIO4</td>
+<td style="text-align: left;">Raspberry Pi UART3 TX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GPIO5</td>
+<td style="text-align: left;">Raspberry Pi UART3 RX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GPIO14</td>
+<td style="text-align: left;">Raspberry Pi TX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GPIO15</td>
+<td style="text-align: left;">Raspberry Pi RX</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/28_ribbon.png" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 28.</strong> 40 pin ribbon cable.</figcaption>
+</figure>
+</div>
+<p>A 40-pin ribbon cable is used to connect the Monitor to the Raspberry Pi (fig.&nbsp;28). After building the Monitor, <strong>check the voltages on the other end of the ribbon cable, to ensure it is not above 3.3V, before plugging it into the Pi</strong>.</p>
+</section>
+<section id="logic-level-shifter" class="level3" data-number="5.0.9">
+<h3 data-number="5.0.9" class="anchored" data-anchor-id="logic-level-shifter"><span class="header-section-number">5.0.9</span> Logic Level Shifter</h3>
+<ul>
+<li><p>Since the Pi uses 3.3 V for communication, and the Arduino 5 V, a logic level shifter is needed. These modules are available cheaply and two 6-pin female headers should be used as a socket for easy install/removal (fig.&nbsp;29).</p></li>
+<li><p>The level shifter uses the 3.3V on pin 1 of the Raspberry Pi connector for the LV connection and the 5V Arduino supply voltage for the HV connection.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/29_dyer_monitor.png" class="img-fluid figure-img" width="600"></p>
+<figcaption><strong>Figure 29.</strong> Dyer Island monitor board.</figcaption>
+</figure>
+</div>
+</section>
+<section id="updi-programming" class="level3" data-number="5.0.10">
+<h3 data-number="5.0.10" class="anchored" data-anchor-id="updi-programming"><span class="header-section-number">5.0.10</span> UPDI Programming</h3>
+<p>The Arduino Nano Every uses UPDI (Unified Program and Debug Interface) for programming. This uses only 1 wire for programming, but a more complex communication protocol is needed. To use UPDI a wire needs to be soldered to a pad located on the underside of the Arduino. A link must also be soldered (Fig. 30).</p>
+<p><strong>NOTE: After the link has been made, the board can no longer be programmed via the Arduino software and USB cable. It will be programmed via the Raspberry Pi using the UPDI wire. If the Arduino software needs to be used during fault finding, unsolder the link. The pads can break off with successive heating sessions, so be cautious.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/media/30_updi_arduino.jpeg" class="img-fluid figure-img" width="400"></p>
+<figcaption><strong>Figure 30.</strong> Wire and link soldered onto Arduino for UPDI programming.</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>To program the Arduino remotely via the Raspberry Pi, a utility called “pymcuprog” is used. This utility allows the Raspberry Pi to program the Arduino via a serial connection. This serial connection is established using UART3 (RX3 and TX3) on the Raspberry Pi as a serial port (see Table 3 for GPIO pinout).</p></li>
+<li><p>To program the Arduino via a serial port, a hardware modification is required. The pymcuprog documentation (<a href="https://pypi.org/project/pymcuprog/" class="uri">https://pypi.org/project/pymcuprog/</a>) describes various combinations of diodes and resistors to achieve this, for various setups. After experimentation, using only a Schottky diode (D2) delivered the best results. Note the cathode of D2 is connected to TX3.</p></li>
+<li><p>The UPDI wire is connected to HV1 on the level shifter (Fig. 18).</p></li>
+<li><p>A script has been written to compile and upload the firmware to the Arduino, from the Raspberry Pi, thus the user does not need to use pymcuprog directly. See the section: PROGRAMMING THE ARDUINO MONITOR VIA THE PI.</p></li>
+</ul>
+</section>
+<section id="voltage-monitoring" class="level3" data-number="5.0.11">
+<h3 data-number="5.0.11" class="anchored" data-anchor-id="voltage-monitoring"><span class="header-section-number">5.0.11</span> Voltage Monitoring</h3>
+<p>If any of the main supply voltages are outside allowable limits, an SMS will be sent to the operator.</p>
+<p>Currently, the following important voltages are monitored:</p>
+<ul>
+<li>4V: This is the SIM800L supply voltage. This voltage is generated by the LM2596 voltage regulator and is fed to analog input A6 of the Arduino, via resistor R1.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Note: In version 2 of the monitor board a different SIM module is used which no longer needs a 4V supply voltage. As a result this is no longer monitored.</p>
+</blockquote>
+<ul>
+<li>5V: This is the 5V supply for the Raspberry Pi. The 5V is picked up from pin 2 or 4 on the Raspberry Pi connector (See Fig. 27 for the Raspberry Pi GPIO pinout).</li>
+</ul>
+<blockquote class="blockquote">
+<p>Note: As this voltage is close to, and might exceed, the Arduino maximum safe voltage, a voltage divider consisting of R2 and R3 is used to step the voltage down. The Arduino uses A3 to measure this voltage. Note that this 5V is separate and should be isolated from the Arduino 5V supply. This is in essence measuring the output of the 5V Meanwell Power Supply.</p>
+</blockquote>
+<ul>
+<li><p>12V: This is the 12V supply for the scales and the router (if an indoor router is used). This voltage is fed via a wire from the Meanwell 12V Power Supply to screw terminal J2. Install the screw terminal in the top right section of the board to allow for easy connecting when installing the board (Fig. 29). Resistor R4 and R5 is used to step the 12V before connecting it to A5 of the Arduino</p></li>
+<li><p>24V: This is the main solar supply voltage. This supplies power to the BioMark reader, the APMS Main Unit and the Outdoor Router (if one is installed). The voltage is measured at the input of the Monitor and is stepped down via resistor divider R6 and R7 before being connected to A7 of the Arduino.</p></li>
+</ul>
+</section>
+<section id="temperature-monitoring" class="level3" data-number="5.0.12">
+<h3 data-number="5.0.12" class="anchored" data-anchor-id="temperature-monitoring"><span class="header-section-number">5.0.12</span> Temperature Monitoring</h3>
+<p>The ambient temperature inside the Main Unit is monitored using a LM35 temperature sensor (U5). The sensor operates on 5V and needs no other components to operate. The output of the sensor is read directly by analog pin A0 on the Arduino.</p>
+</section>
+<section id="buzzer-and-button" class="level3" data-number="5.0.13">
+<h3 data-number="5.0.13" class="anchored" data-anchor-id="buzzer-and-button"><span class="header-section-number">5.0.13</span> Buzzer and Button</h3>
+<p>A buzzer and button are included for debugging and future options. Currently the Monitor will beep once initialisation is complete, and the button will power the Raspberry Pi down/up.</p>
+<ul>
+<li><p>The buzzer is switched via transistor Q2 with base current being limited by resistor R11.</p></li>
+<li><p>The button is connected directly to pin D12 on the Arduino and makes use of the built-in pull-up resistor, thus requiring no other components. Place the button on the board in a location where it will be easy to press once the board is installed.</p></li>
+</ul>
+</section>
+<section id="testing-the-monitor-circuit-board" class="level3" data-number="5.0.14">
+<h3 data-number="5.0.14" class="anchored" data-anchor-id="testing-the-monitor-circuit-board"><span class="header-section-number">5.0.14</span> Testing the Monitor Circuit Board</h3>
+<p>Before testing communication between the Raspberry Pi and the Arduino Monitor, some basic tests must be done to ensure no components will be damaged. A dual variable power supply will be needed to test the various voltages.</p>
+<p>Ensure the firmware was uploaded successfully as explained in the section PROGRAMMING VIA THE ARDUINO SOFTWARE</p>
+<p>Plug the SIM800L into its socket and connect the antenna.</p>
+<ul>
+<li><p>Plug the Arduino into its socket.</p></li>
+<li><p>Plug the Level Shifter into its socket.</p></li>
+<li><p>Plug the 40-pin ribbon cable into the socket on the Monitor but do not plug the other end into the Pi.</p></li>
+<li><p>Power the Monitor via the main 24V DC connector.</p></li>
+<li><p>Observe lights flashing on the SIM800L.</p>
+<ul>
+<li>The green light on the SIM800L should flash rapidly at first, and after about 20 seconds, it should start flashing slowly. This indicates that the module was able to connect to the cell network successfully. Try different antennas and orientations for best results.</li>
+</ul></li>
+<li><p>Check that there is 5.0V on the Arduino and Level Shifter supply pins.</p></li>
+<li><p>Check that there is 4.0V on the SIM800L supply pin.</p>
+<ul>
+<li>Check that the same 4.0V is measured on pin A6 of the Arduino.</li>
+</ul></li>
+<li><p>Check that none of the pins on the Raspberry Pi connector has 5V on it.</p>
+<ul>
+<li>Note pin 2 and 4 will have 5V coming from the Pi when it is connected at a later stage.</li>
+</ul></li>
+<li><p>Supply 12V to connector J2 and ensure the voltage has dropped to below 5V on pin A5 of the Arduino.</p></li>
+<li><p>Measure the stepped-down solar supply voltage on pin A7 of the Arduino. The 24V should have been stepped down to a value less than 5V.</p></li>
+<li><p>Measure the output voltage of the temperature sensor on pin A0 of the Arduino. The sensor outputs 10mV per °C, so at 25°C, the voltage should be about 0.25V.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_scales_platform.html" class="pagination-link" aria-label="Scales Platform">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scales Platform</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05_apms_main_unit.html" class="pagination-link" aria-label="APMS Main Unit">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">APMS Main Unit</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/apmsbirdlife/apms-manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
