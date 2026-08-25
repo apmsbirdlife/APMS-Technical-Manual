@@ -1,0 +1,7 @@
+# Conclusion
+
+The system was built as a platform for future expansions and
+experiments. There are GPIO ports available on the Raspberry Pi, the CPU
+has the capacity to do more work and the Monitor can be programmed with
+more features. The data processing algorithm is also a first attempt and
+the raw data can be processed differently in future if desired.

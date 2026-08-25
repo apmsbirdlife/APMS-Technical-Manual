@@ -1,0 +1,10 @@
+/* Adjust spacing between bullet points */
+  ul li, ol li {
+    margin-bottom: 0em; /* Adjust spacing as needed */
+  }
+
+/* Optional: Adjust spacing for nested lists */
+  ul ul, ol ol, ul ol, ol ul {
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }

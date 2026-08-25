@@ -1,0 +1,58 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Automated Penguin Monitoring System (APMS)"
+  subtitle: "Technical Manual"
+  author: "Pierre Retief"
+  date: today
+  repo-url: https://github.com/apmsbirdlife/apms-manual
+  repo-actions: [issue]
+  search: true
+  # chapters:
+    - index.qmd
+    - part: "Overview"
+      chapters:
+        - 001_overview.qmd
+    - part: "Hardware"
+      chapters:
+        - 01_solar.qmd
+        - 02_internet.qmd
+        - 03_scales_platform.qmd
+        - 04_apms_monitor.qmd
+        - 05_apms_main_unit.qmd
+    - part: "Software & Configuration"
+      chapters:
+        - 06_aws_s3.qmd
+        - 07_raspberry_pi.qmd
+        - 08_arduino.qmd
+        - 09_biomark.qmd
+        - 10_testing.qmd
+        - 11_crontab.qmd
+    - part: "Deployment & Operation"
+      chapters:
+        - 12_commissioning.qmd
+        - 13_data_processing.qmd
+        - 14_maintenance.qmd
+        - 15_accuracy.qmd
+        - 16_conclusion.qmd
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    include-in-header:
+      text: |
+        \usepackage{enumitem}
+        \setlist[itemize]{itemsep=10pt, parsep=0pt, topsep=5pt}
+        \setlist[enumerate]{itemsep=10pt, parsep=0pt, topsep=5pt}
