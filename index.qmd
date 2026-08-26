@@ -35,7 +35,3 @@ Use the left sidebar to navigate between chapters. All chapters are searchable u
 ## Contributing {.unnumbered}
 
 This manual is maintained as an open-source document on GitHub. To suggest corrections or additions, use the **Edit this page** link at the top right of any page, or open an issue on the repository.
-
-## Authors & Acknowledgements {.unnumbered}
-
-Manual written by Pierre Retief for BirdLife South Africa.
