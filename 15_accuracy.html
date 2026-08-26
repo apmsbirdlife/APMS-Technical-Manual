@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>16&nbsp; Checking the System for Accuracy – Automated Penguin Monitoring System (APMS)</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fd3b02168e988177e8c40aa51adbf8e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3f44e09063ab37d110d7ab799bdd2737.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/videojs/video.min.js"></script>
 <link href="site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -344,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="testing-and-calibration-of-system" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="testing-and-calibration-of-system"><span class="header-section-number">16.1</span> Testing and Calibration of System</h2>
 <p>To test the accuracy of the APMS weighbridge, the weight estimates are compared to that obtained by an independent scale. Video footage is captured of the two main scales, as well as the independent scale. The independent scale has an LCD display, and this should be visible to the camera. It does have a night light and should thus be hidden as much as possible from view, as the penguins are very aware of changes to their surroundings and get easily frazzled. The video clips showing penguins stationary on the independent scale will be used to find the “true” weight, while the footage of the main two scales will be used to characterise the data. The penguin should be stationary on the independent scale, long enough to confidently read a stable reading from the LCD display.</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" width="700" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="_book/videos/16_testing_calibrations.mp4"></video></div>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" width="700" class="video-js vjs-default-skin vjs-big-play-centered " controls="" preload="auto" data-setup="{}" title=""><source src="_book/videos/16_testing_calibrations.mp4"></video></div>
 <p>You will need the following</p>
 <ol type="1">
 <li><p>A laptop with WiFi. (Take a LAN cable with just in case)</p></li>
@@ -359,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Choose good weather and observe when the best time is to set up (usually mid day is good when less penguins cross the weighbridge).</p></li>
 <li><p>SSH into the system and log the start of the testing/calibration event in the log file:</p></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> apms/log.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> apms/log.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li><p>The independent scale must be set up as described in the section above.</p></li>
 <li><p>Calibrate the scales as described in the section <a href="./14_maintenance.html#Routine Calibration of Scales">Routine Calibration of Scales</a></p></li>
@@ -386,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Test with 1kg, 5kg and 6kg weight. It should be spot on.</p>
 <ol type="a">
 <li><p>Calibrate according to the user manual, if required</p></li>
-<li><p>Please see the manual for the specific scale you are using. The independent scale we are currently using is the Adam CPW Plus-15 scale. <a href=".\_book/files/CPWplus_UM_USA.pdf">Download the manual here.</a></p></li>
+<li><p>Please see the manual for the specific scale you are using. The independent scale we are currently using is the Adam CPW Plus-15 scale. <a href="./_book/files/CPWplus_UM_USA.pdf">Download the manual here.</a></p></li>
 </ol></li>
 <li><p>At the site, also ensure the scale is level, and recheck with weights.</p></li>
 <li><p>Place the display as far away and out of sight from the penguins as possible.</p></li>
@@ -448,13 +454,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
