@@ -47,12 +47,3 @@ format:
     number-sections: true
     code-copy: true
     code-overflow: wrap
-  pdf:
-    documentclass: scrbook
-    toc: true
-    number-sections: true
-    include-in-header:
-      text: |
-        \usepackage{enumitem}
-        \setlist[itemize]{itemsep=10pt, parsep=0pt, topsep=5pt}
-        \setlist[enumerate]{itemsep=10pt, parsep=0pt, topsep=5pt}
