@@ -108,7 +108,7 @@ Are you sure you want to continue connecting (yes/no/fingerprint)?
 
 -   While trying to SSH into the PI from another PC, especially after changes were made, you might encounter the following message:
 
-![](images/media/19_fingerprint.jpeg){width="700" fig-align="center"}
+<!-- ![](images/media/49_fingerprint.jpeg){width="700" fig-align="center"} -->
 
 -   Edit the "known_hosts" file: 
 
@@ -625,5 +625,3 @@ The table below shows the parameters and their descriptions.
     -   Hold **CTRL** and press **x**. Then press '**y**' to save, then press Enter to exit
 
 -   The configuration file has now been created.
-
-![](images/media/)

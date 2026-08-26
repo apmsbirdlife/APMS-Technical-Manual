@@ -24,7 +24,7 @@ The APMS consists of the following key components:
 
 The 24V Solar Power Supply provides power for the APMS Main Unit, scales, 4G Router and BioMark RFID Reader. This is site dependent.
 
-![Figure 1. Solar panel on Bird Island, Algoa Bay.](images/media/01_solar_panel.jpeg){width="400" fig-align="left"}
+![Figure 1. Solar panel on Bird Island, Algoa Bay.](images/media/01_solar_panel.jpeg){width="600" fig-align="center"}
 
 The primary internet connection is provided via a 4G router. Depending on the cellular signal strength at the site, either an indoor or outdoor router is deployed. We prefer utilizing Teltonika [RUT906](https://www.teltonika-networks.com/products/routers/rut906) or [RUT956](https://www.teltonika-networks.com/products/routers/rut956) routers for two main reasons:
 
@@ -42,18 +42,18 @@ The primary internet connection is provided via a 4G router. Depending on the ce
 
 Two scales are used to increase accuracy and to indicate whether a penguin is heading out to sea, or coming back from the ocean. These scales are mounted on a platform. 
 
-![Figure 3. Scale platform on Dyer Island.](images/media/03_scale_platform.jpeg){width="400" fig-align="left"}
+![Figure 3. Scale platform on Dyer Island.](images/media/03_scale_platform.jpeg){width="600" fig-align="center"}
 
 All the electronics are housed inside an IP67 rated enclosure, referred to as the APMS Main Unit. The section “APMS Main Unit” describes how to build this box.
 
-![Figure 4. APMS main unit.](images/media/04_apms_main_unit.png){width="400" fig-align="left"} 
+![Figure 4. APMS main unit.](images/media/04_apms_main_unit.png){width="600" fig-align="center"} 
 
 The BioMark reader is an external device, used for picking up RFID pit tags. The APMS connects via a USB serial interface, internal to the reader. See the “BioMark” section for more information.
 
 
-![Figure 5. BioMark reader.](images/media/05_biomark_reader.png){width="400" fig-align="left"}
+![Figure 5. BioMark reader.](images/media/05_biomark_reader.png){width="600" fig-align="center"}
 
 The data is downloaded daily, processed, and displayed on a Grafana Dashboard. This is handled by the APMS Server off-site. See \*\*\* for more information regarding the Dashboard.
 
-![Figure 6. APMS dashboard.](images/media/06_dash.png){width="400" fig-align="left"} 
+![Figure 6. APMS dashboard.](images/media/06_dash.png){width="600" fig-align="center"} 
 
