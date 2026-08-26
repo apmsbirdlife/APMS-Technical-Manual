@@ -20,6 +20,7 @@ You will need the following:
 
 5.  In addition to this, always take a basic tool kit and power supply with, as you never know what you might find at the site.
 
+
 ### To perform the testing/calibration
 
 1.  Choose good weather and observe when the best time is to set up (usually mid day is good when less penguins cross the weighbridge).
@@ -35,7 +36,7 @@ python3 apms/log.py
 
 5.  Ensure the camera has a clear view of the 2 main scales, the independent scale, and the LCD display
 
-6.  After at least one day of capturing footage, SSH back into the system and log the end of the event in the log file.
+6.  After at least one day of capturing footage, SSH into the system and log the end of the event in the log file.
 
 7.  Remove the camera and independent scale, leaving the site as undisturbed as possible.
 
