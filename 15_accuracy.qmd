@@ -36,7 +36,7 @@ python3 apms/log.py
 
 5.  Ensure the camera has a clear view of the 2 main scales, the independent scale, and the LCD display
 
-6.  After at least one day of capturing footage, SSH into the system and log the end of the event in the log file.
+6.  After at least one day of capturing footage, SSH into the system and log the end of the event.
 
 7.  Remove the camera and independent scale, leaving the site as undisturbed as possible.
 
