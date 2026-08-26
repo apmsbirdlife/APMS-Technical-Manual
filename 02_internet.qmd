@@ -85,8 +85,7 @@ with the 12V DC plug (RS: 138-9405). This connector will plug into the
 APMS Main Unit (12V DC IN) when the router is to be used.
 
 ![Figure 10. Indoor
-router.](images/media/10_indoor_router.jpeg){width="400"
-fig-align="left"}
+router.](images/media/10_2_indoor_router.jpeg){width="400" fig-align="left"}
 
 ## Teltonika Router
 

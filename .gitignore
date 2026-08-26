@@ -2,3 +2,9 @@
 /_book/
 
 **/*.quarto_ipynb
+.Rproj.user
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.tex
