@@ -14,9 +14,8 @@ The APMS uses RFID detection and weighbridge technology to automatically record 
 
 Contributions and corrections are welcome. To suggest a change:
 
-1. Click **Edit this page** on any page of the manual website, or
-2. Open an [issue](https://github.com/YOUR-ORG/apms-manual/issues) on this repository, or
-3. Fork the repository, make your changes, and submit a pull request
+1. Open an [issue](https://github.com/YOUR-ORG/apms-manual/issues) on this repository, or
+2. Fork the repository, make your changes, and submit a pull request
 
 ## 📁 Repository structure
 
