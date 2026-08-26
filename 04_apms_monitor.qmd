@@ -157,13 +157,13 @@ The 100x160 mm stripboard needs to be reduced to fit inside the Main Unit.
 
 -   The board does not have to be broken at the line, as seen in the picture, and a larger PCB can be obtained by breaking off a smaller piece. Just ensure the spacing between the holes are correct, as in the picture.
 
-![**Figure 19.** Preparing the stripboard.](images/media/19_stripboard.png){width="400" fig-align="center"}
+![**Figure 19.** Preparing the stripboard.](images/media/19_stripboard.png){width="600" fig-align="center"}
 
 -   Use the 3mm drill bit to drill the four corner holes in the circuit board.
 
     -   Do a test fit as shown in fig. 20. Use the four 2.5mm machine screws to secure the blank circuit board to the mounting plate. **Note, do not exert too much force as the screws are going into plastic.**
 
-![**Figure 20.** Test fit the blank board on the mounting bracket.](images/media/20_test_stripboard.png){width="400" fig-align="center"}
+![**Figure 20.** Test fit the blank board on the mounting bracket.](images/media/20_test_stripboard.png){width="600" fig-align="center"}
 
 -   The SIM800L antenna can be installed on the mounting bracket provided.
 
@@ -215,7 +215,7 @@ Use female header pins to create a socket for the module. This enables the modul
 
 -   With the SIM800L/SIM800L-v2 **NOT** inserted, confirm on the header that there is 4.0 V between VCC and GND, or 5.0 V if using the SIM800L-v2.
 
-![**Figure 23.** Robben Island APMS monitor board.](images/media/23_monitor.png){width="400" fig-align="center"}
+![**Figure 23.** Robben Island APMS monitor board.](images/media/23_monitor.png){width="600" fig-align="center"}
 
 ### Communication Between SIM800L and Arduino 
 
@@ -245,11 +245,10 @@ To be completed.
 
 The connector used to connect the Monitor to the Raspberry Pi can be seen in fig. 25. To use the connector with stripboard, the pins must either be bent outwards, or a "breakout" board made from a piece of scrap protoboard (fig. 26). Both methods have been used and are effective. A pre-made break-out board can be purchased if available. If a PCB is designed in future, it will be possible to solder the connector directly on the board.
 
-::: {layout-ncol=2 fig-align="center"}
+
 ![**Figure 25.** Raspberry Pi connector.](images/media/25_connector.png){width="400" fig-align="center"}
 
 ![**Figure 26.** Proto board.](images/media/26_protoboard.jpeg){width="400" fig-align="center"}
-:::
 
 The Raspberry Pi 40-pin Connector pinout can be seen in fig. 27.
 
@@ -257,7 +256,7 @@ A simple voltage check of 3.3V on pin 1 and 5V pin 2 should confirm orientation 
 
 The Raspberry Pi GPIO pins and their functions can be seen in TABLE 3 - RASPBERRY PI GPIO PINS AND FUNCTIONS
 
-![**Figure 27.** Raspberry Pi GPIO pinout.](images/media/27_pi_pinout.png){width="400" fig-align="center"}
+![**Figure 27.** Raspberry Pi GPIO pinout.](images/media/27_pi_pinout.png){width="500" fig-align="center"}
 
   -----------------------------------------------------------------------
   Pin                    Function
@@ -275,7 +274,7 @@ The Raspberry Pi GPIO pins and their functions can be seen in TABLE 3 - RASPBERR
 
   : **Table 3** - Raspberry Pi GPIO pins and functions
 
-![**Figure 28.** 40 pin ribbon cable.](images/media/28_ribbon.png){width="400" fig-align="center"}
+![**Figure 28.** 40 pin ribbon cable.](images/media/28_ribbon.png){width="600" fig-align="center"}
 
 A 40-pin ribbon cable is used to connect the Monitor to the Raspberry Pi (fig. 28). After building the Monitor, **check the voltages on the other end of the ribbon cable, to ensure it is not above 3.3V, before plugging it into the Pi**.
 
@@ -293,7 +292,7 @@ The Arduino Nano Every uses UPDI (Unified Program and Debug Interface) for progr
 
 **NOTE: After the link has been made, the board can no longer be programmed via the Arduino software and USB cable. It will be programmed via the Raspberry Pi using the UPDI wire. If the Arduino software needs to be used during fault finding, unsolder the link. The pads can break off with successive heating sessions, so be cautious.**
 
-![**Figure 30.** Wire and link soldered onto Arduino for UPDI programming.](images/media/30_updi_arduino.jpeg){width="400" fig-align="center"}
+![**Figure 30.** Wire and link soldered onto Arduino for UPDI programming.](images/media/30_updi_arduino.jpeg){width="500" fig-align="center"}
 
 -   To program the Arduino remotely via the Raspberry Pi, a utility called "pymcuprog" is used. This utility allows the Raspberry Pi to program the Arduino via a serial connection. This serial connection is established using UART3 (RX3 and TX3) on the Raspberry Pi as a serial port (see Table 3 for GPIO pinout).
 

@@ -109,7 +109,7 @@ The USB Panel Mount Socket does not have adequate strain relief. Use Pratley Put
 
 ![**Figure 32.1.** Pratley putty strain relief for USB socket.](images/media/32_1_pratley_socket.jpeg){width="600" fig-align="center"}
 
-![**Figure 32.2. **Pratley putty strain relief for USB socket.](images/media/32_2_pratley_socket.jpeg){width="400" fig-align="center"}
+![**Figure 32.2. **Pratley putty strain relief for USB socket.](images/media/32_2_pratley_socket.jpeg){width="600" fig-align="center"}
 
 ## Preparing the Main Unit Enclosure
 
@@ -133,7 +133,7 @@ Prepare the enclosure before starting the build. RS Part numbers included in bra
 
 -   Use a label maker, or a permanent marker, and label each socket (Fig. 33).
 
-![**Figure 33.** APMS Main Unit frontside.](images/media/33_apms_front.jpeg){width="400" fig-align="center"}
+![**Figure 33.** APMS Main Unit frontside.](images/media/33_apms_front.jpeg){width="600" fig-align="center"}
 
 :::{.callout-note}
 There are now two versions of the APMS.
@@ -276,7 +276,7 @@ The data is sent as
 
 -   Connect the GROUND and +12V power wires.
 
-![**Figure 42.2.** Laumas TLB485 USB to RS485 wiring.](images/media/42_usb_rs485.png){width="400" fig-align="center"}
+![**Figure 42.2.** Laumas TLB485 USB to RS485 wiring.](images/media/42_usb_rs485.png){width="600" fig-align="center"}
 
 
 ### Indicator Scale Connection
@@ -285,13 +285,13 @@ The data is sent as
 
 -   A short cable runs from the 6-pin socket to the x-pin connector for the GMT-X1 indicator, or if using a Laumas TLB485 the cable will run from the 6-pin socket connector to the 9-pin connector on the indicator (Fig. 43.2).
 
-![**Figure 43.2.** Laumas TLB485 load cell wiring.](images/media/43_loadcell_wiring.png){width="400" fig-align="center"}
+![**Figure 43.2.** Laumas TLB485 load cell wiring.](images/media/43_loadcell_wiring.png){width="600" fig-align="center"}
 
 -   Each pin on the socket (111-5764) is numbered. Match the numbering on the 9-pin connector with that of the socket (only 1 - 6 is used). See Figs. 43 & 44.
 
 -   Solder the wires to the sockets and add ferrules before inserting it into the scale connector screw terminals.
 
-![**Figure 44.** Installing 6-pin scale connector.](images/media/44_6-pin_connector.png){width="400" fig-align="center"}
+![**Figure 44.** Installing 6-pin scale connector.](images/media/44_6-pin_connector.png){width="600" fig-align="center"}
 
 ### Jumper Install (Laumas TLB485 only)
 
@@ -343,4 +343,4 @@ If the APMS Monitor has been tested as explained in [Testing the Monitor Circuit
 
 -   Connect the 40-pin Raspberry Pi ribbon cable.
 
-![**Figure 47.** Monitor board mounted inside the APMS Main Unit.](images/media/46_monitor.png){width="400" fig-align="center"}
+![**Figure 47.** Monitor board mounted inside the APMS Main Unit.](images/media/46_monitor.png){width="600" fig-align="center"}

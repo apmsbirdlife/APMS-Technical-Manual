@@ -53,14 +53,14 @@ POE. The cable comes with a DC connector that plugs into the circuit
 board. (It needs to be bent in a slightly awkward way to fit).
 
 ![Figure 9. Outdoor
-router.](images/media/09_outdoor_router.jpeg){width="400"
+router.](images/media/09_outdoor_router.jpeg){width="600"
 fig-align="left"}
 
 The router runs directly on the 24V Solar Power supply. A circuit
 breaker for the router should be installed and will also act as a power
 switch, as there is no easy way to power cycle the router.
 
-The contact person is Tammy He
+The contact person is Tammy 
 ([tammy\@outdoorrouter.com](mailto:tammy@outdoorrouter.com){.email})
 
 Mount the router on a pole or to a wall, using the hardware supplied
@@ -85,7 +85,7 @@ with the 12V DC plug (RS: 138-9405). This connector will plug into the
 APMS Main Unit (12V DC IN) when the router is to be used.
 
 ![Figure 10. Indoor
-router.](images/media/10_2_indoor_router.jpeg){width="400" fig-align="left"}
+router.](images/media/10_2_indoor_router.jpeg){width="600" fig-align="left"}
 
 ## Teltonika Router
 
@@ -126,8 +126,7 @@ requiring a physical on-site visit.
     real-time diagnostics of the router and attached devices completely
     over-the-air.
 
-![Figure 11. Teltonika RUT906
-router.](images/media/10_2_router.png){width="400" fig-align="left"}
+![Figure 11. Teltonika RUT906 router.](images/media/10_2_router.png){width="600" fig-align="left"}
 
 ### Installation
 
