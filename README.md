@@ -4,19 +4,19 @@ Technical manual for the Automated Penguin Monitoring System (APMS), developed b
 
 ## 🌐 Read the manual
 
-The rendered manual is available at: **https://birdlifesa.github.io/apms-manual**
+The rendered manual is available at: **xxxxxxxxxx**
 
 ## 📖 About
 
-The APMS uses RFID detection and weighbridge technology to automatically record individual penguin identities and body masses at colony gates. This manual covers hardware construction, software configuration, field deployment, and data processing.
+The APMS uses RFID detection and weighbridge technology to automatically record individual penguin identities and body masses at key African Penguin colonies. This manual covers hardware construction, software configuration, field deployment, and data processing.
 
 ## 🛠 Contributing
 
 Contributions and corrections are welcome. To suggest a change:
 
-1. Click **Edit this page** on any page of the manual website, or
-2. Open an [issue](https://github.com/YOUR-ORG/apms-manual/issues) on this repository, or
-3. Fork the repository, make your changes, and submit a pull request
+1. Open an [issue](https://github.com/YOUR-ORG/apms-manual/issues) on this repository,
+2. Fork the repository, make your changes, and submit a pull request, or
+3. Contact the project manager directly at philip[dot]faure[at]birdlife[dot]org[dot]za
 
 ## 📁 Repository structure
 
