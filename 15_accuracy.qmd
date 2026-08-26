@@ -6,7 +6,7 @@ To know whether an APMS is functioning properly and providing accurate data, a c
 
 To test the accuracy of the APMS weighbridge, the weight estimates are compared to that obtained by an independent scale. Video footage is captured of the two main scales, as well as the independent scale. The independent scale has an LCD display, and this should be visible to the camera. It does have a night light and should thus be hidden as much as possible from view, as the penguins are very aware of changes to their surroundings and get easily frazzled. The video clips showing penguins stationary on the independent scale will be used to find the "true" weight, while the footage of the main two scales will be used to characterise the data. The penguin should be stationary on the independent scale, long enough to confidently read a stable reading from the LCD display.
 
-{{< video _book/videos/16_testing_calibrations.mp4 width="700" >}}
+{{< video videos/16_testing_calibrations.mp4 width="700" >}}
 
 You will need the following
 
