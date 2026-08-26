@@ -8,7 +8,7 @@ To test the accuracy of the APMS weighbridge, the weight estimates are compared 
 
 {{< video videos/16_testing_calibrations.mp4 width="700" >}}
 
-You will need the following
+You will need the following:
 
 1.  A laptop with WiFi. (Take a LAN cable with just in case)
 
