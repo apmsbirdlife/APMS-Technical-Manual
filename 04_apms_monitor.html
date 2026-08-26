@@ -645,7 +645,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/19_stripboard.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/19_stripboard.png" class="img-fluid figure-img" width="600"></p>
 <figcaption><strong>Figure 19.</strong> Preparing the stripboard.</figcaption>
 </figure>
 </div>
@@ -657,7 +657,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/20_test_stripboard.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/20_test_stripboard.png" class="img-fluid figure-img" width="600"></p>
 <figcaption><strong>Figure 20.</strong> Test fit the blank board on the mounting bracket.</figcaption>
 </figure>
 </div>
@@ -695,7 +695,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>The first three monitors (Stony Point, Bird Island and Dyer Island) all use a smaller green PCB (SIM800L). As this module has been difficult to procure, a larger module with a red PCB was used at Robben Island (SIM800L). As we only use 4 pins, the extra features of the red board are not used. At Dassen Island we used the newer SIM800L-V2 module.</p></li>
 <li><p>Unfortunately, the modules are not directly interchangeable as the RX and TX pins are reversed (see pictures below).</p></li>
 </ul>
-<div class="quarto-layout-panel" data-layout-ncol="3" data-fig-align="center">
+<div class="quarto-layout-panel" data-fig-align="center" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -732,7 +732,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/23_monitor.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/23_monitor.png" class="img-fluid figure-img" width="600"></p>
 <figcaption><strong>Figure 23.</strong> Robben Island APMS monitor board.</figcaption>
 </figure>
 </div>
@@ -769,32 +769,24 @@ ul.task-list li input[type="checkbox"] {
 <section id="raspberry-pi-connection" class="level3" data-number="5.0.8">
 <h3 data-number="5.0.8" class="anchored" data-anchor-id="raspberry-pi-connection"><span class="header-section-number">5.0.8</span> Raspberry Pi Connection</h3>
 <p>The connector used to connect the Monitor to the Raspberry Pi can be seen in fig.&nbsp;25. To use the connector with stripboard, the pins must either be bent outwards, or a “breakout” board made from a piece of scrap protoboard (fig.&nbsp;26). Both methods have been used and are effective. A pre-made break-out board can be purchased if available. If a PCB is designed in future, it will be possible to solder the connector directly on the board.</p>
-<div class="quarto-layout-panel" data-layout-ncol="2" data-fig-align="center">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/media/25_connector.png" class="img-fluid figure-img" width="400"></p>
 <figcaption><strong>Figure 25.</strong> Raspberry Pi connector.</figcaption>
 </figure>
 </div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/media/26_protoboard.jpeg" class="img-fluid figure-img" width="400"></p>
 <figcaption><strong>Figure 26.</strong> Proto board.</figcaption>
 </figure>
 </div>
-</div>
-</div>
-</div>
 <p>The Raspberry Pi 40-pin Connector pinout can be seen in fig.&nbsp;27.</p>
 <p>A simple voltage check of 3.3V on pin 1 and 5V pin 2 should confirm orientation if unsure.</p>
 <p>The Raspberry Pi GPIO pins and their functions can be seen in TABLE 3 - RASPBERRY PI GPIO PINS AND FUNCTIONS</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/27_pi_pinout.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/27_pi_pinout.png" class="img-fluid figure-img" width="500"></p>
 <figcaption><strong>Figure 27.</strong> Raspberry Pi GPIO pinout.</figcaption>
 </figure>
 </div>
@@ -835,7 +827,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/28_ribbon.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/28_ribbon.png" class="img-fluid figure-img" width="600"></p>
 <figcaption><strong>Figure 28.</strong> 40 pin ribbon cable.</figcaption>
 </figure>
 </div>
@@ -860,7 +852,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>NOTE: After the link has been made, the board can no longer be programmed via the Arduino software and USB cable. It will be programmed via the Raspberry Pi using the UPDI wire. If the Arduino software needs to be used during fault finding, unsolder the link. The pads can break off with successive heating sessions, so be cautious.</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/media/30_updi_arduino.jpeg" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/media/30_updi_arduino.jpeg" class="img-fluid figure-img" width="500"></p>
 <figcaption><strong>Figure 30.</strong> Wire and link soldered onto Arduino for UPDI programming.</figcaption>
 </figure>
 </div>
