@@ -4,7 +4,7 @@ Technical manual for the Automated Penguin Monitoring System (APMS), developed b
 
 ## 🌐 Read the manual
 
-The rendered manual is available at: **xxxxxxxxxx**
+The rendered manual is available at: **https://apmsbirdlife.github.io/APMS-Technical-Manual/**
 
 ## 📖 About
 
