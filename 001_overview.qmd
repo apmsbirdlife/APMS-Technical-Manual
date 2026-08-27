@@ -42,7 +42,7 @@ The primary internet connection is provided via a 4G router. Depending on the ce
 
 Two scales are used to increase accuracy and to indicate whether a penguin is heading out to sea, or coming back from the ocean. These scales are mounted on a platform. 
 
-![Figure 3. Scale platform on Dyer Island.](images/media/03_scale_platform.jpeg){width="600" fig-align="center"}
+![Figure 3. Scale platform on Dyer Island.](images/media/03_scale_platform.jpeg){width="700" fig-align="center"}
 
 All the electronics are housed inside an IP67 rated enclosure, referred to as the APMS Main Unit. The section “APMS Main Unit” describes how to build this box.
 
