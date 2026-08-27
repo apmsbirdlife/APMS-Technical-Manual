@@ -7,7 +7,7 @@ book:
   subtitle: "Technical Manual"
   author: "Pierre Retief, Philip Faure"
   date: today
-  repo-url: https://github.com/apmsbirdlife/apms-manual
+  repo-url: https://github.com/apmsbirdlife/APMS-Technical-Manual
   repo-actions: [issue]
   search: true
   chapters:
