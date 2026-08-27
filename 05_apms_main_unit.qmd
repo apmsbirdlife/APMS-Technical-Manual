@@ -321,19 +321,12 @@ If using the Laumas TLB485 indicators, a jumper needs to be installed if the bau
 
 To configure the GMT-X1 scale indicator, press the enter (**ENT**) button to open the menu, then press the right arrow to navigate to **4xxx Data-Trans**. Then use the down arrow to go to **43xx COM2** and press enter again.
 
-  ---------------------------------------------------------------------------------------------
-  **Name**                       **Value**        **Image**
-  ------------------------------ ---------------- ---------------------------------------------
-
-  **432x Baudrate**              115200           ![](images/media/45_432x.jpg){width="200"}
-
-  **433x Protocol**              Cont-A           ![](images/media/45_433x.jpg){width="200"}
-
-  **434x Data Format**           8-N-1            ![](images/media/45_434x.jpg){width="200"}
-
-  **436x Send Gap**              0009 ms          ![](images/media/45_436x.jpg){width="200"}
-
-  ---------------------------------------------------------------------------------------------
+| **Name**         | **Value** | **Image**                                     |
+|------------------|-----------|------------------------------------------------|
+| **432x Baudrate**| 115200    | ![](images/media/45_432x.jpg){width="200"}     |
+| **433x Protocol**| Cont-A    | ![](images/media/45_433x.jpg){width="200"}     |
+| **434x Data Format** | 8-N-1 | ![](images/media/45_434x.jpg){width="200"}     |
+| **436x Send Gap**| 0009 ms   | ![](images/media/45_436x.jpg){width="200"}     |
   
 ![**Figure 45.** General Measure GMT-X1 indicator serial port parameter menu for COM2.](images/media/46_0_GMTX1_COM2.jpeg){width="600" fig-align="center"} 
 
