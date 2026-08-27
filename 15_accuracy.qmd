@@ -10,7 +10,7 @@ To test the accuracy of the APMS weighbridge, the weight estimates are compared 
 
 You will need the following:
 
-1.  A laptop with WiFi. (Take a LAN cable with just in case)
+1.  A laptop with WiFi (take a LAN cable with just in case)
 
 2.  Certified 1kg and 5kg weights
 

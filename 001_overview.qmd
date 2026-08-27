@@ -46,6 +46,8 @@ Two scales are used to increase accuracy and to indicate whether a penguin is he
 
 All the electronics are housed inside an IP67 rated enclosure, referred to as the APMS Main Unit. The section “APMS Main Unit” describes how to build this box.
 
+{{< video videos/0_penguins_crossing.mp4 width="700" >}}
+
 ![Figure 4. APMS main unit.](images/media/04_apms_main_unit.png){width="600" fig-align="center"} 
 
 The BioMark reader is an external device, used for picking up RFID pit tags. The APMS connects via a USB serial interface, internal to the reader. See the “BioMark” section for more information.
