@@ -262,15 +262,21 @@ The data is sent as
 
 ### Indicator Power and Data
 
-- Laumas TLB485
-    -   The Laumas TLB485 scale indicator uses an 8-pin screw connector for power and serial communication. The connector, as well as the layout of the two RS485 Serial Converters can be seen in FIGURE 41 - SCALE INDICATOR CONNECTIONS
     
 - General Measure GMT-X1
-    - **TO BE COMPLETED**
+    - The GMT-X1 uses a 7-pin screw connector for communication between the loadcell and the indicator, a 2-pin screw connector for 24V power supply, and a 6-pin screw connector for communication (RX/TX) between the Raspberry Pi and the indicator (Fig. 41.1)
+    
+![**Figure 41.1.** GMT-X1 scale indicator power and loadcell connectors.](images/media/41_1_connectors.jpg){width="600" fig-align="center"}
+![**Figure 41.2.** GMT-X1 scale indicator RX/TX Raspberry Pi connectors.](images/media/41_2_connectors.jpg){width="600" fig-align="center"}
+
+
+- Laumas TLB485
+    -   The Laumas TLB485 scale indicator uses an 8-pin screw connector for power and serial communication. The connector, as well as the layout of the two RS485 Serial Converters (Fig. 41.2).
+
 
 -   Shorten the cables of the RS485 converters to fit the layout shown.
 
-![**Figure 41.1.** Laumas TLB485 scale indicator connectors.](images/media/41_connectors.png){width="700" fig-align="center"}
+![**Figure 41.3.** Laumas TLB485 scale indicator connectors.](images/media/41_connectors.png){width="700" fig-align="center"}
 
 -   Only the orange and yellow wires of the RS485 converter is used. Strip and crimp ferrules on the end of the wires and connect as in Fig. 42.
 
@@ -291,7 +297,7 @@ The data is sent as
 
 -   Solder the wires to the sockets and add ferrules before inserting it into the scale connector screw terminals.
 
-![**Figure 44.** Installing 6-pin scale connector.](images/media/44_6-pin_connector.png){width="600" fig-align="center"}
+![**Figure 44.2.** Installing 6-pin scale connector.](images/media/44_6-pin_connector.png){width="600" fig-align="center"}
 
 ### Jumper Install (Laumas TLB485 only)
 
