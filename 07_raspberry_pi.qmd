@@ -110,14 +110,14 @@ Are you sure you want to continue connecting (yes/no/fingerprint)?
 
 <!-- ![](images/media/49_fingerprint.jpeg){width="700" fig-align="center"} -->
 
--   Edit the "known_hosts" file: 
+-   Edit the "known_hosts" file by opening the known_hosts file. Use any text editor such as Notepad or Nano to open it.
 
 ```bash
-sudo nano ~/.ssh/known_hosts
+C:\Users\phil/.ssh/known_hosts
 ```
 -   Remove the line containing the IP of the Raspberry Pi:
 
--   Save the file and exit. (Hold **CTRL** and press **x**. Type press **y** to save, then press **Enter** to exit)
+-   Save the file and exit. (If using Nano: Hold **CTRL** and press **x**. Type press **y** to save, then press **Enter** to exit)
 
 ## Update the Raspberry Pi Operating System
 
@@ -177,7 +177,7 @@ Downloading software via the 4G router could be costly and unnecessary if a loca
 | :--- | :--- | :--- |
 | **git** | `2.34.1` | Used to download and update the firmware |
 | **ntpdate** | `4.2.8` | To update the system time via NTP |
-| **tmate** | `2.4.0` | Used to SSH into the Pi, via the internet |
+| **tmux** | `x.x.x` | Used to SSH into the Pi, via the internet |
 | **python3** | `3.9.2` | Programming language used to run most of the firmware |
 | **minicom** | `2.8` | Useful program for monitoring the serial port |
 | **pip** | `20.3.4` | Program used to install python packages |
@@ -194,7 +194,7 @@ Downloading software via the 4G router could be costly and unnecessary if a loca
 -   Install the packages:
 
 ```bash
-sudo apt-get install git ntpdate tmate python3 minicom pip vnstat
+sudo apt-get install git ntpdate tmux python3 minicom pip vnstat
 ```
 
 -   Answer **Yes** to any questions that may appear.
@@ -209,16 +209,21 @@ sudo apt-get install git ntpdate tmate python3 minicom pip vnstat
 | **pyserial** | `3.5` | Used for serial communication |
 | **vcgencmd** | `0.1.1` | Used to monitor CPU temperature |
 | **psutil** | `5.9.5` | Used to monitor disk space and CPU usage |
-| **pmcuprog** | `3.19.4.61` | Microchip PIC microcontroller programmer utility |
+| **pymcuprog** | `3.19.4.61` | Microchip PIC microcontroller programmer utility |
 
+-   If you're having problems installing pip, try using:
 
--   To install the python packages, use pip: ***\$ pip install pyserial vcgencmd psutil pmcuprog*** and answer Yes to any questions that may appear:
+```bash
+sudo apt install python3-pip --fix-missing
+```
+
+-   To install the python packages, use pip: ***\$ pip install pyserial vcgencmd psutil pymcuprog*** and answer Yes to any questions that may appear:
 
 ```bash
 pip install pyserial vcgencmd psutil pmcuprog
 ```
 
--   If installing an older version, add "=\[version\]" for example: ***\$ pip install psutil=5.9.5***
+-   If installing an older version, add "=\[version\]" for example: ***\$ pip install psutil==5.9.5***
 
 ## SSH into the Pi (via Tailscale)
 
@@ -349,6 +354,9 @@ umount /dev/sda1
 ```
 -   Run fdisk on the drive: 
 
+```bash
+sudo fdisk /dev/sda
+```
     -   Create a new empty DOS partition: press 'o' and enter
 
     -   Create a new partition: press 'n' and enter -- use all the default options
@@ -356,9 +364,6 @@ umount /dev/sda1
     -   Change partition type: press 't' and enter -- choose 7 - 'HPFS/NTFS/exFAT'
 
     -   Save and exit: press 'w' and enter
-```bash
-sudo fdisk /dev/sda
-```
 
 -   Format disk: 
 ```bash
@@ -417,7 +422,7 @@ The Raspberry Pi communicates with the Monitor via serial, using GPIO14 and GPIO
 sudo raspi-config
 ```
 
--   Select "**Interfaces**"
+-   Select "**Interface Options**"
 
 -   Select "**Serial Port**"
 
@@ -477,7 +482,7 @@ sudo apt-get install git
 -   Configure git:
 ```bash
 git config --global user.name "apms"
-git config --global user.email <apmsbirdlife@gmail.com>
+git config --global user.email apmsbirdlife@gmail.com
 ```
 
 :::{.callout-tip}
@@ -527,9 +532,10 @@ ssh -T git@github.com
 ```bash
 cd ~
 git clone git@github.com:apmsbirdlife/apms.git
-
+```
 
 -   All the APMS firmware should now be downloaded to `~/apms/.` Go to the directory, then make sure you are on the correct branch: 
+
 ```bash
 cd ~/apms
 git checkout main

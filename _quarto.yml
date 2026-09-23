@@ -5,7 +5,7 @@ project:
 book:
   title: "Automated Penguin Monitoring System (APMS)"
   subtitle: "Technical Manual"
-  author: "Pierre Retief, Philip Faure"
+  author: "Pierre Retief"
   date: today
   repo-url: https://github.com/apmsbirdlife/APMS-Technical-Manual
   repo-actions: [issue]
