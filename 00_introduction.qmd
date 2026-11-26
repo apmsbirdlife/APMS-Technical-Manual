@@ -1,0 +1,5 @@
+# Introduction
+
+The Automated Penguin Monitoring System is used to weigh African Penguins in the wild, without the need to physically handle them.
+
+The system consists of both hardware and software components. This manual is written as a step-by-step guide to building a complete system. The hardware components are covered first, followed by the software setup. Finally, the software needed to process the data and display it on a custom dashboard is discussed. A trouble shooting guide is also included at the end of the document.
