@@ -635,27 +635,27 @@ The table below shows the parameters and their descriptions.
 ## Installing AWS CLI
 The APMS uses AWS CLI to upload data to the AWS servers. To install the official AWS CLI version 2 on a Raspberry Pi running a 64-bit Linux OS, follow these steps:   
 
-### Update your package lists and install prerequisites 
+Update your package lists and install prerequisites 
 'curl' and 'unzip' are required for downloading and extracting the installer:  
 
 ```bash
 sudo apt update && sudo apt install -y curl unzip
 ```
 
-### Ensure both tools are installed by running: 
+Ensure both tools are installed by running: 
 
 ```bash
 curl --version
 unzip -v
 ```
 
-### Download the official AWS CLI v2 ARM64 bundle:
+Download the official AWS CLI v2 ARM64 bundle:
 
 ```bash 
 curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
 ```
 
-### Check that the awscliv2.zip file exists in your current directory 
+Check that the awscliv2.zip file exists in your current directory 
 ```bash
 ls -lh awscliv2.zip
 ```
@@ -665,7 +665,7 @@ Unzip the downloaded archive:
 unzip awscliv2.zip
 ```
 
-### Verify an aws folder has been created containing the installer files 
+Verify an aws folder has been created containing the installer files 
 
 ```bash
 ls aws/
@@ -677,7 +677,7 @@ ls aws/
 sudo ./aws/install
 ```
 
-### This installs the files to `/usr/local/aws-cli` and creates a symbolic link at `/usr/local/bin/aws`.
+This installs the files to `/usr/local/aws-cli` and creates a symbolic link at `/usr/local/bin/aws`.
 
 Verify the installation:
 
@@ -685,13 +685,13 @@ Verify the installation:
 aws --version
 ```
 
-### The command should output the installed version, Python version, and system architecture (e.g., aws-cli/2.x.x ... Linux/aarch64). Clean up the temporary installation files:
+The command should output the installed version, Python version, and system architecture (e.g., aws-cli/2.x.x ... Linux/aarch64). Clean up the temporary installation files:
 
 ```bash
 rm -rf awscliv2.zip aws/
 ```
 
-### Create the symbolic link:
+Create the symbolic link:
 
 ```bash
 sudo ln -s /usr/local/bin/aws /usr/bin/aws
@@ -701,7 +701,7 @@ Ensure the link was created successfully by running:
 ```
 ls -l /usr/bin/aws`. It should point to `/usr/local/bin/aws`.
 
-### Configure AWS Credentials Interactively
+Configure AWS Credentials Interactively
 
 Run the configuration command in your terminal:
 
