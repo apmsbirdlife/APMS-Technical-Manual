@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1357cf7b0fac1a0bcebefebedf584601.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d48df2f77323250187ba2c77cca896ca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -351,15 +351,7 @@ window.Quarto = {
   <li><a href="#configuring-the-apms" id="toc-configuring-the-apms" class="nav-link" data-scroll-target="#configuring-the-apms"><span class="header-section-number">8.14</span> Configuring the APMS</a></li>
   <li><a href="#installing-aws-cli" id="toc-installing-aws-cli" class="nav-link" data-scroll-target="#installing-aws-cli"><span class="header-section-number">8.15</span> Installing AWS CLI</a>
   <ul class="collapse">
-  <li><a href="#update-your-package-lists-and-install-prerequisites" id="toc-update-your-package-lists-and-install-prerequisites" class="nav-link" data-scroll-target="#update-your-package-lists-and-install-prerequisites"><span class="header-section-number">8.15.1</span> Update your package lists and install prerequisites</a></li>
-  <li><a href="#ensure-both-tools-are-installed-by-running" id="toc-ensure-both-tools-are-installed-by-running" class="nav-link" data-scroll-target="#ensure-both-tools-are-installed-by-running"><span class="header-section-number">8.15.2</span> Ensure both tools are installed by running:</a></li>
-  <li><a href="#download-the-official-aws-cli-v2-arm64-bundle" id="toc-download-the-official-aws-cli-v2-arm64-bundle" class="nav-link" data-scroll-target="#download-the-official-aws-cli-v2-arm64-bundle"><span class="header-section-number">8.15.3</span> Download the official AWS CLI v2 ARM64 bundle:</a></li>
-  <li><a href="#check-that-the-awscliv2.zip-file-exists-in-your-current-directory" id="toc-check-that-the-awscliv2.zip-file-exists-in-your-current-directory" class="nav-link" data-scroll-target="#check-that-the-awscliv2.zip-file-exists-in-your-current-directory"><span class="header-section-number">8.15.4</span> Check that the awscliv2.zip file exists in your current directory</a></li>
-  <li><a href="#verify-an-aws-folder-has-been-created-containing-the-installer-files" id="toc-verify-an-aws-folder-has-been-created-containing-the-installer-files" class="nav-link" data-scroll-target="#verify-an-aws-folder-has-been-created-containing-the-installer-files"><span class="header-section-number">8.15.5</span> Verify an aws folder has been created containing the installer files</a></li>
-  <li><a href="#run-the-installation-script" id="toc-run-the-installation-script" class="nav-link" data-scroll-target="#run-the-installation-script"><span class="header-section-number">8.15.6</span> Run the installation script:</a></li>
-  <li><a href="#this-installs-the-files-to-usrlocalaws-cli-and-creates-a-symbolic-link-at-usrlocalbinaws." id="toc-this-installs-the-files-to-usrlocalaws-cli-and-creates-a-symbolic-link-at-usrlocalbinaws." class="nav-link" data-scroll-target="#this-installs-the-files-to-usrlocalaws-cli-and-creates-a-symbolic-link-at-usrlocalbinaws."><span class="header-section-number">8.15.7</span> This installs the files to <code>/usr/local/aws-cli</code> and creates a symbolic link at <code>/usr/local/bin/aws</code>.</a></li>
-  <li><a href="#the-command-should-output-the-installed-version-python-version-and-system-architecture-e.g.-aws-cli2.x.x-linuxaarch64.-clean-up-the-temporary-installation-files" id="toc-the-command-should-output-the-installed-version-python-version-and-system-architecture-e.g.-aws-cli2.x.x-linuxaarch64.-clean-up-the-temporary-installation-files" class="nav-link" data-scroll-target="#the-command-should-output-the-installed-version-python-version-and-system-architecture-e.g.-aws-cli2.x.x-linuxaarch64.-clean-up-the-temporary-installation-files"><span class="header-section-number">8.15.8</span> The command should output the installed version, Python version, and system architecture (e.g., aws-cli/2.x.x … Linux/aarch64). Clean up the temporary installation files:</a></li>
-  <li><a href="#create-the-symbolic-link" id="toc-create-the-symbolic-link" class="nav-link" data-scroll-target="#create-the-symbolic-link"><span class="header-section-number">8.15.9</span> Create the symbolic link:</a></li>
+  <li><a href="#run-the-installation-script" id="toc-run-the-installation-script" class="nav-link" data-scroll-target="#run-the-installation-script"><span class="header-section-number">8.15.1</span> Run the installation script:</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/apmsbirdlife/APMS-Technical-Manual/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -1142,50 +1134,33 @@ Tip
 <section id="installing-aws-cli" class="level2" data-number="8.15">
 <h2 data-number="8.15" class="anchored" data-anchor-id="installing-aws-cli"><span class="header-section-number">8.15</span> Installing AWS CLI</h2>
 <p>The APMS uses AWS CLI to upload data to the AWS servers. To install the official AWS CLI version 2 on a Raspberry Pi running a 64-bit Linux OS, follow these steps:</p>
-<section id="update-your-package-lists-and-install-prerequisites" class="level3" data-number="8.15.1">
-<h3 data-number="8.15.1" class="anchored" data-anchor-id="update-your-package-lists-and-install-prerequisites"><span class="header-section-number">8.15.1</span> Update your package lists and install prerequisites</h3>
-<p>‘curl’ and ‘unzip’ are required for downloading and extracting the installer:</p>
+<p>Update your package lists and install prerequisites ‘curl’ and ‘unzip’ are required for downloading and extracting the installer:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> curl unzip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="ensure-both-tools-are-installed-by-running" class="level3" data-number="8.15.2">
-<h3 data-number="8.15.2" class="anchored" data-anchor-id="ensure-both-tools-are-installed-by-running"><span class="header-section-number">8.15.2</span> Ensure both tools are installed by running:</h3>
+<p>Ensure both tools are installed by running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--version</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> <span class="at">-v</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="download-the-official-aws-cli-v2-arm64-bundle" class="level3" data-number="8.15.3">
-<h3 data-number="8.15.3" class="anchored" data-anchor-id="download-the-official-aws-cli-v2-arm64-bundle"><span class="header-section-number">8.15.3</span> Download the official AWS CLI v2 ARM64 bundle:</h3>
+<p>Download the official AWS CLI v2 ARM64 bundle:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip"</span> <span class="at">-o</span> <span class="st">"awscliv2.zip"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="check-that-the-awscliv2.zip-file-exists-in-your-current-directory" class="level3" data-number="8.15.4">
-<h3 data-number="8.15.4" class="anchored" data-anchor-id="check-that-the-awscliv2.zip-file-exists-in-your-current-directory"><span class="header-section-number">8.15.4</span> Check that the awscliv2.zip file exists in your current directory</h3>
+<p>Check that the awscliv2.zip file exists in your current directory</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> awscliv2.zip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Unzip the downloaded archive:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> awscliv2.zip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="verify-an-aws-folder-has-been-created-containing-the-installer-files" class="level3" data-number="8.15.5">
-<h3 data-number="8.15.5" class="anchored" data-anchor-id="verify-an-aws-folder-has-been-created-containing-the-installer-files"><span class="header-section-number">8.15.5</span> Verify an aws folder has been created containing the installer files</h3>
+<p>Verify an aws folder has been created containing the installer files</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> aws/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="run-the-installation-script" class="level3" data-number="8.15.6">
-<h3 data-number="8.15.6" class="anchored" data-anchor-id="run-the-installation-script"><span class="header-section-number">8.15.6</span> Run the installation script:</h3>
+<section id="run-the-installation-script" class="level3" data-number="8.15.1">
+<h3 data-number="8.15.1" class="anchored" data-anchor-id="run-the-installation-script"><span class="header-section-number">8.15.1</span> Run the installation script:</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ./aws/install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="this-installs-the-files-to-usrlocalaws-cli-and-creates-a-symbolic-link-at-usrlocalbinaws." class="level3" data-number="8.15.7">
-<h3 data-number="8.15.7" class="anchored" data-anchor-id="this-installs-the-files-to-usrlocalaws-cli-and-creates-a-symbolic-link-at-usrlocalbinaws."><span class="header-section-number">8.15.7</span> This installs the files to <code>/usr/local/aws-cli</code> and creates a symbolic link at <code>/usr/local/bin/aws</code>.</h3>
+<p>This installs the files to <code>/usr/local/aws-cli</code> and creates a symbolic link at <code>/usr/local/bin/aws</code>.</p>
 <p>Verify the installation:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="the-command-should-output-the-installed-version-python-version-and-system-architecture-e.g.-aws-cli2.x.x-linuxaarch64.-clean-up-the-temporary-installation-files" class="level3" data-number="8.15.8">
-<h3 data-number="8.15.8" class="anchored" data-anchor-id="the-command-should-output-the-installed-version-python-version-and-system-architecture-e.g.-aws-cli2.x.x-linuxaarch64.-clean-up-the-temporary-installation-files"><span class="header-section-number">8.15.8</span> The command should output the installed version, Python version, and system architecture (e.g., aws-cli/2.x.x … Linux/aarch64). Clean up the temporary installation files:</h3>
+<p>The command should output the installed version, Python version, and system architecture (e.g., aws-cli/2.x.x … Linux/aarch64). Clean up the temporary installation files:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> awscliv2.zip aws/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="create-the-symbolic-link" class="level3" data-number="8.15.9">
-<h3 data-number="8.15.9" class="anchored" data-anchor-id="create-the-symbolic-link"><span class="header-section-number">8.15.9</span> Create the symbolic link:</h3>
+<p>Create the symbolic link:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /usr/local/bin/aws /usr/bin/aws</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Ensure the link was created successfully by running:</p>
 <pre><code>ls -l /usr/bin/aws`. It should point to `/usr/local/bin/aws`.
 
-### Configure AWS Credentials Interactively
+Configure AWS Credentials Interactively
 
 Run the configuration command in your terminal:
 
